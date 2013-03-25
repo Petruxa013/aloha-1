@@ -6,6 +6,9 @@ outlet:
     prefix_path:          /outlet
     column:               id
     with_wildcard_routes: true
+    collection_actions:
+      parseFile:           [get,post]
+      parseFile_create:    [post]
 
 city:
   class: sfDoctrineRouteCollection

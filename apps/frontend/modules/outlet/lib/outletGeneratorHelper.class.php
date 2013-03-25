@@ -10,4 +10,8 @@
  */
 class outletGeneratorHelper extends BaseOutletGeneratorHelper
 {
+	public function linkToParseFile($params)
+	{
+		return '<i class="icon-upload icon-white"></i>' . link_to(__($params['label'], array(), 'sf_admin'), '@' . $this->getUrlForAction('parseFile'), array('class' => 'btn btn-warning'));
+	}
 }

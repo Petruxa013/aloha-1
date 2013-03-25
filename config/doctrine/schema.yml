@@ -27,13 +27,12 @@ Region:
       notnull:        true
   relations:
     Country:
-      onDelete:       CASCADE
       local:          country_id
       foreign:        id
       foreignAlias:   Rigions
   indexes:
-    country_id_idx:
-      fields:         [country_id]
+    name:
+      fields:         [name]
 
 City:
   columns:
@@ -56,20 +55,16 @@ City:
       notnull:        true
   relations:
     Country:
-      onDelete:       CASCADE
       local:          country_id
       foreign:        id
       foreignAlias:   Cities
     Region:
-      onDelete:       CASCADE
       local:          region_id
       foreign:        id
       foreignAlias:   Rigions
   indexes:
-    country_id_idx:
-      fields:         [country_id]
-    region_id_idx:
-      fields:         [region_id]
+    name:
+      fields:         [name]
 
 Outlet:
   columns:
@@ -79,9 +74,10 @@ Outlet:
       unsigned:       true
       primary:        true
       autoincrement:  true
-    distributor:
-      type:           string(255)
+    distributor_id:
+      type:           integer(11)
       notnull:        true
+      unsigned:       true
     lagal_name:
       type:           string(255)
       notnull:        true
@@ -112,3 +108,40 @@ Outlet:
         - a
         - b
       notnull:        true
+  relations:
+    Region:
+      local:          region_id
+      foreign:        id
+      foreignAlias:   Outlets
+    City:
+      local:          city_id
+      foreign:        id
+      foreignAlias:   Outlets
+    Distributor:
+      local:          distributor_id
+      foreign:        id
+      foreignAlias:   Outlets
+  indexes:
+    type:
+      fields:         [type]
+    group_type:
+      fields:         [group_type]
+    legal_name:
+      fields:         [legal_name]
+    actual_name:
+      fields:         [actual_name]
+
+Distributor:
+  columns:
+    id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+      primary:        true
+      autoincrement:  true
+    name:
+      type:           string(255)
+      notnull:        true
+  indexes:
+    name:
+      fields:         [name]

@@ -4,74 +4,32 @@
  */
 class addGeoBaseFks extends Doctrine_Migration_Base
 {
-    public function up()
-    {
-        $this->createForeignKey('city', 'city_country_id_country_id', array(
-             'name' => 'city_country_id_country_id',
-             'local' => 'country_id',
-             'foreign' => 'id',
-             'foreignTable' => 'country',
-             'onUpdate' => '',
-             'onDelete' => 'CASCADE',
-             ));
-        $this->createForeignKey('city', 'city_region_id_region_id', array(
-             'name' => 'city_region_id_region_id',
-             'local' => 'region_id',
-             'foreign' => 'id',
-             'foreignTable' => 'region',
-             'onUpdate' => '',
-             'onDelete' => 'CASCADE',
-             ));
-        $this->createForeignKey('region', 'region_country_id_country_id', array(
-             'name' => 'region_country_id_country_id',
-             'local' => 'country_id',
-             'foreign' => 'id',
-             'foreignTable' => 'country',
-             'onUpdate' => '',
-             'onDelete' => 'CASCADE',
-             ));
-        $this->addIndex('city', 'city_country_id', array(
-             'fields' => 
-             array(
-              0 => 'country_id',
-             ),
-             ));
-        $this->addIndex('city', 'city_region_id', array(
-             'fields' => 
-             array(
-              0 => 'region_id',
-             ),
-             ));
-        $this->addIndex('region', 'region_country_id', array(
-             'fields' => 
-             array(
-              0 => 'country_id',
-             ),
-             ));
-    }
+	public function up()
+	{
+		$this->createForeignKey('city', 'city_country_id_country_id', array(
+			'name'         => 'city_country_id_country_id',
+			'local'        => 'country_id',
+			'foreign'      => 'id',
+			'foreignTable' => 'country',
+		));
+		$this->createForeignKey('city', 'city_region_id_region_id', array(
+			'name'         => 'city_region_id_region_id',
+			'local'        => 'region_id',
+			'foreign'      => 'id',
+			'foreignTable' => 'region',
+		));
+		$this->createForeignKey('region', 'region_country_id_country_id', array(
+			'name'         => 'region_country_id_country_id',
+			'local'        => 'country_id',
+			'foreign'      => 'id',
+			'foreignTable' => 'country',
+		));
+	}
 
-    public function down()
-    {
-        $this->dropForeignKey('city', 'city_country_id_country_id');
-        $this->dropForeignKey('city', 'city_region_id_region_id');
-        $this->dropForeignKey('region', 'region_country_id_country_id');
-        $this->removeIndex('city', 'city_country_id', array(
-             'fields' => 
-             array(
-              0 => 'country_id',
-             ),
-             ));
-        $this->removeIndex('city', 'city_region_id', array(
-             'fields' => 
-             array(
-              0 => 'region_id',
-             ),
-             ));
-        $this->removeIndex('region', 'region_country_id', array(
-             'fields' => 
-             array(
-              0 => 'country_id',
-             ),
-             ));
-    }
+	public function down()
+	{
+		$this->dropForeignKey('city', 'city_country_id_country_id');
+		$this->dropForeignKey('city', 'city_region_id_region_id');
+		$this->dropForeignKey('region', 'region_country_id_country_id');
+	}
 }

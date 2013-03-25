@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/outletGeneratorConfiguration.class.php';
-require_once dirname(__FILE__).'/../lib/outletGeneratorHelper.class.php';
+require_once dirname(__FILE__) . '/../lib/outletGeneratorConfiguration.class.php';
+require_once dirname(__FILE__) . '/../lib/outletGeneratorHelper.class.php';
 
 /**
  * outlet actions.
@@ -13,4 +13,132 @@ require_once dirname(__FILE__).'/../lib/outletGeneratorHelper.class.php';
  */
 class outletActions extends autoOutletActions
 {
+	public function executeParseFile(sfWebRequest $request)
+	{
+		$this->form = new OutletParseFileForm();
+
+	}
+
+	public function executeParseFile_create(sfWebRequest $request)
+	{
+		$this->form = new OutletParseFileForm();
+
+		$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+		if ($this->form->isValid()) {
+			$file = $request->getFiles($this->form->getName());
+			$file_tmp = $file['filename']['tmp_name'];
+
+			$fileSlug = explode('.', $file['filename']['name']);
+			$fileSlug[0] = SlugifyClass::slugify($fileSlug[0]);
+			$fileSlug = implode('.',$fileSlug);
+
+			$filePath = sfConfig::get('sf_upload_dir'). DS. 'outlets'.DS;
+			if(!is_dir($filePath))
+				mkdir($filePath, 0777, true);
+
+			$file2parse = $filePath . $fileSlug;
+			copy($file_tmp, $file2parse);
+
+			$inputFileType = PHPExcel_IOFactory::identify($file2parse);
+			/* @var $objReader PHPExcel_Reader_Excel2007 */
+			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+			$objReader->setReadDataOnly(true);
+
+			$objPHPExcel = $objReader->load($file2parse);
+
+			$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,false);
+
+			foreach($sheetData as $line)
+			{
+
+				$outlet = new Outlet();
+				
+				$distributorName = $line[0];
+				$distributor = DistributorTable::getInstance()->findOneByName($distributorName, Doctrine::HYDRATE_ARRAY);
+
+				if(!$distributor)
+				{
+					$distributor = new Distributor();
+					$distributor->setName($distributorName);
+					$distributor->save();
+				}
+				$outlet->setDistributorId($distributor['id']);
+				$outlet->setLagalName($line[1]);
+				$outlet->setActualName($line[2]);
+
+				$regionName = $line[3];
+				$region = RegionTable::getInstance()->findOneByName($regionName, Doctrine::HYDRATE_ARRAY);
+				if(!$region)
+				{
+					$region = new Region();
+					$region->name = $regionName;
+					$region->country_id = 2;
+					$region->save();
+					var_dump($regionName);
+				}
+
+				$outlet->setRegionId($region['id']);
+
+				$cityName = $line[4];
+				$city = CityTable::getInstance()->findOneByName($cityName, Doctrine::HYDRATE_ARRAY);
+				if(!$city)
+				{
+					$city = new City();
+					$city->name = $cityName;
+					$city->country_id = 2;
+					$city->region_id = 2;
+					$city->save();
+					var_dump($cityName);
+				}
+
+				$outlet->setCityId($city['id']);
+
+				$outlet->setAddress($line[5]);
+
+				$type = mb_strtolower($line[6], 'utf-8');
+				if(!array_key_exists($type, Outlet::$types))
+				{
+					$type = array_search($type, Outlet::$types);
+				}
+
+
+				$outlet->setType($type);
+
+				$groupType = mb_strtolower($line[7], 'utf-8');
+				if(!array_key_exists($groupType, Outlet::$groupTypes))
+				{
+					$groupType = array_search($groupType, Outlet::$groupTypes);
+				}
+				$outlet->setGroupType($groupType);
+
+				$outlet->save();
+			}
+
+//			die();
+
+
+//			if (($handle = fopen($file2parse, "r")) !== FALSE) {
+//				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+//					list($cart, $pin) = $data;
+//					list($series, $number) = explode(' ', $cart);
+//
+//					$newCart = new Cart();
+//					$newCart->series = $series;
+//					$newCart->number = $number;
+//					$newCart->pin = $pin;
+//					try {
+//						if (!$newCart->save())
+//							throw new sfException('Во время создания РТТ ' . $cart . ' произошла ошибка');
+//					} catch (sfException $e) {
+//						continue;
+//					}
+//
+//				}
+//				fclose($handle);
+//			}
+
+		}
+
+		$this->setTemplate('parseFile');
+	}
 }

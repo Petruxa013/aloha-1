@@ -15,6 +15,7 @@ generator:
       actions: ~
       fields:
         distributor: {label: Дистрибьютор }
+        distributor_id: {label: Дистрибьютор }
         lagal_name: {label: Юридическое название }
         actual_name: {label: Фактическое название }
         region_id: {label: Регион }
@@ -24,7 +25,11 @@ generator:
         group_type: {label: Группа }
       list:
         title: Список РТТ
-        #display: [position, reference, name, price, currency, is_enabled,sCategory, sBrand]
+        actions:
+          parseFile: {label: Загрузить группу РТТ из файла }
+          _new: ~
+        display: [_distributor, lagal_name, actual_name, _region_id, _city_id, _type, group_type]
+        table_method: getForList
       filter:  ~
       form:    ~
       edit:

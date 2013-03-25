@@ -16,4 +16,15 @@ class OutletTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Outlet');
     }
+
+	public function getForList(Doctrine_Query $q)
+	{
+		$rootAlias = $q->getRootAlias();
+		$q->leftJoin($rootAlias . '.Distributor distributor');
+		$q->leftJoin($rootAlias . '.Region region');
+		$q->leftJoin($rootAlias . '.City city');
+		return $q;
+
+	}
+
 }
