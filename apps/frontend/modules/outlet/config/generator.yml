@@ -1,0 +1,33 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           outlet
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          outlet
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        distributor: {label: Дистрибьютор }
+        lagal_name: {label: Юридическое название }
+        actual_name: {label: Фактическое название }
+        region_id: {label: Регион }
+        city_id: {label: Город }
+        address: {label: Адрес }
+        type: {label: Тип РТТ }
+        group_type: {label: Группа }
+      list:
+        title: Список РТТ
+        #display: [position, reference, name, price, currency, is_enabled,sCategory, sBrand]
+      filter:  ~
+      form:    ~
+      edit:
+        title: Редактирование РТТ
+      new:
+        title: Создание РТТ

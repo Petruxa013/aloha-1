@@ -12,6 +12,13 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Аудит
+								<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><?php echo link_to('РТТ', 'outlet') ?></li>
+							</ul>
+						</li>
+						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Вспомогательные разделы
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">

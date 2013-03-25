@@ -70,3 +70,45 @@ City:
       fields:         [country_id]
     region_id_idx:
       fields:         [region_id]
+
+Outlet:
+  columns:
+    id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+      primary:        true
+      autoincrement:  true
+    distributor:
+      type:           string(255)
+      notnull:        true
+    lagal_name:
+      type:           string(255)
+      notnull:        true
+    actual_name:
+      type:           string(255)
+      notnull:        true
+    region_id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+    city_id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+    address:
+      type:           string(255)
+      notnull:        true
+    type:
+      type:           enum
+      values:
+        - specialized
+        - auto
+        - market
+      notnull:        true
+    group_type:
+      type:           enum
+      values:
+        - a
+        - b
+      notnull:        true
