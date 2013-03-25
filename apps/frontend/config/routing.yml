@@ -1,16 +1,47 @@
+city:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                city
+    module:               city
+    prefix_path:          /city
+    column:               id
+    with_wildcard_routes: true
+
+region:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                region
+    module:               region
+    prefix_path:          /region
+    column:               id
+    with_wildcard_routes: true
+
+country:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                country
+    module:               country
+    prefix_path:          /country
+    column:               id
+    with_wildcard_routes: true
+
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
 # default rules
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: index, action: index }
+
+signout:
+  url: /signout
+  param: {module: sfGuardAuth, action: signout}
 
 # generic rules
 # please, remove them by adding more specific rules
-default_index:
-  url:   /:module
-  param: { action: index }
-
-default:
-  url:   /:module/:action/*
+#default_index:
+#  url:   /:module
+#  param: { action: index }
+#
+#default:
+#  url:   /:module/:action/*

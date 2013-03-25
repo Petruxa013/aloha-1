@@ -1,0 +1,72 @@
+Country:
+  columns:
+    id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+      primary:        true
+      autoincrement:  true
+    name:
+      type:           string(255)
+      notnull:        true
+
+Region:
+  columns:
+    id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+      primary:        true
+      autoincrement:  true
+    country_id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+    name:
+      type:           string(255)
+      notnull:        true
+  relations:
+    Country:
+      onDelete:       CASCADE
+      local:          country_id
+      foreign:        id
+      foreignAlias:   Rigions
+  indexes:
+    country_id_idx:
+      fields:         [country_id]
+
+City:
+  columns:
+    id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+      primary:        true
+      autoincrement:  true
+    country_id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+    region_id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+    name:
+      type:           string(255)
+      notnull:        true
+  relations:
+    Country:
+      onDelete:       CASCADE
+      local:          country_id
+      foreign:        id
+      foreignAlias:   Cities
+    Region:
+      onDelete:       CASCADE
+      local:          region_id
+      foreign:        id
+      foreignAlias:   Rigions
+  indexes:
+    country_id_idx:
+      fields:         [country_id]
+    region_id_idx:
+      fields:         [region_id]
