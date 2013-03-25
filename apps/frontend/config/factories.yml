@@ -26,7 +26,10 @@ test:
 dev:
   mailer:
     param:
-      delivery_strategy: none
+      delivery_strategy: single_address
+      delivery_address:  a.manichev@gmail.com
+      transport:
+        class:           Swift_SendmailTransport
 
 all:
   routing:

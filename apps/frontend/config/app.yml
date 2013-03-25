@@ -2,4 +2,18 @@
 # http://www.symfony-project.org/reference/1_4/en/11-App
 
 # default values
-#all:
+all:
+  error_management:
+
+    disable:                    false           # Disable all error management
+
+    record_exception_to_db:     true           # To record every exception to database
+    record_php_error:           true           # To record php error
+
+    ask_user_to_comment:        false           # To redirect the user on the comment page
+    after_comment_route:        @homepage       # Route to redirect after user post a comment
+
+    send_mail_on_error:         true           # To send a email on every error
+    send_mail_on_user_comment:  false           # To send an email when a user comment an error
+    email_to:                   a.manichev@gmail.com
+    email_from:                 error@aloha.com
