@@ -12,6 +12,15 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Вспомогательные разделы
+								<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><?php echo link_to('Города', 'city') ?></li>
+								<li><?php echo link_to('Регионы', 'region') ?></li>
+								<li><?php echo link_to('Страны', 'country') ?></li>
+							</ul>
+						</li>
+						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Пользователи
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">
