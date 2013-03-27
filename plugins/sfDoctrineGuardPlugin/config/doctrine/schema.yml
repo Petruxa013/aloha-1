@@ -77,9 +77,17 @@ sfGuardUser:
       default: false
     last_login:
       type: timestamp
+    contact_comments:
+      type: string(255)
+    patrionimic:
+      type: string(255)
+    tocken:
+      type: string(128)
   indexes:
     is_active_idx:
       fields: [is_active]
+    tockecn_idx:
+      fields: [tocken]
   relations:
     Groups:
       class: sfGuardGroup

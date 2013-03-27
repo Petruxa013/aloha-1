@@ -28,6 +28,13 @@
 							</ul>
 						</li>
 						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Пользователи 1
+								<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><?php echo link_to('Аудиторы', 'user') ?></li>
+							</ul>
+						</li>
+						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Пользователи
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">

@@ -1,3 +1,14 @@
+user:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                sfGuardUser
+    module:               user
+    prefix_path:          /user
+    column:               id
+    with_wildcard_routes: true
+    collection_actions:
+      newAuditor:           [get,post]
+
 outlet:
   class: sfDoctrineRouteCollection
   options:
@@ -48,6 +59,10 @@ homepage:
 signout:
   url: /signout
   param: {module: sfGuardAuth, action: signout}
+
+signin_by_tocken:
+  url: /signin/tocken/:tocken
+  param: {module: sfGuardAuth, action: signinByTocken}
 
 # generic rules
 # please, remove them by adding more specific rules
