@@ -19,6 +19,6 @@ class ProjectConfiguration extends sfProjectConfiguration
 		$this->enablePlugins('csDoctrineActAsAttachablePlugin');
 		$this->enablePlugins('idlErrorManagementPlugin');
 
-    $this->enablePlugins('sfImageTransformPlugin');
+        $this->enablePlugins('sfImageTransformPlugin');
   }
 }
