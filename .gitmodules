@@ -4,6 +4,3 @@
 [submodule "plugins/bootstrapAdminThemePlugin"]
 	path = plugins/bootstrapAdminThemePlugin
 	url = git@github.com:astronom/bootstrapAdminThemePlugin.git
-[submodule "plugins/csDoctrineActAsAttachablePlugin"]
-	path = plugins/csDoctrineActAsAttachablePlugin
-	url = git@github.com:astronom/csDoctrineActAsAttachablePlugin.git
