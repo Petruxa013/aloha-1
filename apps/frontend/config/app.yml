@@ -3,9 +3,22 @@
 
 # default values
 all:
+  sfImageTransformPlugin:
+    default_adapter: GD # GD or ImageMagick
+    default_image:
+      mime_type: image/jpeg
+      filename: Untitled.jpg
+      width: 100
+      height: 100
+      color: '#FFFFFF'
+    font_dir: /usr/share/fonts/truetype/msttcorefonts
+    mime_type:
+      auto_detect: true
+      library: gd_mime_type #  gd_mime_type (GD), Fileinfo (PECL), MIME_Type (PEAR)
+
   error_management:
 
-    disable:                    false           # Disable all error management
+    disable:                    true           # Disable all error management
 
     record_exception_to_db:     true           # To record every exception to database
     record_php_error:           true           # To record php error
@@ -17,3 +30,5 @@ all:
     send_mail_on_user_comment:  false           # To send an email when a user comment an error
     email_to:                   a.manichev@gmail.com
     email_from:                 error@aloha.com
+
+  tocken_success_signin_url:    @auditor_panel

@@ -145,3 +145,277 @@ Distributor:
   indexes:
     name:
       fields:         [name]
+
+Worksheet:
+  actAs:
+    Timestampable:
+    Attachable:
+      types: [Image, Audio]
+  columns:
+    id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+      primary:        true
+      autoincrement:  true
+    outlet_id:
+      type:           integer(11)
+      notnull:        true
+      unsigned:       true
+#cordiant_comfort
+    cordiant_comfort_155_65R13_a: { type: boolean }
+    cordiant_comfort_155_65R13_b: { type: boolean }
+
+    cordiant_comfort_175_70R13_a: { type: boolean }
+    cordiant_comfort_175_70R13_b: { type: boolean }
+
+    cordiant_comfort_175_65R14_a: { type: boolean }
+    cordiant_comfort_175_65R14_b: { type: boolean }
+
+    cordiant_comfort_185_60R14_a: { type: boolean }
+    cordiant_comfort_185_60R14_b: { type: boolean }
+
+    cordiant_comfort_185_65R14_a: { type: boolean }
+    cordiant_comfort_185_65R14_b: { type: boolean }
+
+    cordiant_comfort_185_70R14_a: { type: boolean }
+    cordiant_comfort_185_70R14_b: { type: boolean }
+
+    cordiant_comfort_185_65R15_a: { type: boolean }
+    cordiant_comfort_185_65R15_b: { type: boolean }
+
+    cordiant_comfort_195_65R15_a: { type: boolean }
+    cordiant_comfort_195_65R15_b: { type: boolean }
+
+    cordiant_comfort_205_60R15_a: { type: boolean }
+    cordiant_comfort_205_60R15_b: { type: boolean }
+
+    cordiant_comfort_205_65R15_a: { type: boolean }
+    cordiant_comfort_205_65R15_b: { type: boolean }
+
+    cordiant_comfort_205_55R16_a: { type: boolean }
+    cordiant_comfort_205_55R16_b: { type: boolean }
+
+    cordiant_comfort_205_60R16_a: { type: boolean }
+    cordiant_comfort_205_60R16_b: { type: boolean }
+
+    cordiant_comfort_215_55R16_a: { type: boolean }
+    cordiant_comfort_215_55R16_b: { type: boolean }
+
+#cordiant_sport
+    cordiant_sport_175_70R13_a: { type: boolean }
+    cordiant_sport_175_70R13_b: { type: boolean }
+
+    cordiant_sport_175_65R14_a: { type: boolean }
+    cordiant_sport_175_65R14_b: { type: boolean }
+
+    cordiant_sport_175_70R14_a: { type: boolean }
+    cordiant_sport_175_70R14_b: { type: boolean }
+
+    cordiant_sport_185_60R14_a: { type: boolean }
+    cordiant_sport_185_60R14_b: { type: boolean }
+
+    cordiant_sport_185_65R14_a: { type: boolean }
+    cordiant_sport_185_65R14_b: { type: boolean }
+
+    cordiant_sport_185_70R14_a: { type: boolean }
+    cordiant_sport_185_70R14_b: { type: boolean }
+
+    cordiant_sport_185_65R15_a: { type: boolean }
+    cordiant_sport_185_65R15_b: { type: boolean }
+
+    cordiant_sport_195_60R15_a: { type: boolean }
+    cordiant_sport_195_60R15_b: { type: boolean }
+
+    cordiant_sport_195_65R15_a: { type: boolean }
+    cordiant_sport_195_65R15_b: { type: boolean }
+
+    cordiant_sport_205_60R15_a: { type: boolean }
+    cordiant_sport_205_60R15_b: { type: boolean }
+
+    cordiant_sport_205_65R15_a: { type: boolean }
+    cordiant_sport_205_65R15_b: { type: boolean }
+
+    cordiant_sport_205_55R16_a: { type: boolean }
+    cordiant_sport_205_55R16_b: { type: boolean }
+
+    cordiant_sport_215_55R16_a: { type: boolean }
+    cordiant_sport_215_55R16_b: { type: boolean }
+
+#cordiant_standart
+    cordiant_standart_175_70R13_a: { type: boolean }
+    cordiant_standart_175_70R13_b: { type: boolean }
+
+    cordiant_standart_175_65R14_a: { type: boolean }
+    cordiant_standart_175_65R14_b: { type: boolean }
+
+    cordiant_standart_175_70R14_a: { type: boolean }
+    cordiant_standart_175_70R14_b: { type: boolean }
+
+    cordiant_standart_185_65R14_a: { type: boolean }
+    cordiant_standart_185_65R14_b: { type: boolean }
+
+    cordiant_standart_185_70R14_a: { type: boolean }
+    cordiant_standart_185_70R14_b: { type: boolean }
+
+    cordiant_standart_185_65R15_a: { type: boolean }
+    cordiant_standart_185_65R15_b: { type: boolean }
+
+    cordiant_standart_195_65R15_a: { type: boolean }
+    cordiant_standart_195_65R15_b: { type: boolean }
+
+#cordiant_all_terrain
+    cordiant_all_terrain_225_70R16_a: { type: boolean }
+    cordiant_all_terrain_225_70R16_b: { type: boolean }
+
+    cordiant_all_terrain_215_65R16_a: { type: boolean }
+    cordiant_all_terrain_215_65R16_b: { type: boolean }
+
+    cordiant_all_terrain_215_70R16_a: { type: boolean }
+    cordiant_all_terrain_215_70R16_b: { type: boolean }
+
+    cordiant_all_terrain_205_70R15_a: { type: boolean }
+    cordiant_all_terrain_205_70R15_b: { type: boolean }
+
+#cordiant_sport_2
+
+    cordiant_sport_2_175_70R13_a: { type: boolean }
+    cordiant_sport_2_175_70R13_b: { type: boolean }
+
+    cordiant_sport_2_175_65R14_a: { type: boolean }
+    cordiant_sport_2_175_65R14_b: { type: boolean }
+
+    cordiant_sport_2_185_60R14_a: { type: boolean }
+    cordiant_sport_2_185_60R14_b: { type: boolean }
+
+    cordiant_sport_2_185_65R14_a: { type: boolean }
+    cordiant_sport_2_185_65R14_b: { type: boolean }
+
+    cordiant_sport_2_185_60R15_a: { type: boolean }
+    cordiant_sport_2_185_60R15_b: { type: boolean }
+
+    cordiant_sport_2_195_55R15_a: { type: boolean }
+    cordiant_sport_2_195_55R15_b: { type: boolean }
+
+    cordiant_sport_2_195_60R15_a: { type: boolean }
+    cordiant_sport_2_195_60R15_b: { type: boolean }
+
+    cordiant_sport_2_195_65R15_a: { type: boolean }
+    cordiant_sport_2_195_65R15_b: { type: boolean }
+
+    cordiant_sport_2_205_65R15_a: { type: boolean }
+    cordiant_sport_2_205_65R15_b: { type: boolean }
+
+    cordiant_sport_2_205_55R16_a: { type: boolean }
+    cordiant_sport_2_205_55R16_b: { type: boolean }
+
+    cordiant_sport_2_205_60R16_a: { type: boolean }
+    cordiant_sport_2_205_60R16_b: { type: boolean }
+
+    cordiant_sport_2_215_55R16_a: { type: boolean }
+    cordiant_sport_2_215_55R16_b: { type: boolean }
+
+    cordiant_sport_2_215_60R16_a: { type: boolean }
+    cordiant_sport_2_215_60R16_b: { type: boolean }
+
+#cordiant_road_runner
+
+    cordiant_road_runner_155_70R13_a: { type: boolean }
+    cordiant_road_runner_155_70R13_b: { type: boolean }
+
+    cordiant_road_runner_185_70R14_a: { type: boolean }
+    cordiant_road_runner_185_70R14_b: { type: boolean }
+
+    cordiant_road_runner_205_60R16_a: { type: boolean }
+    cordiant_road_runner_205_60R16_b: { type: boolean }
+
+    cordiant_road_runner_185_65R14_a: { type: boolean }
+    cordiant_road_runner_185_65R14_b: { type: boolean }
+
+    cordiant_road_runner_195_65R15_a: { type: boolean }
+    cordiant_road_runner_195_65R15_b: { type: boolean }
+
+    cordiant_road_runner_205_65R15_a: { type: boolean }
+    cordiant_road_runner_205_65R15_b: { type: boolean }
+
+    cordiant_road_runner_205_55R16_a: { type: boolean }
+    cordiant_road_runner_205_55R16_b: { type: boolean }
+
+    cordiant_road_runner_185_60R14_a: { type: boolean }
+    cordiant_road_runner_185_60R14_b: { type: boolean }
+
+    cordiant_road_runner_175_70R13_a: { type: boolean }
+    cordiant_road_runner_175_70R13_b: { type: boolean }
+
+    cordiant_road_runner_175_65R14_a: { type: boolean }
+    cordiant_road_runner_175_65R14_b: { type: boolean }
+
+#cordiant_4_x_4
+
+    cordiant_4_x_4_235_70R16_a: { type: boolean }
+    cordiant_4_x_4_235_70R16_b: { type: boolean }
+
+#cordiant_off_road
+
+    cordiant_off_road_205_70R15_a: { type: boolean }
+    cordiant_off_road_205_70R15_b: { type: boolean }
+
+    cordiant_off_road_235_75R15_a: { type: boolean }
+    cordiant_off_road_235_75R15_b: { type: boolean }
+
+    cordiant_off_road_215_65R16_a: { type: boolean }
+    cordiant_off_road_215_65R16_b: { type: boolean }
+
+    cordiant_off_road_225_75R16_a: { type: boolean }
+    cordiant_off_road_225_75R16_b: { type: boolean }
+
+    cordiant_off_road_245_70R16_a: { type: boolean }
+    cordiant_off_road_245_70R16_b: { type: boolean }
+
+#tunga_ps_3
+
+    tunga_ps_3_175_70R13_a: { type: boolean }
+    tunga_ps_3_175_70R13_b: { type: boolean }
+
+#tunga_camina
+
+    tunga_camina_175_70R13_a: { type: boolean }
+    tunga_camina_175_70R13_b: { type: boolean }
+
+    tunga_camina_175_65R14_a: { type: boolean }
+    tunga_camina_175_65R14_b: { type: boolean }
+
+    tunga_camina_185_60R14_a: { type: boolean }
+    tunga_camina_185_60R14_b: { type: boolean }
+
+    tunga_camina_185_65R14_a: { type: boolean }
+    tunga_camina_185_65R14_b: { type: boolean }
+
+    tunga_camina_185_70R14_a: { type: boolean }
+    tunga_camina_185_70R14_b: { type: boolean }
+
+    tunga_camina_195_65R15_a: { type: boolean }
+    tunga_camina_195_65R15_b: { type: boolean }
+
+    comment:
+      type: text(1024)
+    outlet_manager:
+      type: string(255)
+    outlet_manager_position:
+      type: string(255)
+    outlet_phone:
+      type: string(128)
+    status:
+      type: integer(4)
+    auditor_id:
+       type: integer
+  relations:
+    Outlet:
+      local:          outlet_id
+      foreign:        id
+      foreignType:    one
+      foreignAlias:   Worksheet
+    sfGuardUser:
+      local:          auditor_id
+      foreign:        id
+      foreignAlias:   Worksheets

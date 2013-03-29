@@ -12,4 +12,11 @@
  */
 class Attachment extends PluginAttachment
 {
+	public function getBaseUploadPath()
+	{
+		$basePath = parent::getBaseUploadPath(). $this->getObjectId() . DS;
+
+		return $basePath;
+	}
+
 }

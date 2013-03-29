@@ -10,7 +10,17 @@
  */
 class AttachmentForm extends PluginAttachmentForm
 {
-  public function configure()
-  {
-  }
+	public function configure()
+	{
+		$this->setButton('Загрузить');
+		$this->disableCSRFProtection();
+	}
+
+	protected function getBaseUploadPath()
+	{
+		$basePath = sfConfig::get('sf_upload_dir') . DS . strtolower($this->getObjectClass()) . DS . $this->getObjectId() . DS;
+
+		return $basePath;
+	}
+
 }

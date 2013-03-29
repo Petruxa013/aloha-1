@@ -10,11 +10,14 @@
  */
 class DocumentAttachmentForm extends PluginDocumentAttachmentForm
 {
-  /**
-   * @see AttachmentForm
-   */
-  public function configure()
-  {
-    parent::configure();
-  }
+	/**
+	 * @see AttachmentForm
+	 */
+	public function configure()
+	{
+		parent::configure();
+		$this->getWidget('url')->setLabel('Файл');
+		$this->getValidator('url')->setOption('max_size', 31457280);
+
+	}
 }

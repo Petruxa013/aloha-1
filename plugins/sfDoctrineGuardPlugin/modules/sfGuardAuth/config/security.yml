@@ -4,5 +4,8 @@ secure:
 signin:
   is_secure: false
 
+signinByTocken:
+  is_secure: false
+
 signout:
   is_secure: false

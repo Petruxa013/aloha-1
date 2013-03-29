@@ -30,10 +30,10 @@ class outletActions extends autoOutletActions
 
 			$fileSlug = explode('.', $file['filename']['name']);
 			$fileSlug[0] = SlugifyClass::slugify($fileSlug[0]);
-			$fileSlug = implode('.',$fileSlug);
+			$fileSlug = implode('.', $fileSlug);
 
-			$filePath = sfConfig::get('sf_upload_dir'). DS. 'outlets'.DS;
-			if(!is_dir($filePath))
+			$filePath = sfConfig::get('sf_upload_dir') . DS . 'outlets' . DS;
+			if (!is_dir($filePath))
 				mkdir($filePath, 0777, true);
 
 			$file2parse = $filePath . $fileSlug;
@@ -46,18 +46,16 @@ class outletActions extends autoOutletActions
 
 			$objPHPExcel = $objReader->load($file2parse);
 
-			$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,false);
+			$sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, false);
 
-			foreach($sheetData as $line)
-			{
+			foreach ($sheetData as $line) {
 
 				$outlet = new Outlet();
-				
+
 				$distributorName = $line[0];
 				$distributor = DistributorTable::getInstance()->findOneByName($distributorName, Doctrine::HYDRATE_ARRAY);
 
-				if(!$distributor)
-				{
+				if (!$distributor) {
 					$distributor = new Distributor();
 					$distributor->setName($distributorName);
 					$distributor->save();
@@ -68,8 +66,7 @@ class outletActions extends autoOutletActions
 
 				$regionName = $line[3];
 				$region = RegionTable::getInstance()->findOneByName($regionName, Doctrine::HYDRATE_ARRAY);
-				if(!$region)
-				{
+				if (!$region) {
 					$region = new Region();
 					$region->name = $regionName;
 					$region->country_id = 2;
@@ -81,8 +78,7 @@ class outletActions extends autoOutletActions
 
 				$cityName = $line[4];
 				$city = CityTable::getInstance()->findOneByName($cityName, Doctrine::HYDRATE_ARRAY);
-				if(!$city)
-				{
+				if (!$city) {
 					$city = new City();
 					$city->name = $cityName;
 					$city->country_id = 2;
@@ -96,8 +92,7 @@ class outletActions extends autoOutletActions
 				$outlet->setAddress($line[5]);
 
 				$type = mb_strtolower($line[6], 'utf-8');
-				if(!array_key_exists($type, Outlet::$types))
-				{
+				if (!array_key_exists($type, Outlet::$types)) {
 					$type = array_search($type, Outlet::$types);
 				}
 
@@ -105,8 +100,7 @@ class outletActions extends autoOutletActions
 				$outlet->setType($type);
 
 				$groupType = mb_strtolower($line[7], 'utf-8');
-				if(!array_key_exists($groupType, Outlet::$groupTypes))
-				{
+				if (!array_key_exists($groupType, Outlet::$groupTypes)) {
 					$groupType = array_search($groupType, Outlet::$groupTypes);
 				}
 				$outlet->setGroupType($groupType);
@@ -114,31 +108,7 @@ class outletActions extends autoOutletActions
 				$outlet->save();
 			}
 
-//			die();
-
-
-//			if (($handle = fopen($file2parse, "r")) !== FALSE) {
-//				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-//					list($cart, $pin) = $data;
-//					list($series, $number) = explode(' ', $cart);
-//
-//					$newCart = new Cart();
-//					$newCart->series = $series;
-//					$newCart->number = $number;
-//					$newCart->pin = $pin;
-//					try {
-//						if (!$newCart->save())
-//							throw new sfException('Во время создания РТТ ' . $cart . ' произошла ошибка');
-//					} catch (sfException $e) {
-//						continue;
-//					}
-//
-//				}
-//				fclose($handle);
-//			}
-
+			$this->setTemplate('parseFile');
 		}
-
-		$this->setTemplate('parseFile');
 	}
 }

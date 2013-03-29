@@ -1,3 +1,12 @@
+worksheet:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                worksheet
+    module:               worksheet
+    prefix_path:          /worksheet
+    column:               id
+    with_wildcard_routes: true
+
 user:
   class: sfDoctrineRouteCollection
   options:
@@ -63,6 +72,51 @@ signout:
 signin_by_tocken:
   url: /signin/tocken/:tocken
   param: {module: sfGuardAuth, action: signinByTocken}
+
+auditor:
+  url: /auditor
+  param: {module: auditor_panel, action: auditor }
+
+auditor_panel:
+  url: /auditor/panel
+  param: {module: auditor_panel, action: index }
+
+auditor_panel_add_worksheet:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet
+  param: {module: auditor_panel, action: addWorksheet }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get, post]
+
+auditor_panel_worksheet_additional_files:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/files
+  param: {module: auditor_panel, action: additionalFiles }
+  options:
+    model: outlet
+    type: object
+
+auditor_panel_worksheet_additional_files_rename:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/files/rename
+  param: {module: auditor_panel, action: additionalFilesRename }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [post]
+
+auditor_panel_worksheet:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                worksheet
+    module:               auditor_panel
+    prefix_path:          /auditor/panel/worksheet
+    column:               id
+    with_wildcard_routes: true
 
 # generic rules
 # please, remove them by adding more specific rules

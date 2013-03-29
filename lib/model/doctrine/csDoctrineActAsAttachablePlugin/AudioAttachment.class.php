@@ -10,6 +10,6 @@
  * @author     Alexander Manichev a.manichev@gmail.com
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
-class AudioAttachment extends PluginAudioAttachment
+class AudioAttachment extends Attachment
 {
 }

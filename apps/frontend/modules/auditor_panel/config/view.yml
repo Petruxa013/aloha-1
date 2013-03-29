@@ -1,0 +1,10 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+all:
+  stylesheets:    [/bootstrapAdminThemePlugin/css/bootstrap.min.css]
+  javascripts:    [/bootstrapAdminThemePlugin/js/bootstrap.min.js]
+
+additionalFilesSuccess:
+  stylesheets:    [/bootstrapAdminThemePlugin/css/bootstrap.min.css, cupertino/jquery-ui-1.8.16.custom.css]
+  javascripts:    [/bootstrapAdminThemePlugin/js/bootstrap.min.js, jquery-ui.custom.min.js]

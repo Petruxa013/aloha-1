@@ -40,7 +40,7 @@ all:
     charset:                utf-8
 
     enabled_modules:        [default, sfGuardAuth, sfGuardGroup, sfGuardUser, sfGuardPermission, csAttachable, idlApplicationErrorAdmin]
-    standard_helpers:       [Partial, Cache, I18N, Attachments]
+    standard_helpers:       [Partial, Cache, I18N, jQuery, Attachments]
     i18n:                   true
 
     login_module:           sfGuardAuth
