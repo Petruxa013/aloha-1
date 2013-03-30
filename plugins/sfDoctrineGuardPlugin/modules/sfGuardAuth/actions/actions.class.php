@@ -28,8 +28,9 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 
 		$tocken = $request->getParameter('tocken');
 
+		/* @var $user sfGuardUser */
 		$user = sfGuardUserTable::getInstance()->findOneByTocken($tocken);
-		if($user)
+		if($user && $user->getIsActive())
 		{
 			$this->getUser()->signin($user);
 			$signinUrl = sfConfig::get('app_sf_guard_plugin_success_signin_url', $user->getReferer($request->getReferer()));
