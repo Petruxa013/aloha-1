@@ -1,0 +1,41 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           sfGuardUser
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          coordinator
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      fields:
+        first_name: {label: Имя }
+        last_name: {label: Фамилия }
+        email_address: {label: Email }
+        username: {label: Логин }
+        is_active: {label: Имеет доступ }
+        group: {label: Группа }
+        patrionimic: {label: Отчество }
+        contact_comments: {label: 'Как связаться (skype, icq, и т.д.)' }
+      list:
+        title: Список координаторов
+        display: [first_name, last_name, email_address, contact_comments, is_active]
+        object_actions:
+          getTocken:
+            action: getTocken
+            label: Ссылка авторизации
+          _edit: ~
+          _delete: ~
+        actions: ~
+        table_method: getCoordinatorsQuery
+      filter:  ~
+      form:
+        class: CoordinatorForm
+      edit:
+        title: Редактирование координатора
+      new:
+        title: Создание координатора

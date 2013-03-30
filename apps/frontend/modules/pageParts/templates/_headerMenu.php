@@ -32,6 +32,7 @@
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><?php echo link_to('Аудиторы', 'user') ?></li>
+								<li><?php echo link_to('Координаторы', 'coordinator') ?></li>
 							</ul>
 						</li>
 						<li class="dropdown">

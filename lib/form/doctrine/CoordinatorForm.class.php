@@ -19,9 +19,12 @@ class CoordinatorForm extends sfGuardUserForm
 			'email_address',
 			'patrionimic',
 			'contact_comments',
+			'masters_list',
 		));
 
 		$this->setWidget('contact_comments', new sfWidgetFormTextarea());
+
+		$this->setWidget('masters_list', new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'table_method' => 'getActiveProjectManagersQuery', 'add_empty' => true)));
 
 		$this->setValidators(array(
 			'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
@@ -30,6 +33,7 @@ class CoordinatorForm extends sfGuardUserForm
 			'email_address'    => new sfValidatorEmail(array('max_length' => 255, 'required' => false)),
 			'patrionimic'      => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'contact_comments' => new sfValidatorString(array('max_length' => 255, 'required' => true)),
+			'masters_list'     => new sfValidatorDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'required' => true)),
 		));
 
 		$this->getValidator('first_name')->setMessages(array('required' => 'Обязательно к заполнению'));
@@ -39,6 +43,8 @@ class CoordinatorForm extends sfGuardUserForm
 
 		$this->widgetSchema->moveField('patrionimic', sfWidgetFormSchema::AFTER, 'first_name');
 		$this->widgetSchema->moveField('last_name', sfWidgetFormSchema::FIRST);
+		$this->getWidgetSchema()->setLabel('masters_list', 'Руководители проекта');
+
 
 //		$this->validatorSchema->setPostValidator(
 //			new sfValidatorAnd(array(
@@ -88,6 +94,38 @@ class CoordinatorForm extends sfGuardUserForm
 		$this->updateObjectEmbeddedForms($values);
 
 		return $this->getObject();
+	}
+
+	public function saveMastersList($con = null)
+	{
+		if (!$this->isValid()) {
+			throw $this->getErrorSchema();
+		}
+
+		if (!isset($this->widgetSchema['masters_list'])) {
+			// somebody has unset this widget
+			return;
+		}
+
+		if (null === $con) {
+			$con = $this->getConnection();
+		}
+
+		$existing = $this->object->Masters->getPrimaryKeys();
+		$values = $this->getValue('masters_list');
+		if (!is_array($values)) {
+			$values = array($values);
+		}
+
+		$unlink = array_diff($existing, $values);
+		if (count($unlink)) {
+			$this->object->unlink('Masters', array_values($unlink));
+		}
+
+		$link = array_diff($values, $existing);
+		if (count($link)) {
+			$this->object->link('Masters', array_values($link));
+		}
 	}
 
 
