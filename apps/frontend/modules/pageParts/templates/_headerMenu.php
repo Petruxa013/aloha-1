@@ -33,6 +33,7 @@
 							<ul class="dropdown-menu">
 								<li><?php echo link_to('Аудиторы', 'auditor') ?></li>
 								<li><?php echo link_to('Координаторы', 'coordinator') ?></li>
+								<li><?php echo link_to('Руководители проекта', 'project_manager') ?></li>
 							</ul>
 						</li>
 						<li class="dropdown">

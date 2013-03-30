@@ -1,3 +1,12 @@
+project_manager:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                sfGuardUser
+    module:               project_manager
+    prefix_path:          /project_manager
+    column:               id
+    with_wildcard_routes: true
+
 auditors:
   class: sfDoctrineRouteCollection
   options:
