@@ -101,6 +101,22 @@ sfGuardUser:
       foreign: permission_id
       refClass: sfGuardUserPermission
       foreignAlias: Users
+    Workers:
+      class: sfGuardUser
+      local: master_id
+      foreign: worker_id
+      refClass: sfGuardUserSchema
+      foreignAlias: Masters
+
+sfGuardUserSchema:
+  columns:
+    master_id:
+      type: integer
+      primary: true
+    worker_id:
+      type: integer
+      primary: true
+
 
 sfGuardUserPermission:
   options:

@@ -16,4 +16,15 @@ class sfGuardUserTable extends PluginsfGuardUserTable
     {
         return Doctrine_Core::getTable('sfGuardUser');
     }
+
+	public function getActiveCoordinators()
+	{
+		$coordinatorGroup = sfGuardGroupTable::getInstance()->findOneByName('coordinator', Doctrine::HYDRATE_ARRAY);
+		$q = $this->createQuery('user');
+		$q->addWhere('user.is_active = ?', true)
+		->leftJoin('user.sfGuardUserGroup userGroup')
+		->addWhere('userGroup.group_id = ?', $coordinatorGroup['id']);
+
+		return $q;
+	}
 }

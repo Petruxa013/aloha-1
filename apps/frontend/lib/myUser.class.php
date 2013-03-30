@@ -47,7 +47,17 @@ class myUser extends sfGuardSecurityUser
 
 	public function getCoordinator()
 	{
-		return 'todo';
+		$user = $this->getGuardUser();
+		$coordinatorName = '';
+		if($user) {
+			$coordinators = $user->getMasters();
+			if($coordinators)
+				foreach($coordinators as $coordinator)
+					$coordinatorName .= $coordinator->getName();
+		return $coordinatorName;
+		}
+
+		return null;
 	}
 
 	public function getId()
