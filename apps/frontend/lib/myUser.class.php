@@ -3,15 +3,6 @@
 class myUser extends sfGuardSecurityUser
 {
 
-	public static $groupRus = array(
-		'auditor' => 'Аудитор',
-		'coordinator' => 'Координатор',
-		'project_manager' => 'Руководитель проекта',
-		'client'    => 'Клиент',
-		'client_manager' => 'Представитель клиента',
-		'admin' => 'Администратор'
-	);
-
 	public function __construct($dispatcher, $storage)
 	{
 		parent::__construct($dispatcher, $storage);
@@ -48,8 +39,7 @@ class myUser extends sfGuardSecurityUser
 		$group = '';
 		foreach($groupNames as $name)
 		{
-			if(isset(self::$groupRus[$name]))
-				$group .= self::$groupRus[$name]. ' ';
+			$group .= UserHelper::humanGroupName($name). ' ';
 		}
 
 		return $group;
