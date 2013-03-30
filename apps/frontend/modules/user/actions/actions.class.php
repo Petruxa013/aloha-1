@@ -25,15 +25,28 @@ class userActions extends autoUserActions
         $this->setTemplate('newAuditor');
 	}
 
-//	public function executeNewCoordinator(sfWebRequest $request)
-//	{
-//		$this->form = new CoordinatorForm();
-//		$this->sf_guard_user = $this->form->getObject();
-//
-//		if("POST" == $request->getMethod())
-//			$this->processForm($request, $this->form);
-//
-//        $this->setTemplate('newAuditor');
-//	}
+	public function executeGetTocken(sfWebRequest $request)
+	{
+		$this->user = $this->getRoute()->getObject();
+		$tocken = $this->user->getTocken();
+
+		if(empty($tocken))
+		{
+			$this->user->setTocken($this->generateRandomPassword(30));
+			$this->user->save();
+		}
+
+	}
+
+	/**
+	 * Returns a random password.
+	 *
+	 * @param int $len The key length
+	 * @return string
+	 */
+	private function generateRandomPassword($len = 20)
+	{
+		return substr(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36), 0, $len);
+	}
 
 }

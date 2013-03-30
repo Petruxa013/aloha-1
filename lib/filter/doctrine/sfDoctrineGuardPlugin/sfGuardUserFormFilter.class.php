@@ -12,5 +12,8 @@ class sfGuardUserFormFilter extends PluginsfGuardUserFormFilter
 {
   public function configure()
   {
+	  $this->useFields(array(
+		  'first_name', 'last_name', 'patrionimic', 'email_address', 'groups_list'
+	  ));
   }
 }

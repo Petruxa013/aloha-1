@@ -70,8 +70,15 @@ signout:
   param: {module: sfGuardAuth, action: signout}
 
 signin_by_tocken:
+  class: sfDoctrineRoute
   url: /signin/tocken/:tocken
   param: {module: sfGuardAuth, action: signinByTocken}
+  options:
+    model: sfGuardUser
+    type: object
+#  requirements:
+#    sf_method: [get]
+#    tocken: \w+
 
 auditor:
   url: /auditor

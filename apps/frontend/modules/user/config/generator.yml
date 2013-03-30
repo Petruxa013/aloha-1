@@ -24,6 +24,12 @@ generator:
       list:
         title: Список пользователей
         display: [first_name, last_name, email_address, username, is_active, _group]
+        object_actions:
+          getTocken:
+            action: getTocken
+            label: Ссылка авторизации
+          _edit: ~
+          _delete: ~
         actions:
           _new: ~
           _newAuditor: {label: Создать аудитора }
