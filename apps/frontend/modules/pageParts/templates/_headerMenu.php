@@ -1,3 +1,4 @@
+<?php if(!$sf_user->isAnonymous()): ?>
 <div class="navbar-wrapper">
 		<div class="navbar">
 			<div class="navbar-inner">
@@ -60,3 +61,4 @@
 		</div>
 		<!-- /.navbar -->
 </div>
+<?php endif; ?>
