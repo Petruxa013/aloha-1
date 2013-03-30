@@ -2,5 +2,4 @@
 # http://www.symfony-project.org/reference/1_4/en/08-Security
 
 default:
-  is_secure: true
-  credentials: [[coordinator, project_manager, admin, auditor]]
+  is_secure: false

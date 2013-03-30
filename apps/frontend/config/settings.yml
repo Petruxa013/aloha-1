@@ -23,6 +23,10 @@ test:
     etag:                   false
 
 all:
+  .actions:
+    secure_module: security   # To be called when a user doesn't have
+    secure_action: credentials   # The credentials required for an action
+
   .settings:
     # Form security secret (CSRF protection)
     csrf_secret:            13d2bab70b098179223dffsabbhf

@@ -30,8 +30,7 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 
 		/* @var $user sfGuardUser */
 		$user = sfGuardUserTable::getInstance()->findOneByTocken($tocken);
-		if($user && $user->getIsActive())
-		{
+		if ($user && $user->getIsActive()) {
 			$this->getUser()->signin($user);
 			$signinUrl = sfConfig::get('app_sf_guard_plugin_success_signin_url', $user->getReferer($request->getReferer()));
 
@@ -42,5 +41,10 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 
 		return $this->redirect($closeDoorUrl);
 
+	}
+
+	public function executeSecure($request)
+	{
+		$this->forward('security', 'credentials');
 	}
 }
