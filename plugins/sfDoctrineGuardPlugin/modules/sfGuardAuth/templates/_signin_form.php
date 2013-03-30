@@ -1,5 +1,5 @@
 <?php use_helper('I18N') ?>
-
+<div class="container well">
 <form action="<?php echo url_for('@sf_guard_signin') ?>" method="post">
   <table>
     <tbody>
@@ -8,8 +8,8 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          <input type="submit" value="<?php echo __('Signin', null, 'sf_guard') ?>" />
-          
+	      <button type="submit" class="btn btn-success">Авторизоваться</button>
+
           <?php $routes = $sf_context->getRouting()->getRoutes() ?>
           <?php if (isset($routes['sf_guard_forgot_password'])): ?>
             <a href="<?php echo url_for('@sf_guard_forgot_password') ?>"><?php echo __('Forgot your password?', null, 'sf_guard') ?></a>
@@ -23,3 +23,4 @@
     </tfoot>
   </table>
 </form>
+</div>

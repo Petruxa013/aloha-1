@@ -16,6 +16,9 @@ all:
       auto_detect: true
       library: gd_mime_type #  gd_mime_type (GD), Fileinfo (PECL), MIME_Type (PEAR)
 
+  sf_guard_plugin:
+    remember_cookie_name:   allClientsRemember
+
   error_management:
 
     disable:                    true           # Disable all error management

@@ -1,0 +1,7 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+signinSuccess:
+  stylesheets:    [/bootstrapAdminThemePlugin/css/bootstrap.min.css]
+  javascripts:    [/bootstrapAdminThemePlugin/js/bootstrap.min.js]
+

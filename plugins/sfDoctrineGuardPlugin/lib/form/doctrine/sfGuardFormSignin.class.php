@@ -10,10 +10,15 @@
  */
 class sfGuardFormSignin extends BasesfGuardFormSignin
 {
-  /**
-   * @see sfForm
-   */
-  public function configure()
-  {
-  }
+	/**
+	 * @see sfForm
+	 */
+	public function configure()
+	{
+		$this->getWidgetSchema()->setLabels(array(
+			'username' => 'Логин',
+			'password' => 'Пароль',
+			'remember' => 'Запомнить меня',
+		));
+	}
 }
