@@ -1,3 +1,12 @@
+auditors:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                sfGuardUser
+    module:               auditor
+    prefix_path:          /auditor
+    column:               id
+    with_wildcard_routes: true
+
 coordinator:
   class: sfDoctrineRouteCollection
   options:

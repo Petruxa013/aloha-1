@@ -64,7 +64,9 @@ class AuditorForm extends PluginsfGuardUserForm
 		$auditor->setTocken($this->generateRandomPassword(30));
 
 		parent::doSave($con);
-		$auditor->addGroupByName('auditor');
+
+		if(!$auditor->hasGroup('auditor'))
+			$auditor->addGroupByName('auditor');
 	}
 
 	/**

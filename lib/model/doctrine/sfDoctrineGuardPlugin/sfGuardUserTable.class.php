@@ -60,5 +60,23 @@ class sfGuardUserTable extends PluginsfGuardUserTable
 		return $this->getCoordinatorsQuery()->execute();
 	}
 
+	public function getActiveAuditorsQuery()
+	{
+		$q = $this->getAuditorsQuery();
+		$q->addWhere('user.is_active = ?', true);
+
+		return $q;
+	}
+
+	public function getAuditorsQuery()
+	{
+		$coordinatorGroup = sfGuardGroupTable::getInstance()->findOneByName('auditor', Doctrine::HYDRATE_ARRAY);
+		$q = $this->createQuery('user')
+				->leftJoin('user.sfGuardUserGroup userGroup')
+				->addWhere('userGroup.group_id = ?', $coordinatorGroup['id']);
+
+		return $q;
+
+	}
 
 }

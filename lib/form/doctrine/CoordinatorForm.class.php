@@ -65,7 +65,9 @@ class CoordinatorForm extends sfGuardUserForm
 		$auditor->setTocken($this->generateRandomPassword(30));
 
 		parent::doSave($con);
-		$auditor->addGroupByName('coordinator');
+
+		if(!$auditor->hasGroup('coordinator'))
+			$auditor->addGroupByName('coordinator');
 	}
 
 	/**
