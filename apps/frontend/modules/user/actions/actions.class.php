@@ -25,6 +25,17 @@ class userActions extends autoUserActions
         $this->setTemplate('newAuditor');
 	}
 
+	public function executeNewCoordinator(sfWebRequest $request)
+	{
+		$this->form = new CoordinatorForm();
+		$this->sf_guard_user = $this->form->getObject();
+
+		if("POST" == $request->getMethod())
+			$this->processForm($request, $this->form);
+
+        $this->setTemplate('newCoordinator');
+	}
+
 	public function executeGetTocken(sfWebRequest $request)
 	{
 		$this->user = $this->getRoute()->getObject();

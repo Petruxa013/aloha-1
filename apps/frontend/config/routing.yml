@@ -17,6 +17,7 @@ user:
     with_wildcard_routes: true
     collection_actions:
       newAuditor:           [get,post]
+      newCoordinator:       [get,post]
 
 outlet:
   class: sfDoctrineRouteCollection

@@ -15,4 +15,9 @@ class userGeneratorHelper extends BaseUserGeneratorHelper
 		return link_to('<i class="icon-plus icon-white"></i> ' . __($params['label'], array(), 'sf_admin'), '@' . $this->getUrlForAction('newAuditor'), array('class' => 'btn btn-info'));
 	}
 
+	public function linkToNewCoordinator($params)
+	{
+		return link_to('<i class="icon-plus icon-white"></i> ' . __($params['label'], array(), 'sf_admin'), '@' . $this->getUrlForAction('newCoordinator'), array('class' => 'btn btn-info'));
+	}
+
 }

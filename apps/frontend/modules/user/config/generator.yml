@@ -33,6 +33,7 @@ generator:
         actions:
           _new: ~
           _newAuditor: {label: Создать аудитора }
+          _newCoordinator: {label: Создать координатора }
 #        table_method: getForList
       filter:  ~
       form:
