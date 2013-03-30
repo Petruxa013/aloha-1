@@ -19,12 +19,12 @@ abstract class PluginAttachment extends BaseAttachment
   {
     return str_replace(sfConfig::get('sf_web_dir'), '',  $this->getUploadPath());
   }
-  
+
   public function getUploadPath()
   {
     return $this->getBaseUploadPath().$this->getUrl();
   }
-  
+
   public function getBaseUploadPath()
   {
     return sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . strtolower($this->getObjectClass()) . DIRECTORY_SEPARATOR;
