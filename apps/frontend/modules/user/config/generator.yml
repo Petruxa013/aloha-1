@@ -36,7 +36,7 @@ generator:
 #        table_method: getForList
       filter:  ~
       form:
-        class:
+        class: sfGuardOpenUserForm
       edit:
         title: Редактирование Пользователя
       new:
