@@ -61,4 +61,19 @@ class AudioAttachmentForm extends AttachmentForm
 		return $this->getObject();
 	}
 
+	protected function doSave($con = NULL)
+	{
+		$object = parent::doSave($con);
+
+		$worksheet = $this->getObject()->getObject();
+		if($worksheet && $worksheet->getAudioStatus() == null)
+		{
+			$worksheet->setAudioStatus(10);
+			$worksheet->save();
+		}
+
+		return $object;
+
+	}
+
 }

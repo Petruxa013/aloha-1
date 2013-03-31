@@ -146,6 +146,46 @@ auditor_panel_disapprove_worksheet:
   requirements:
     sf_method: [get]
 
+auditor_panel_approve_worksheet_photo:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/approve/photo
+  param: {module: auditor_panel, action: approveWorksheetPhoto }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get]
+
+auditor_panel_disapprove_worksheet_photo:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/disapprove/photo
+  param: {module: auditor_panel, action: disapproveWorksheetPhoto }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get]
+
+auditor_panel_approve_worksheet_audio:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/approve/audio
+  param: {module: auditor_panel, action: approveWorksheetAudio }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get]
+
+auditor_panel_disapprove_worksheet_audio:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/disapprove/audio
+  param: {module: auditor_panel, action: disapproveWorksheetAudio }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get]
+
 auditor_panel_worksheet_additional_files:
   class: sfDoctrineRoute
   url: /auditor/panel/outlet/:id/worksheet/files

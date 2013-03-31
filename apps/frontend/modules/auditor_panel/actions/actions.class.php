@@ -202,4 +202,59 @@ class auditor_panelActions extends sfActions
 		}
 	}
 
+	public function executeApproveWorksheetPhoto(sfWebRequest $request)
+	{
+		$user = $this->getUser();
+		$worksheet = $this->getRoute()->getObject()->getWorksheet();
+		/* @var $worksheet Worksheet */
+		if($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 10)
+		{
+			$worksheet->setPhotoStatus(20);
+			$worksheet->save();
+		}
+
+		$this->forward('auditor_panel', 'additionalFiles');
+
+	}
+
+	public function executeDisapproveWorksheetPhoto(sfWebRequest $request)
+	{
+		$user = $this->getUser();
+		$worksheet = $this->getRoute()->getObject()->getWorksheet();
+		/* @var $worksheet Worksheet */
+		if($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 20)
+		{
+			$worksheet->setPhotoStatus(10);
+			$worksheet->save();
+		}
+		$this->forward('auditor_panel', 'additionalFiles');
+
+	}
+
+	public function executeApproveWorksheetAudio(sfWebRequest $request)
+	{
+		$user = $this->getUser();
+		$worksheet = $this->getRoute()->getObject()->getWorksheet();
+		/* @var $worksheet Worksheet */
+		if($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 10)
+		{
+			$worksheet->setAudioStatus(20);
+			$worksheet->save();
+		}
+		$this->forward('auditor_panel', 'additionalFiles');
+	}
+
+	public function executeDisapproveWorksheetAudio(sfWebRequest $request)
+	{
+		$user = $this->getUser();
+		$worksheet = $this->getRoute()->getObject()->getWorksheet();
+		/* @var $worksheet Worksheet */
+		if($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 20)
+		{
+			$worksheet->setAudioStatus(10);
+			$worksheet->save();
+		}
+		$this->forward('auditor_panel', 'additionalFiles');
+	}
+
 }

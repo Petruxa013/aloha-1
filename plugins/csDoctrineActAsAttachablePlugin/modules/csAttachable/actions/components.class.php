@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/../lib/BasecsAttachableComponents.class.php');
+require_once(dirname(__FILE__) . '/../lib/BasecsAttachableComponents.class.php');
 
 /**
  *
@@ -19,4 +19,8 @@ require_once(dirname(__FILE__).'/../lib/BasecsAttachableComponents.class.php');
  */
 class csAttachableComponents extends BasecsAttachableComponents
 {
+	public function executeAttachmentsList()
+	{
+		$this->object = $this->form ? $this->form->getObject() : null;
+	}
 }

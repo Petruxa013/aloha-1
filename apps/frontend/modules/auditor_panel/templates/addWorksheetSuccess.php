@@ -555,7 +555,7 @@
 	</a>
 	<?php elseif($worksheet->getStatus() == 20): ?>
 		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
-			<button type="button" class="btn btn-success">Вернуть анкету на доработку</button>
+			<button type="button" class="btn btn-warning">Вернуть анкету на доработку</button>
 		</a>
 	<?php endif; ?>
 	<?php endif; ?>

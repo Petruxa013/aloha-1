@@ -37,11 +37,11 @@ function worksheet_photo_button($outlet)
 	$text = 'Загрузить фото';
 	/* @var $outlet Outlet */
 	if ($worksheet = $outlet->getWorksheet()) {
-		if($worksheet->hasImages())
-			{
-				$class = "btn-warning";
-				$text = 'Посмотреть фото';
-			}
+		if($worksheet->getPhotoStatus() == 10)
+			$class = "btn-warning";
+		if($worksheet->getPhotoStatus() == 20)
+			$class = "btn-success";
+		$text = 'Посмотреть фото';
 	}
 
 	$button = '<a href="' . url_for('auditor_panel_worksheet_additional_files', $outlet) . '">';
@@ -57,11 +57,12 @@ function worksheet_audio_button($outlet)
 	$text = 'Загрузить аудио';
 	/* @var $outlet Outlet */
 	if ($worksheet = $outlet->getWorksheet()) {
-		if($worksheet->hasAudios())
-			{
-				$class = "btn-warning";
-				$text = 'Прослушать аудио';
-			}
+		if($worksheet->getAudioStatus() == 10)
+			$class = "btn-warning";
+		if($worksheet->getAudioStatus() == 20)
+			$class = "btn-success";
+
+		$text = 'Прослушать аудио';
 	}
 
 	$button = '<a href="' . url_for('auditor_panel_worksheet_additional_files', $outlet) . '">';

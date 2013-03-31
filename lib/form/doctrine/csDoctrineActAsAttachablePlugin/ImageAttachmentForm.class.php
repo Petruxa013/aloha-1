@@ -55,6 +55,12 @@ class ImageAttachmentForm extends AttachmentForm
 		$object = parent::doSave($con);
 
 		$image = $this->getObject();
+		$worksheet = $image->getObject();
+		if($worksheet && $worksheet->getPhotoStatus() == null)
+		{
+			$worksheet->setPhotoStatus(10);
+			$worksheet->save();
+		}
 		$imagePath = $image->getUploadPath();
 
 		$thumb = new sfImage($imagePath);

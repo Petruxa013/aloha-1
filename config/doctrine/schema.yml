@@ -407,6 +407,10 @@ Worksheet:
       type: string(128)
     status:
       type: integer(4)
+    photo_status:
+      type: integer(4)
+    audio_status:
+      type: integer(4)
     auditor_id:
        type: integer
   relations:
@@ -419,3 +423,10 @@ Worksheet:
       local:          auditor_id
       foreign:        id
       foreignAlias:   Worksheets
+  indexes:
+    status_idx:
+      fields: [status]
+    photo_status_idx:
+      fields: [photo_status]
+    audio_status_idx:
+      fields: [audio_status]
