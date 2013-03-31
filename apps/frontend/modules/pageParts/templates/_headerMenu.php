@@ -12,9 +12,9 @@
 				<!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<?php if($sf_user->hasCredential('auditor')): ?>
+<!--						--><?php //if($sf_user->hasCredential('auditor')): ?>
 						<li><a href="<?php echo url_for('@auditor_panel') ?>">Аудиторам</a> </li>
-						<?php elseif($sf_user->hasCredentials(array('coordinator', 'admin', 'project_manager'))): ?>
+<!--						--><?php //elseif($sf_user->hasCredentials(array('coordinator', 'admin', 'project_manager'))): ?>
 						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Аудит
 								<b class="caret"></b></a>
@@ -50,7 +50,7 @@
 							</ul>
 						</li>
 						</ul>
-						<?php endif; ?>
+<!--						--><?php //endif; ?>
 					<ul id="main-menu-right" class="nav pull-right">
 						<li><?php echo link_to('Выход', 'signout') ?></li>
 					</ul>
