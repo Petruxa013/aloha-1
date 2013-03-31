@@ -126,6 +126,26 @@ auditor_panel_add_worksheet:
   requirements:
     sf_method: [get, post]
 
+auditor_panel_approve_worksheet:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/approve
+  param: {module: auditor_panel, action: approveWorksheet }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get]
+
+auditor_panel_disapprove_worksheet:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/disapprove
+  param: {module: auditor_panel, action: disapproveWorksheet }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get]
+
 auditor_panel_worksheet_additional_files:
   class: sfDoctrineRoute
   url: /auditor/panel/outlet/:id/worksheet/files

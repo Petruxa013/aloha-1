@@ -12,8 +12,14 @@ function worksheet_button($outlet)
 	$class = "btn-danger";
 	$text = 'Заполнить анкету';
 	/* @var $outlet Outlet */
-	if ($outlet->getWorksheet()) {
-		$class = "btn-warning";
+	/* @var $worksheet Worksheet */
+	$worksheet = $outlet->getWorksheet();
+	if ($worksheet) {
+		if($worksheet->getStatus() == 10)
+			$class = "btn-warning";
+		if($worksheet->getStatus() == 20)
+			$class = "btn-success";
+
 		$text = 'Посмотреть анкету';
 	}
 
@@ -64,3 +70,4 @@ function worksheet_audio_button($outlet)
 
 	return $button;
 }
+

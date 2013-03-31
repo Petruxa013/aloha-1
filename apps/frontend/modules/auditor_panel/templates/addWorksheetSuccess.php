@@ -539,7 +539,26 @@
 	</tr>
 </table>
 <div class="pagination-centered">
-	<button type="submit" class="btn btn-info">Сохранить</button>
+	<?php if($worksheet->getStatus() < 20): ?>
+	<button type="submit" class="btn btn-info">
+		<?php if($worksheet->getStatus() == 10): ?>
+			Обновить анкету
+		<?php else: ?>
+			Сохранить
+		<?php endif; ?>
+	</button>
+	<?php endif; ?>
+	<?php if($sf_user->hasCredential('coordinator')): ?>
+	<?php if($worksheet->getStatus() == 10): ?>
+	<a href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
+		<button type="button" class="btn btn-success">Одобрить анкету</button>
+	</a>
+	<?php elseif($worksheet->getStatus() == 20): ?>
+		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+			<button type="button" class="btn btn-success">Вернуть анкету на доработку</button>
+		</a>
+	<?php endif; ?>
+	<?php endif; ?>
 </div>
 </form>
 <script type="text/javascript">

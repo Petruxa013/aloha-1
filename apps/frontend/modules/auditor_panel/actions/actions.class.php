@@ -37,7 +37,7 @@ class auditor_panelActions extends sfActions
 			$this->form = new WorksheetForm();
 		else
 			$this->form = new WorksheetForm($worksheet);
-
+		$this->worksheet = $worksheet;
 		if($request->isMethod('post'))
 		{
 			$this->form->getObject()->setOutletId($this->outlet->getId());
@@ -45,6 +45,11 @@ class auditor_panelActions extends sfActions
 			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 			if ($this->form->isValid()) {
 					$worksheet = $this->form->save();
+					if(is_null($worksheet->getStatus()))
+					{
+						$worksheet->setStatus(10);
+						$worksheet->save();
+					}
 					$this->setTemplate('worksheet');
 					return sfView::SUCCESS;
 			}
@@ -171,6 +176,30 @@ class auditor_panelActions extends sfActions
 		}
 
 		return sfView::NONE;
+	}
+
+	public function executeApproveWorksheet(sfWebRequest $request)
+	{
+		$user = $this->getUser();
+		$worksheet = $this->getRoute()->getObject()->getWorksheet();
+		/* @var $worksheet Worksheet */
+		if($user->hasCredential('coordinator') && $worksheet->getStatus() == 10)
+		{
+			$worksheet->setStatus(20);
+			$worksheet->save();
+		}
+	}
+
+	public function executeDisapproveWorksheet(sfWebRequest $request)
+	{
+		$user = $this->getUser();
+		$worksheet = $this->getRoute()->getObject()->getWorksheet();
+		/* @var $worksheet Worksheet */
+		if($user->hasCredential('coordinator') && $worksheet->getStatus() == 20)
+		{
+			$worksheet->setStatus(10);
+			$worksheet->save();
+		}
 	}
 
 }
