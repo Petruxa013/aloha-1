@@ -19,6 +19,7 @@ class ProjectManagerForm extends PluginsfGuardUserForm
 			'email_address',
 			'patrionimic',
 			'contact_comments',
+			'is_active',
 		));
 
 		$this->setWidget('contact_comments', new sfWidgetFormTextarea());

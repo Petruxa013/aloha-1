@@ -20,6 +20,7 @@ class CoordinatorForm extends sfGuardUserForm
 			'patrionimic',
 			'contact_comments',
 			'masters_list',
+			'is_active',
 		));
 
 		$this->setWidget('contact_comments', new sfWidgetFormTextarea());
