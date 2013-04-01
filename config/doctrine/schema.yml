@@ -101,6 +101,8 @@ Outlet:
       fields:         [legal_name]
     actual_name:
       fields:         [actual_name]
+    address:
+      fields:         [address]
 
 Distributor:
   columns:
