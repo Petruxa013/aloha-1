@@ -12,9 +12,8 @@
 				<!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-<!--						--><?php //if($sf_user->hasCredential('auditor')): ?>
-						<li><a href="<?php echo url_for('@auditor_panel') ?>">Аудиторам</a> </li>
-<!--						--><?php //elseif($sf_user->hasCredentials(array('coordinator', 'admin', 'project_manager'))): ?>
+						<li><a href="<?php echo url_for('@auditor_panel') ?>">Отчеты по РТТ</a> </li>
+						<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager')): ?>
 						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Аудит
 								<b class="caret"></b></a>
@@ -22,6 +21,8 @@
 								<li><?php echo link_to('РТТ', 'outlet') ?></li>
 							</ul>
 						</li>
+						<?php endif; ?>
+						<?php if($sf_user->hasCredential('admin')): ?>
 						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Вспомогательные разделы
 								<b class="caret"></b></a>
@@ -30,17 +31,23 @@
 								<li><?php echo link_to('Регионы', 'region') ?></li>
 							</ul>
 						</li>
+						<?php endif; ?>
+						<?php if($sf_user->hasCredential('coordinator') || $sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager')): ?>
 						<li class="dropdown">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Пользователи 1
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Пользователи
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><?php echo link_to('Аудиторы', 'auditor') ?></li>
+								<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager')): ?>
 								<li><?php echo link_to('Координаторы', 'coordinator') ?></li>
 								<li><?php echo link_to('Руководители проекта', 'project_manager') ?></li>
+								<?php endif; ?>
 							</ul>
 						</li>
+						<?php endif; ?>
+						<?php if($sf_user->hasCredential('admin')): ?>
 						<li class="dropdown">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Пользователи
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><?php echo link_to('Пользователи', 'sf_guard_user') ?></li>
@@ -48,8 +55,8 @@
 								<li><?php echo link_to('Разрешения', 'sf_guard_permission') ?></li>
 							</ul>
 						</li>
+						<?php endif; ?>
 						</ul>
-<!--						--><?php //endif; ?>
 					<ul id="main-menu-right" class="nav pull-right">
 						<li><?php echo link_to('Выход', 'signout') ?></li>
 					</ul>
