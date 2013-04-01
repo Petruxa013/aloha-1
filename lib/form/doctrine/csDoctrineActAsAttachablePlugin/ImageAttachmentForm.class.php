@@ -25,6 +25,11 @@ class ImageAttachmentForm extends AttachmentForm
 					'image/png',
 					'image/x-png',
 					'image/gif',
+					'image/tif',
+					'image/x-tif',
+					'image/tiff',
+					'image/x-tiff',
+					'application/tif',
 				));
 	}
 
