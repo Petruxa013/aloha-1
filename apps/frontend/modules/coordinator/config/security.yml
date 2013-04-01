@@ -3,4 +3,4 @@
 
 all:
   is_secure: true
-  credentials: [[admmin, project_manager]]
+  credentials: [[admin, project_manager]]
