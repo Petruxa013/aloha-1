@@ -6,10 +6,6 @@ Region:
       unsigned:       true
       primary:        true
       autoincrement:  true
-    country_id:
-      type:           integer(11)
-      notnull:        true
-      unsigned:       true
     name:
       type:           string(255)
       notnull:        true
@@ -25,10 +21,6 @@ City:
       unsigned:       true
       primary:        true
       autoincrement:  true
-    country_id:
-      type:           integer(11)
-      notnull:        true
-      unsigned:       true
     region_id:
       type:           integer(11)
       notnull:        true

@@ -69,9 +69,7 @@ class outletActions extends autoOutletActions
 				if (!$region) {
 					$region = new Region();
 					$region->name = $regionName;
-					$region->country_id = 2;
 					$region->save();
-					var_dump($regionName);
 				}
 
 				$outlet->setRegionId($region['id']);
@@ -81,10 +79,8 @@ class outletActions extends autoOutletActions
 				if (!$city) {
 					$city = new City();
 					$city->name = $cityName;
-					$city->country_id = 2;
-					$city->region_id = 2;
+					$city->region_id = $region['id'];
 					$city->save();
-					var_dump($cityName);
 				}
 
 				$outlet->setCityId($city['id']);
@@ -95,7 +91,6 @@ class outletActions extends autoOutletActions
 				if (!array_key_exists($type, Outlet::$types)) {
 					$type = array_search($type, Outlet::$types);
 				}
-
 
 				$outlet->setType($type);
 
