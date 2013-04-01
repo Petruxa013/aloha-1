@@ -30,6 +30,7 @@ class CoordinatorForm extends sfGuardUserForm
 		$this->setWidget('masters_list', new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'table_method' => 'getActiveProjectManagersQuery', 'add_empty' => true)));
 
 		$this->getWidget('regions_list')->setAttributes(array('class' => 'span9', 'style' => 'height: 300px;'));
+		$this->getWidget('regions_list')->setOption('order_by', array('name', 'asc'));
 
 		$this->setValidators(array(
 			'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),

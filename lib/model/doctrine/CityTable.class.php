@@ -19,7 +19,8 @@ class CityTable extends Doctrine_Table
 
 	public function getCoordinatorCities()
 	{
-		$q = $this->createQuery('city');
+		$q = $this->createQuery('city')
+				->addOrderBy('name ASC');
 
 		$user = sfContext::getInstance()->getUser();
 
