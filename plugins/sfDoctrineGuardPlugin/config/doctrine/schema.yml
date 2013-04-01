@@ -58,7 +58,6 @@ sfGuardUser:
     email_address:
       type: string(255)
       notnull: true
-      unique: true
     username:
       type: string(128)
       notnull: true
