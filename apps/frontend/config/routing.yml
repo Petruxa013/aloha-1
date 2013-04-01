@@ -76,15 +76,6 @@ region:
     column:               id
     with_wildcard_routes: true
 
-country:
-  class: sfDoctrineRouteCollection
-  options:
-    model:                country
-    module:               country
-    prefix_path:          /country
-    column:               id
-    with_wildcard_routes: true
-
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
