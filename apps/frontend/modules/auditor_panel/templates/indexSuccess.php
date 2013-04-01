@@ -25,7 +25,6 @@
 			<th>Анкета</th>
 			<th>Фотографии</th>
 			<th>Аудио</th>
-			<th>Действия</th>
 		</tr>
 		<?php foreach($outlets as $key => $outlet): ?>
 		<?php /* @var $outlet Outlet */ ?>
@@ -45,11 +44,6 @@
 			</td>
 			<td>
 				<?php echo worksheet_audio_button($outlet) ?>
-			</td>
-			<td>
-				<a href="<?php echo url_for('auditor_panel_worksheet_delete', $outlet)?>">
-					<button class="btn btn-danger">Удалить</button>
-				</a>
 			</td>
 			</td>
 		</tr>
