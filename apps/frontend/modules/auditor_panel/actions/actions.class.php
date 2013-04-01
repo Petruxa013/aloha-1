@@ -170,7 +170,7 @@ class auditor_panelActions extends sfActions
 		}
 
 		$this->pager = $this->getPager($request);
-		$filters = array('auditor_panel_filters' => $request->getParameter('auditor_panel_filters'));
+		$filters = array('auditor_panel_filter' => $request->getParameter('auditor_panel_filter'));
 
 		$this->pager->setFilters(http_build_query($filters));
 		$this->route = 'auditor_panel_filter';

@@ -26,7 +26,8 @@ class Outlet extends BaseOutlet
 
 	public function getHumanType()
 	{
-		return self::$types[$this->getType()];
+		if($this->getType())
+			return self::$types[$this->getType()];
 	}
 
 	public function getHumanGroupType()

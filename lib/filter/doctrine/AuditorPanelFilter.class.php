@@ -33,6 +33,9 @@ class AuditorPanelFilter extends OutletFormFilter {
 		$this->getWidget('region_id')->setOption('order_by', array('name','asc'));
 		$this->getWidget('city_id')->setOption('order_by', array('name','asc'));
 
+		$this->getWidgetSchema()->setNameFormat('auditor_panel_filter[%s]');
+
+
 		$this->disableCSRFProtection();
 
 	}

@@ -3,7 +3,7 @@
 
 <div id="filterPopup" class="modal hide fade">
 
-	<form action="<?php echo url_for('auditor_panel_filter') ?>" method="post"
+	<form action="<?php echo url_for('auditor_panel_filter') ?>" method="get"
 	      class="form-horizontal">
 
 		<div class="modal-header">
