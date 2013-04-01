@@ -36,8 +36,8 @@ class sfGuardUserTable extends PluginsfGuardUserTable
 
 		if($user->hasCredential('coordinator'))
 		{
-			$q->leftJoin('user.sfGuardUserSchema userSchema')
-				->addWhere('userSchema.master_id = ?', $user->getId());
+//			$q->leftJoin('user.sfGuardUserSchema userSchema')
+				$q->addWhere('user.id = ?', $user->getId());
 		}
 
 
