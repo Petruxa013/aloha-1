@@ -107,6 +107,40 @@ sfGuardUser:
       foreign: worker_id
       refClass: sfGuardUserSchema
       foreignAlias: Masters
+    Regions:
+      class: Region
+      local: user_id
+      foreign: region_id
+      refClass: sfGuardUserRegionSchema
+      foreignAlias: Users
+      onDelete: SET NULL
+    Regions:
+      class: City
+      local: user_id
+      foreign: city_id
+      refClass: sfGuardUserCitySchema
+      foreignAlias: Users
+      onDelete: SET NULL
+
+sfGuardUserRegionSchema:
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    region_id:
+      type: integer
+      primary: true
+      unsigned: true
+
+sfGuardUserCitySchema:
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    city_id:
+      type: integer
+      primary: true
+      unsigned: true
 
 sfGuardUserSchema:
   columns:
