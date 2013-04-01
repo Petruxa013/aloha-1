@@ -29,6 +29,7 @@ class AuditorForm extends PluginsfGuardUserForm
 		$this->setWidget('masters_list', new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'table_method' => 'getActiveCoordinators', 'add_empty' => true)));
 
 		$this->setWidget('cities_list', new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'City', 'table_method' => 'getCoordinatorCities', 'add_empty' => false)));
+		$this->getWidget('cities_list')->setAttributes(array('style' => 'height: 300px;', 'class' => 'span9'));
 
 		$this->setValidators(array(
 			'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
