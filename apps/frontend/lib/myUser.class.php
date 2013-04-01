@@ -69,5 +69,57 @@ class myUser extends sfGuardSecurityUser
 		return null;
 	}
 
+	public function getRegionIds()
+	{
+		$regionIds = array();
+
+		if($regions = $this->getRegions())
+		{
+			foreach($regions as $region)
+				$regionIds[] = $region->getId();
+		}
+
+		return $regionIds;
+
+	}
+
+	public function getRegions()
+	{
+		$user = $this->getGuardUser();
+		if ($user)
+		{
+			$regions = $user->getRegions();
+			return $regions;
+		}
+
+		return false;
+	}
+
+	public function getCityIds()
+	{
+		$cityIds = array();
+
+		if($cities = $this->getCities())
+		{
+			foreach($cities as $city)
+				$cityIds[] = $city->getId();
+		}
+
+		return $cityIds;
+
+	}
+
+	public function getCities()
+	{
+		$user = $this->getGuardUser();
+		if ($user)
+		{
+			$cities = $user->getCities();
+			return $cities;
+		}
+
+		return false;
+	}
+
 }
 

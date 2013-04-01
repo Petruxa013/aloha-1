@@ -114,7 +114,7 @@ sfGuardUser:
       refClass: sfGuardUserRegionSchema
       foreignAlias: Users
       onDelete: SET NULL
-    Regions:
+    Cities:
       class: City
       local: user_id
       foreign: city_id

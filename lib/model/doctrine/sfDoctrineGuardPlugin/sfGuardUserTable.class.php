@@ -27,10 +27,19 @@ class sfGuardUserTable extends PluginsfGuardUserTable
 
 	public function getCoordinatorsQuery()
 	{
+		$user = sfContext::getInstance()->getUser();
+
 		$coordinatorGroup = sfGuardGroupTable::getInstance()->findOneByName('coordinator', Doctrine::HYDRATE_ARRAY);
 		$q = $this->createQuery('user')
 				->leftJoin('user.sfGuardUserGroup userGroup')
 				->addWhere('userGroup.group_id = ?', $coordinatorGroup['id']);
+
+		if($user->hasCredential('coordinator'))
+		{
+			$q->leftJoin('user.sfGuardUserSchema userSchema')
+				->addWhere('userSchema.master_id = ?', $user->getId());
+		}
+
 
 		return $q;
 
@@ -70,10 +79,18 @@ class sfGuardUserTable extends PluginsfGuardUserTable
 
 	public function getAuditorsQuery()
 	{
-		$coordinatorGroup = sfGuardGroupTable::getInstance()->findOneByName('auditor', Doctrine::HYDRATE_ARRAY);
+		$user = sfContext::getInstance()->getUser();
+
+		$auditorGroup = sfGuardGroupTable::getInstance()->findOneByName('auditor', Doctrine::HYDRATE_ARRAY);
 		$q = $this->createQuery('user')
 				->leftJoin('user.sfGuardUserGroup userGroup')
-				->addWhere('userGroup.group_id = ?', $coordinatorGroup['id']);
+				->addWhere('userGroup.group_id = ?', $auditorGroup['id']);
+
+		if($user->hasCredential('coordinator'))
+		{
+			$q->leftJoin('user.sfGuardUserSchema userSchema')
+				->addWhere('userSchema.master_id = ?', $user->getId());
+		}
 
 		return $q;
 

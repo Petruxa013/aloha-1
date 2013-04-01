@@ -21,11 +21,14 @@ class AuditorForm extends PluginsfGuardUserForm
 			'contact_comments',
 			'masters_list',
 			'is_active',
+			'cities_list',
 		));
 
 		$this->setWidget('contact_comments', new sfWidgetFormTextarea());
 
 		$this->setWidget('masters_list', new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'table_method' => 'getActiveCoordinators', 'add_empty' => true)));
+
+		$this->setWidget('cities_list', new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'City', 'table_method' => 'getCoordinatorCities', 'add_empty' => false)));
 
 		$this->setValidators(array(
 			'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
@@ -35,6 +38,9 @@ class AuditorForm extends PluginsfGuardUserForm
 			'patrionimic'      => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'contact_comments' => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'masters_list'     => new sfValidatorDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'required' => true)),
+			'is_active'        => new sfValidatorBoolean(array('required' => false)),
+			'cities_list'      => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'City', 'required' => false)),
+
 		));
 
 		$this->getValidator('first_name')->setMessages(array('required' => 'Обязательно к заполнению'));
@@ -45,6 +51,7 @@ class AuditorForm extends PluginsfGuardUserForm
 		$this->widgetSchema->moveField('patrionimic', sfWidgetFormSchema::AFTER, 'first_name');
 		$this->widgetSchema->moveField('last_name', sfWidgetFormSchema::FIRST);
 		$this->getWidgetSchema()->setLabel('masters_list', 'Координатор');
+		$this->getWidgetSchema()->setLabel('cities_list', 'Доступные города');
 
 //		$this->validatorSchema->setPostValidator(
 //			new sfValidatorAnd(array(

@@ -21,11 +21,14 @@ class CoordinatorForm extends sfGuardUserForm
 			'contact_comments',
 			'masters_list',
 			'is_active',
+			'regions_list',
+
 		));
 
 		$this->setWidget('contact_comments', new sfWidgetFormTextarea());
 
 		$this->setWidget('masters_list', new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'table_method' => 'getActiveProjectManagersQuery', 'add_empty' => true)));
+		$this->getWidget('regions_list')->setAttributes(array('class' => 'span9'));
 
 		$this->setValidators(array(
 			'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
@@ -35,6 +38,8 @@ class CoordinatorForm extends sfGuardUserForm
 			'patrionimic'      => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'contact_comments' => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'masters_list'     => new sfValidatorDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'required' => true)),
+			'is_active'        => new sfValidatorBoolean(array('required' => false)),
+			'regions_list'     => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Region', 'required' => false)),
 		));
 
 		$this->getValidator('first_name')->setMessages(array('required' => 'Обязательно к заполнению'));
@@ -45,6 +50,7 @@ class CoordinatorForm extends sfGuardUserForm
 		$this->widgetSchema->moveField('patrionimic', sfWidgetFormSchema::AFTER, 'first_name');
 		$this->widgetSchema->moveField('last_name', sfWidgetFormSchema::FIRST);
 		$this->getWidgetSchema()->setLabel('masters_list', 'Руководители проекта');
+		$this->getWidgetSchema()->setLabel('regions_list', 'Доступные регионы');
 
 
 //		$this->validatorSchema->setPostValidator(

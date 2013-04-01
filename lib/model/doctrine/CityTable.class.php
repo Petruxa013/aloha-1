@@ -16,4 +16,20 @@ class CityTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('City');
     }
+
+	public function getCoordinatorCities()
+	{
+		$q = $this->createQuery('city');
+
+		$user = sfContext::getInstance()->getUser();
+
+		if($user->hasCredential('coordinator'))
+		{
+			$coordinatorRegionIds = $user->getRegionIds();
+
+			$q->whereIn('city.region_id', $coordinatorRegionIds);
+		}
+
+		return $q;
+	}
 }
