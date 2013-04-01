@@ -35,3 +35,5 @@ all:
     email_from:                 error@aloha.com
 
   tocken_success_signin_url:    auditor_panel
+
+  max_items_on_auditor_panel:   20

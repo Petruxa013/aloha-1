@@ -26,137 +26,39 @@ class auditor_panelActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
-		$this->outlets = OutletTable::getInstance()->getAllWithGeoByUserQuery($this->getUser())->execute();
+		$this->filter = $this->getFilterForm();
+
+		$this->pager = new myPager('Outlet', sfConfig::get('max_items_on_report', 20));
+		$this->pager->setQuery(Doctrine::getTable('Outlet')
+						->getAllWithGeoByUserQuery($this->getUser()));
+		$this->pager->setPage($request->getParameter('page', 1));
+		$this->pager->init();
+
 	}
 
 	public function executeAddWorksheet(sfWebRequest $request)
 	{
 		$this->outlet = $this->getRoute()->getObject();
 		$worksheet = $this->outlet->getWorksheet();
-		if(!$worksheet)
+		if (!$worksheet)
 			$this->form = new WorksheetForm();
 		else
 			$this->form = new WorksheetForm($worksheet);
 		$this->worksheet = $worksheet;
-		if($request->isMethod('post'))
-		{
+		if ($request->isMethod('post')) {
 			$this->form->getObject()->setOutletId($this->outlet->getId());
 			$this->form->getObject()->setAuditorId($this->getUser()->getId());
 			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 			if ($this->form->isValid()) {
-					$worksheet = $this->form->save();
-					if(is_null($worksheet->getStatus()))
-					{
-						$worksheet->setStatus(10);
-						$worksheet->save();
-					}
-					$this->setTemplate('worksheet');
-					return sfView::SUCCESS;
-			}
-		}
-	}
-
-	public function executeNew(sfWebRequest $request)
-	{
-		$this->form = new WorksheetForm();
-		$this->worksheet = $this->form->getObject();
-	}
-
-	public function executeCreate(sfWebRequest $request)
-	{
-		$this->form = new WorksheetForm();
-		$this->worksheet = $this->form->getObject();
-
-		$this->processForm($request, $this->form);
-
-		$this->setTemplate('new');
-	}
-
-	public function executeEdit(sfWebRequest $request)
-	{
-		$this->worksheet = $this->getRoute()->getObject();
-		$this->form = $this->configuration->getForm($this->worksheet);
-	}
-
-	public function executeUpdate(sfWebRequest $request)
-	{
-		$this->worksheet = $this->getRoute()->getObject();
-		$this->form = $this->configuration->getForm($this->worksheet);
-
-		$this->processForm($request, $this->form);
-
-		$this->setTemplate('edit');
-	}
-
-	public function executeDelete(sfWebRequest $request)
-	{
-		$request->checkCSRFProtection();
-
-		$this->dispatcher->notify(new sfEvent($this, 'admin.delete_object', array('object' => $this->getRoute()->getObject())));
-
-		if ($this->getRoute()->getObject()->delete()) {
-			$this->getUser()->setFlash('notice', 'The item was deleted successfully.');
-		}
-
-		$this->redirect('@worksheet');
-	}
-
-	protected function processForm(sfWebRequest $request, sfForm $form)
-	{
-		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-		if ($form->isValid()) {
-			$notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-
-			try {
-				$worksheet = $form->save();
-			} catch (Doctrine_Validator_Exception $e) {
-
-				$errorStack = $form->getObject()->getErrorStack();
-
-				$message = get_class($form->getObject()) . ' has ' . count($errorStack) . " field" . (count($errorStack) > 1 ? 's' : null) . " with validation errors: ";
-				foreach ($errorStack as $field => $errors) {
-					$message .= "$field (" . implode(", ", $errors) . "), ";
+				$worksheet = $this->form->save();
+				if (is_null($worksheet->getStatus())) {
+					$worksheet->setStatus(10);
+					$worksheet->save();
 				}
-				$message = trim($message, ', ');
-
-				$this->getUser()->setFlash('error', $message);
+				$this->setTemplate('worksheet');
 				return sfView::SUCCESS;
 			}
-
-			$this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $worksheet)));
-
-			if ($request->hasParameter('_save_and_add')) {
-				$this->getUser()->setFlash('notice', $notice . ' You can add another one below.');
-
-				$this->redirect('@worksheet_new');
-			} else {
-				$this->getUser()->setFlash('notice', $notice);
-
-				$this->redirect(array('sf_route' => 'worksheet_edit', 'sf_subject' => $worksheet));
-			}
-		} else {
-			$this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
 		}
-	}
-
-
-	protected function buildQuery()
-	{
-		$tableMethod = $this->configuration->getTableMethod();
-		if (null === $this->filters) {
-			$this->filters = $this->configuration->getFilterForm($this->getFilters());
-		}
-
-		$this->filters->setTableMethod($tableMethod);
-
-		$query = $this->filters->buildQuery($this->getFilters());
-
-		$this->addSortQuery($query);
-
-		$event = $this->dispatcher->filter(new sfEvent($this, 'admin.build_query'), $query);
-		$query = $event->getReturnValue();
-
-		return $query;
 	}
 
 	public function executeAdditionalFiles()
@@ -169,8 +71,7 @@ class auditor_panelActions extends sfActions
 	public function executeAdditionalFilesRename(sfWebRequest $request)
 	{
 		$attachment = Doctrine::getTable('Attachment')->findOneById($request->getParameter('attachmentId'));
-		if($attachment)
-		{
+		if ($attachment) {
 			$attachment->setTitle($request->getParameter('title'));
 			$attachment->save();
 		}
@@ -183,8 +84,7 @@ class auditor_panelActions extends sfActions
 		$user = $this->getUser();
 		$worksheet = $this->getRoute()->getObject()->getWorksheet();
 		/* @var $worksheet Worksheet */
-		if($user->hasCredential('coordinator') && $worksheet->getStatus() == 10)
-		{
+		if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 10) {
 			$worksheet->setStatus(20);
 			$worksheet->save();
 		}
@@ -195,8 +95,7 @@ class auditor_panelActions extends sfActions
 		$user = $this->getUser();
 		$worksheet = $this->getRoute()->getObject()->getWorksheet();
 		/* @var $worksheet Worksheet */
-		if($user->hasCredential('coordinator') && $worksheet->getStatus() == 20)
-		{
+		if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 20) {
 			$worksheet->setStatus(10);
 			$worksheet->save();
 		}
@@ -207,8 +106,7 @@ class auditor_panelActions extends sfActions
 		$user = $this->getUser();
 		$worksheet = $this->getRoute()->getObject()->getWorksheet();
 		/* @var $worksheet Worksheet */
-		if($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 10)
-		{
+		if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 10) {
 			$worksheet->setPhotoStatus(20);
 			$worksheet->save();
 		}
@@ -222,8 +120,7 @@ class auditor_panelActions extends sfActions
 		$user = $this->getUser();
 		$worksheet = $this->getRoute()->getObject()->getWorksheet();
 		/* @var $worksheet Worksheet */
-		if($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 20)
-		{
+		if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 20) {
 			$worksheet->setPhotoStatus(10);
 			$worksheet->save();
 		}
@@ -236,8 +133,7 @@ class auditor_panelActions extends sfActions
 		$user = $this->getUser();
 		$worksheet = $this->getRoute()->getObject()->getWorksheet();
 		/* @var $worksheet Worksheet */
-		if($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 10)
-		{
+		if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 10) {
 			$worksheet->setAudioStatus(20);
 			$worksheet->save();
 		}
@@ -249,12 +145,91 @@ class auditor_panelActions extends sfActions
 		$user = $this->getUser();
 		$worksheet = $this->getRoute()->getObject()->getWorksheet();
 		/* @var $worksheet Worksheet */
-		if($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 20)
-		{
+		if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 20) {
 			$worksheet->setAudioStatus(10);
 			$worksheet->save();
 		}
 		$this->forward('auditor_panel', 'additionalFiles');
 	}
+
+	public function executeFilter(sfWebRequest $request)
+	{
+		$this->setPage(1);
+
+		if ($request->hasParameter('_reset')) {
+			$this->setFilters($this->getFilterDefaults());
+
+			$this->redirect('@auditor_panel');
+		}
+
+		$this->filter = $this->getFilterForm();
+
+		$this->filter->bind($request->getParameter($this->filter->getName()));
+		if ($this->filter->isValid()) {
+			$this->setFilters($this->filter->getValues());
+		}
+
+		$this->pager = $this->getPager($request);
+		$filters = array('auditor_panel_filters' => $request->getParameter('auditor_panel_filters'));
+
+		$this->pager->setFilters(http_build_query($filters));
+		$this->route = 'auditor_panel_filter';
+
+		$this->setTemplate('index');
+	}
+
+	protected function getPager(sfWebRequest $request)
+	{
+		$pager = new myPager('Outlet', sfConfig::get('app_max_items_on_auditor_panel'));
+		$pager->setQuery($this->buildQuery());
+		$pager->setPage($request->getParameter('page', 1));
+
+		$pager->init();
+
+		return $pager;
+	}
+
+
+	protected function buildQuery()
+	{
+		if ($this->filter === null) {
+			$this->filter = $this->getFilterForm($this->getFilters());
+		}
+
+		$query = $this->filter->buildQuery($this->getFilters());
+		return $query;
+	}
+
+
+	protected function getFilters()
+	{
+		return $this->getUser()->getAttribute('auditor_panel.filter', $this->getFilterDefaults(), 'auditor_panel_module');
+	}
+
+	protected function setFilters(array $filters)
+	{
+		return $this->getUser()->setAttribute('auditor_panel.filter', $filters, 'auditor_panel_module');
+	}
+
+	private function getFilterDefaults()
+	{
+		return array();
+	}
+
+	private function getFilterForm()
+	{
+		return new AuditorPanelFilter();
+	}
+
+	protected function setPage($page)
+	{
+		$this->getUser()->setAttribute('auditor_panel.page', $page, 'auditor_panel_module');
+	}
+
+	protected function getPage()
+	{
+		return $this->getUser()->getAttribute('auditor_panel.page', 1, 'auditor_panel_module');
+	}
+
 
 }

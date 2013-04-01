@@ -107,6 +107,10 @@ auditor_panel:
   url: /auditor/panel
   param: {module: auditor_panel, action: index }
 
+auditor_panel_filter:
+  url: /auditor/panel/filter
+  param: {module: auditor_panel, action: filter }
+
 auditor_panel_add_worksheet:
   class: sfDoctrineRoute
   url: /auditor/panel/outlet/:id/worksheet

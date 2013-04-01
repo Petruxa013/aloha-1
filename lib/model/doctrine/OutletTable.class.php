@@ -33,10 +33,12 @@ class OutletTable extends Doctrine_Table
 		$rootAlias = $q->getRootAlias();
 		$q = $this->getForList($q);
 		$q->leftJoin($rootAlias. '.Worksheet worksheet');
+
 		if($user->hasCredential('auditor'))
 			$q->whereIn($q->getRootAlias().'.city_id', $user->getCityIds());
 		if($user->hasCredential('coordinator'))
 			$q->whereIn($q->getRootAlias().'.region_id', $user->getRegionIds());
+
 		return $q;
 	}
 

@@ -10,9 +10,21 @@
 	<p><b>Ваш координатор: </b><?php echo $sf_user->getCoordinator() ?></p>
 </div>
 </div>
+<?php $filterValues = $sf_user->getRawValue()->getAttribute('auditor_panel.filter', array(), 'auditor_panel_module'); if (!empty($filterValues)): ?>
+<div class="alert alert-info alert-block">
+<a href="#" class="close fade" data-dismiss="alert">&times;</a>
+<h4 class="alert-heading">Фильтр включен</h4>
+Данные отфильтрованы. <a href="#filterPopup" data-toggle="modal">Управление фильтром</a>
+</div>
+<?php endif; ?>
+
+<div class="pull-right">
+<a href="#filterPopup" class="btn" data-toggle="modal"><i class="icon-search"></i> Поиск по разделу</a>
+</div>
+
 <div class="">
 	<h2>Розничные торговые точки (РТТ)</h2>
-
+	<?php include_partial('paginator', array('pager' => $pager)) ?>
 	<table class="table table-bordered" style="margin-top: 15px;">
 		<tr>
 			<th>Дистрибьютор</th>
@@ -26,6 +38,8 @@
 			<th>Фотографии</th>
 			<th>Аудио</th>
 		</tr>
+		<?php $outlets = $pager->getResults() ?>
+		<?php if(count($outlets) > 0): ?>
 		<?php foreach($outlets as $key => $outlet): ?>
 		<?php /* @var $outlet Outlet */ ?>
 		<tr>
@@ -48,5 +62,9 @@
 			</td>
 		</tr>
 		<?php endforeach; ?>
+		<?php endif; ?>
 	</table>
+	<?php include_partial('paginator', array('pager' => $pager)) ?>
 </div>
+
+<?php include_partial('auditor_panel/filters', array('form' => $filter)) ?>
