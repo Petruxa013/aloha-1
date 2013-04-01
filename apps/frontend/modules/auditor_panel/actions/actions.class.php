@@ -197,6 +197,9 @@ class auditor_panelActions extends sfActions
 		}
 
 		$query = $this->filter->buildQuery($this->getFilters());
+		/* @var $query Doctrine_Query */
+		$query = Doctrine::getTable('Outlet')
+								->getAllWithGeoByUserQuery($this->getUser(), $query);
 		return $query;
 	}
 

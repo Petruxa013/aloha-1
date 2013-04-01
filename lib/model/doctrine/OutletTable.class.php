@@ -27,9 +27,12 @@ class OutletTable extends Doctrine_Table
 
 	}
 
-	public function getAllWithGeoByUserQuery($user)
+	public function getAllWithGeoByUserQuery($user, Doctrine_Query $query = null)
 	{
-		$q = $this->createQuery();
+		if($query)
+			$q = $query;
+		else
+			$q = $this->createQuery();
 		$rootAlias = $q->getRootAlias();
 		$q = $this->getForList($q);
 		$q->leftJoin($rootAlias. '.Worksheet worksheet');
