@@ -18,9 +18,22 @@ class AttachmentForm extends PluginAttachmentForm
 
 	protected function getBaseUploadPath()
 	{
-		$basePath = sfConfig::get('sf_upload_dir') . DS . strtolower($this->getObjectClass()) . DS . $this->getObjectId() . DS;
+		/* @var $worksheet Worksheet */
+		if ($this->getObjectClass() && $this->getObjectId())
+		{
+			$worksheet = Doctrine::getTable($this->getObjectClass())->findOneById($this->getObjectId());
 
-		return $basePath;
+			$outlet = $worksheet->getOutlet();
+
+			$basePath = sfConfig::get('sf_upload_dir') . DS .
+					strtolower($this->getObjectClass()) . DS .
+					SlugifyClass::slugify($outlet->getRegion()) . DS .
+					SlugifyClass::slugify($outlet->getCity()) . DS .
+					SlugifyClass::slugify($outlet->getAddress()) . DS;
+
+			return $basePath;
+		}
+		else return null;
 	}
 
 }

@@ -37,6 +37,16 @@ class AudioAttachmentForm extends AttachmentForm
 			'audio/x-aiff', // aif aifc aiff
 			'audio/x-mpegurl', // m3u
 			'audio/x-pn-realaudio', // ra ram
+			'application/octet-stream', // amr
+			'audio/AMR', // amr
+			'audio/amr', // amr
+			'video/quicktime', // mov
+			'video/x-quicktime', // mov
+			'audio/aiff', // mov
+			'audio/x-midi', // mov
+			'audio/x-wav', // mov
+			'audio/x-ms-wma', //wma
+			'video/x-ms-asf', // wma
 		));
 	}
 

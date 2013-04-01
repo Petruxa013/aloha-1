@@ -20,17 +20,17 @@ class ImageAttachmentForm extends AttachmentForm
 		$this->getValidator('url')->setOption('max_size', 10 * 1024 * 1024);
 		$this->getValidator('url')->setOption('path', $this->getBaseUploadPath());
 		$this->getValidator('url')->setOption('mime_types', array(
-					'image/jpeg',
-					'image/pjpeg',
-					'image/png',
-					'image/x-png',
-					'image/gif',
-					'image/tif',
-					'image/x-tif',
-					'image/tiff',
-					'image/x-tiff',
-					'application/tif',
-				));
+			'image/jpeg',
+			'image/pjpeg',
+			'image/png',
+			'image/x-png',
+			'image/gif',
+			'image/tif',
+			'image/x-tif',
+			'image/tiff',
+			'image/x-tiff',
+			'application/tif',
+		));
 	}
 
 	public function updateObject($values = null)
@@ -61,23 +61,27 @@ class ImageAttachmentForm extends AttachmentForm
 
 		$image = $this->getObject();
 		$worksheet = $image->getObject();
-		if($worksheet && $worksheet->getPhotoStatus() == null)
-		{
+		if ($worksheet && $worksheet->getPhotoStatus() == null) {
 			$worksheet->setPhotoStatus(10);
 			$worksheet->save();
 		}
 		$imagePath = $image->getUploadPath();
 
-		$thumb = new sfImage($imagePath);
+		try {
+			$thumb = new sfImage($imagePath);
 
-		$imageWidth = $thumb->getWidth();
-		$imageHeigh = $thumb->getHeight();
+			$imageWidth = $thumb->getWidth();
+			$imageHeigh = $thumb->getHeight();
 
-		$thumb->resize(floor($imageWidth*0.5), floor($imageHeigh*0.5));
-		$thumb->saveAs($image->getResizedHalthPath());
+			$thumb->resize(floor($imageWidth * 0.5), floor($imageHeigh * 0.5));
+			$thumb->saveAs($image->getResizedHalthPath());
 
-		$thumb->resize(floor($imageWidth*0.1), floor($imageHeigh*0.1));
-		$thumb->saveAs($image->getResizedMiniPath());
+			$thumb->resize(floor($imageWidth * 0.1), floor($imageHeigh * 0.1));
+			$thumb->saveAs($image->getResizedMiniPath());
+		} catch (sfImageTransformException $exeption) {
+//			$image->setType('other');
+//			$image->save();
+		}
 
 		return $object;
 

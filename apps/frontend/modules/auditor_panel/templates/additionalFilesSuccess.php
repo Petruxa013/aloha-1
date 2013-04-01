@@ -28,6 +28,10 @@
 	<?php endif; ?>
 
 </div>
+<?php if(!$worksheet->getId()): ?>
+	<div class="alert container">Пока вы не заполните анкету по этой точке загрузка данных невозможна</div>
+<?php endif; ?>
+
 
 <div class="container">
 	<?php if($worksheet->getAudioStatus() == 20 && $worksheet->getPhotoStatus() == 20): ?>
@@ -54,28 +58,6 @@
 		</div>
 	</form>
 </div>
-
-<script type="text/javascript">
-	$(function () {
-		var target;
-		$('a[name="changeAttachmentTitle"]').click(function () {
-			target = $(this);
-			$("#renameFile > form").find('input#name').val(target.parent('li').children('span').html());
-		});
-		$("#renameFile > form").submit(function () {
-			var name = $("#name");
-			$.post('<?php echo url_for('auditor_panel_worksheet_additional_files_rename', $outlet) ?>',
-					{
-						attachmentId: target.attr('attachmentid'),
-						title: name.val()
-					}, function() {
-						target.parent('li').children('span').html(name.val());
-						$('a.close').click();
-					});
-			return false;
-		});
-	});
-</script>
 <style>
 	.attachment li a.btn:hover {
 		color: #ffffff;

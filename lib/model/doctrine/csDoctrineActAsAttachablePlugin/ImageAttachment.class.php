@@ -39,7 +39,12 @@ class ImageAttachment extends Attachment
 
 	public function getDefaultResizedFilepath($width = null, $height = null)
 	{
-		return str_replace(sfConfig::get('sf_web_dir'), '', $this->getResizedPath($width, $height));
+		/* @todo Не ходит на диск а придумать как отдавать ссылки не на веб картинки напрямую */
+		$path = $this->getResizedPath($width, $height);
+		if(!file_exists($path))
+			$path = $this->getUploadPath();
+
+		return str_replace(sfConfig::get('sf_web_dir'), '', $path);
 	}
 
 	public function getThumbnail($width = null, $height = null)
