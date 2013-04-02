@@ -5,6 +5,7 @@
 		<a href="<?php echo url_for('auditor_panel')?>">
 			<button class="btn btn-info">Вернуться к списку РТТ</button>
 		</a>
+
 	<?php if($sf_user->hasCredential('coordinator')): ?>
 	<?php if($worksheet->getPhotoStatus() == 10): ?>
 	<a href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
@@ -12,7 +13,7 @@
 	</a>
 	<?php elseif($worksheet->getPhotoStatus() == 20): ?>
 		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
-			<button type="button" class="btn btn-warning">Вернуть фото на доработку</button>
+			<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
 		</a>
 	<?php endif; ?>
 
@@ -22,10 +23,32 @@
 	</a>
 	<?php elseif($worksheet->getAudioStatus() == 20): ?>
 		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
-			<button type="button" class="btn btn-warning">Вернуть аудио на доработку</button>
+			<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
+		</a>
+	<?php endif; ?>
+	<?php endif; ?>
+
+
+	<?php if($sf_user->hasCredential('project_manager')): ?>
+	<?php if($worksheet->getPhotoStatus() == 20): ?>
+	<a href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
+		<button type="button" class="btn btn-success">Одобрить фото</button>
+	</a>
+	<?php elseif($worksheet->getPhotoStatus() == 30): ?>
+		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
+			<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
 		</a>
 	<?php endif; ?>
 
+	<?php if($worksheet->getAudioStatus() == 20): ?>
+	<a href="<?php echo url_for('auditor_panel_approve_worksheet_audio', $outlet) ?>">
+		<button type="button" class="btn btn-success">Одобрить аудио</button>
+	</a>
+	<?php elseif($worksheet->getAudioStatus() == 30): ?>
+		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
+			<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
+		</a>
+	<?php endif; ?>
 	<?php endif; ?>
 
 </div>

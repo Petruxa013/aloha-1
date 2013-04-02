@@ -126,52 +126,86 @@ class auditor_panelActions extends sfActions
 	public function executeApproveWorksheetPhoto(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		$worksheet = $this->getRoute()->getObject()->getWorksheet();
-		/* @var $worksheet Worksheet */
-		if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 10) {
-			$worksheet->setPhotoStatus(20);
-			$worksheet->save();
+		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		{
+			$this->outlet = $this->getRoute()->getObject();
+			$worksheet = $this->outlet->getWorksheet();
+			/* @var $worksheet Worksheet */
+			if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 10) {
+				$worksheet->setPhotoStatus(20);
+				$worksheet->save();
+			}
+			if ($user->hasCredential('project_manager') && $worksheet->getPhotoStatus() == 20) {
+				$worksheet->getPhotoStatus(30);
+				$worksheet->save();
+			}
+
+			$this->forward('auditor_panel', 'additionalFiles');
 		}
-
-		$this->forward('auditor_panel', 'additionalFiles');
-
+		else $this->forward404();
 	}
 
 	public function executeDisapproveWorksheetPhoto(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		$worksheet = $this->getRoute()->getObject()->getWorksheet();
-		/* @var $worksheet Worksheet */
-		if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 20) {
-			$worksheet->setPhotoStatus(10);
-			$worksheet->save();
+		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		{
+			$this->outlet = $this->getRoute()->getObject();
+			$worksheet = $this->outlet->getWorksheet();
+			/* @var $worksheet Worksheet */
+			if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 20) {
+				$worksheet->setPhotoStatus(null);
+				$worksheet->save();
+			}
+			if ($user->hasCredential('project_manager') && $worksheet->getPhotoStatus() == 30) {
+				$worksheet->getPhotoStatus(20);
+				$worksheet->save();
+			}
+			$this->forward('auditor_panel', 'additionalFiles');
 		}
-		$this->forward('auditor_panel', 'additionalFiles');
-
+		else $this->forward404();
 	}
 
 	public function executeApproveWorksheetAudio(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		$worksheet = $this->getRoute()->getObject()->getWorksheet();
-		/* @var $worksheet Worksheet */
-		if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 10) {
-			$worksheet->setAudioStatus(20);
-			$worksheet->save();
+		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		{
+			$this->outlet = $this->getRoute()->getObject();
+			$worksheet = $this->outlet->getWorksheet();
+			/* @var $worksheet Worksheet */
+			if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 10) {
+				$worksheet->setAudioStatus(20);
+				$worksheet->save();
+			}
+			if ($user->hasCredential('project_manager') && $worksheet->getAudioStatus() == 20) {
+				$worksheet->getAudioStatus(30);
+				$worksheet->save();
+			}
+			$this->forward('auditor_panel', 'additionalFiles');
 		}
-		$this->forward('auditor_panel', 'additionalFiles');
+		else $this->forward404();
 	}
 
 	public function executeDisapproveWorksheetAudio(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		$worksheet = $this->getRoute()->getObject()->getWorksheet();
-		/* @var $worksheet Worksheet */
-		if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 20) {
-			$worksheet->setAudioStatus(10);
-			$worksheet->save();
+		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		{
+			$this->outlet = $this->getRoute()->getObject();
+			$worksheet = $this->outlet->getWorksheet();
+			/* @var $worksheet Worksheet */
+			if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 20) {
+				$worksheet->setAudioStatus(null);
+				$worksheet->save();
+			}
+			if ($user->hasCredential('project_manager') && $worksheet->getAudioStatus() == 30) {
+				$worksheet->getAudioStatus(20);
+				$worksheet->save();
+			}
+			$this->forward('auditor_panel', 'additionalFiles');
 		}
-		$this->forward('auditor_panel', 'additionalFiles');
+		else $this->forward404();
 	}
 
 	public function executeFilter(sfWebRequest $request)
