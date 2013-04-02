@@ -6,7 +6,7 @@
 		<div class="alert alert-danger">
 			<strong>Будьте осторожны и не давайте эту ссылку другому человеку!</strong>
 		</div>
-		<a href="<?php echo url_for('coordinator')?>">
+		<a href="<?php echo url_for('auditor')?>">
 			<button class="btn btn-info">Вернуться к списку аудиторов</button>
 		</a>
 </div>
