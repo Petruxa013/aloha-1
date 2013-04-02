@@ -550,8 +550,17 @@
 		<?php endif; ?>
 	</button>
 	<?php endif; ?>
+	<?php if($sf_user->hasCredential('project_manager')): ?>
+	<button type="submit" class="btn">
+		<?php if($worksheet->getStatus() >= 10): ?>
+			Обновить анкету
+		<?php else: ?>
+			Сохранить
+		<?php endif; ?>
+	</button>
+	<?php endif; ?>
 	<?php if($sf_user->hasCredential('coordinator')): ?>
-	<?php if($worksheet->getStatus() == 10): ?>
+	<?php if($worksheet->getStatus() <= 10): ?>
 	<a href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-info">Одобрить анкету</button>
 	</a>
@@ -564,8 +573,9 @@
 		</a>
 	<?php endif; ?>
 	<?php endif; ?>
+
 	<?php if($sf_user->hasCredential('project_manager')): ?>
-	<?php if($worksheet->getStatus() == 20): ?>
+	<?php if($worksheet->getStatus() <= 20): ?>
 	<a href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить анкету</button>
 	</a>

@@ -90,12 +90,12 @@ class auditor_panelActions extends sfActions
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
 			/* @var $worksheet Worksheet */
-			if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 10) {
+			if ($user->hasCredential('coordinator') && $worksheet->getStatus() <= 10) {
 				$worksheet->setStatus(20);
 				$worksheet->save();
 			}
 
-			if ($user->hasCredential('project_manager') && $worksheet->getStatus() == 20) {
+			if ($user->hasCredential('project_manager') && $worksheet->getStatus() <= 20) {
 				$worksheet->setStatus(30);
 				$worksheet->save();
 			}
@@ -111,12 +111,12 @@ class auditor_panelActions extends sfActions
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
 			/* @var $worksheet Worksheet */
-			if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 20) {
+			if ($user->hasCredential('coordinator') && $worksheet->getStatus() <= 20) {
 				$worksheet->setStatus(null);
 				$worksheet->save();
 			}
-			if ($user->hasCredential('project_manager') && $worksheet->getStatus() == 30) {
-				$worksheet->setStatus(20);
+			if ($user->hasCredential('project_manager') && $worksheet->getStatus() <= 30) {
+				$worksheet->setStatus(null);
 				$worksheet->save();
 			}
 		}
@@ -131,12 +131,12 @@ class auditor_panelActions extends sfActions
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
 			/* @var $worksheet Worksheet */
-			if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 10) {
+			if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() <= 10) {
 				$worksheet->setPhotoStatus(20);
 				$worksheet->save();
 			}
-			if ($user->hasCredential('project_manager') && $worksheet->getPhotoStatus() == 20) {
-				$worksheet->getPhotoStatus(30);
+			if ($user->hasCredential('project_manager') && $worksheet->getPhotoStatus() <= 20) {
+				$worksheet->setPhotoStatus(30);
 				$worksheet->save();
 			}
 
@@ -153,12 +153,12 @@ class auditor_panelActions extends sfActions
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
 			/* @var $worksheet Worksheet */
-			if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() == 20) {
+			if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() <= 20) {
 				$worksheet->setPhotoStatus(null);
 				$worksheet->save();
 			}
-			if ($user->hasCredential('project_manager') && $worksheet->getPhotoStatus() == 30) {
-				$worksheet->getPhotoStatus(20);
+			if ($user->hasCredential('project_manager') && $worksheet->getPhotoStatus() <= 30) {
+				$worksheet->setPhotoStatus(null);
 				$worksheet->save();
 			}
 			$this->forward('auditor_panel', 'additionalFiles');
@@ -174,12 +174,12 @@ class auditor_panelActions extends sfActions
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
 			/* @var $worksheet Worksheet */
-			if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 10) {
+			if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() <= 10) {
 				$worksheet->setAudioStatus(20);
 				$worksheet->save();
 			}
-			if ($user->hasCredential('project_manager') && $worksheet->getAudioStatus() == 20) {
-				$worksheet->getAudioStatus(30);
+			if ($user->hasCredential('project_manager') && $worksheet->getAudioStatus() <= 20) {
+				$worksheet->setAudioStatus(30);
 				$worksheet->save();
 			}
 			$this->forward('auditor_panel', 'additionalFiles');
@@ -195,12 +195,12 @@ class auditor_panelActions extends sfActions
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
 			/* @var $worksheet Worksheet */
-			if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() == 20) {
+			if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() <= 20) {
 				$worksheet->setAudioStatus(null);
 				$worksheet->save();
 			}
-			if ($user->hasCredential('project_manager') && $worksheet->getAudioStatus() == 30) {
-				$worksheet->getAudioStatus(20);
+			if ($user->hasCredential('project_manager') && $worksheet->getAudioStatus() <= 30) {
+				$worksheet->setAudioStatus(null);
 				$worksheet->save();
 			}
 			$this->forward('auditor_panel', 'additionalFiles');

@@ -52,13 +52,13 @@
 			<td><?php echo $outlet->getCity() ?></td>
 			<td><?php echo $outlet->getHumanType() ?></td>
 			<td>
-				<?php echo worksheet_button($outlet) ?>
+				<?php echo worksheet_button($outlet, $sf_user) ?>
 			</td>
 			<td>
-				<?php echo worksheet_photo_button($outlet) ?>
+				<?php echo worksheet_photo_button($outlet, $sf_user) ?>
 			</td>
 			<td>
-				<?php echo worksheet_audio_button($outlet) ?>
+				<?php echo worksheet_audio_button($outlet, $sf_user) ?>
 			</td>
 			</td>
 		</tr>
