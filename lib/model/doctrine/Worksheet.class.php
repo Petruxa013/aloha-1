@@ -40,4 +40,14 @@ class Worksheet extends BaseWorksheet
 		return $this->getAudioAttachments();
 	}
 
+	public function getDate()
+	{
+		return date('d.m.Y', strtotime($this->getCreatedAt()));
+	}
+
+	public function getTime()
+	{
+		return date('H:i', strtotime($this->getCreatedAt()));
+	}
+
 }

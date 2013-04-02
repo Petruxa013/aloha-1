@@ -19,8 +19,12 @@ class WorksheetForm extends BaseWorksheetForm
 		$this->getWidget('outlet_phone')->setAttributes(array('class' => 'input-block-level', 'placeholder' => '+7 895 556 67 45'));
 		$this->setWidget('comment', new sfWidgetFormTextarea(array(), array('cols' => 7, 'rows' => 4, 'class' => 'input-block-level', 'placeholder' => 'Здесь вы можите указать на неточность адреса, и других данных РТТ. Сложностей, с которыми вы столкнулись во время аудита')));
 
-		$this->setWidget('date', new sfWidgetFormDate(array('format' => '%day%.%month%.%year%', 'can_be_empty' => false), array('style' => 'width: auto')));
+		$year = date('Y', time());
+		$this->setWidget('date', new sfWidgetFormDate(array('format' => '%day%.%month%.%year%', 'can_be_empty' => false, 'years' => array($year => $year)), array('style' => 'width: auto')));
 		$this->setWidget('time', new sfWidgetFormTime(array('with_seconds' => false, 'can_be_empty' => false), array('style' => 'width: auto')));
+
+		$this->getWidget('date')->setDefault($this->getObject()->getDate());
+		$this->getWidget('time')->setDefault($this->getObject()->getTime());
 
 		$this->setValidator('date', new sfValidatorDate());
 		$this->setValidator('time', new sfValidatorTime());
