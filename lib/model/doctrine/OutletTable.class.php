@@ -41,6 +41,11 @@ class OutletTable extends Doctrine_Table
 			$q->whereIn($q->getRootAlias().'.city_id', $user->getCityIds());
 		if($user->hasCredential('coordinator'))
 			$q->whereIn($q->getRootAlias().'.region_id', $user->getRegionIds());
+		if($user->hasCredential('client')) {
+			$q->whereIn($q->getRootAlias().'.region_id', $user->getRegionIds());
+			$q->addWhere('worksheet.status = ? AND worksheet.photo_status = ? AND worksheet.audio_status = ?', array(30,30,30));
+		}
+
 
 		return $q;
 	}

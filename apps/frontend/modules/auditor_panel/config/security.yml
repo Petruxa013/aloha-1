@@ -3,4 +3,4 @@
 
 default:
   is_secure: true
-  credentials: [[coordinator, project_manager, admin, auditor]]
+  credentials: [[coordinator, project_manager, admin, auditor, client]]
