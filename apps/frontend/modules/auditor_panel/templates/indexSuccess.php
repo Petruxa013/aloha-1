@@ -8,6 +8,7 @@
 	<p><b>ФИО: </b><?php echo $sf_user->getFio() ?></p>
 	<p><b>Вы: </b><?php echo $sf_user->getRusGroup() ?></p>
 	<p><b>Ваш координатор: </b><?php echo $sf_user->getCoordinator() ?></p>
+	<p><b>Контакты координатора: </b> <?php echo $sf_user->getCoordinatorContacts() ?></p>
 </div>
 </div>
 <?php $filterValues = $sf_user->getRawValue()->getAttribute('auditor_panel.filter', array(), 'auditor_panel_module'); if (!empty($filterValues)): ?>

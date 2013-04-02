@@ -54,10 +54,28 @@ class myUser extends sfGuardSecurityUser
 			if($coordinators)
 				foreach($coordinators as $coordinator)
 					$coordinatorName .= $coordinator->getName();
+
 		return $coordinatorName;
 		}
 
 		return null;
+	}
+
+	public function getCoordinatorContacts()
+	{
+		$user = $this->getGuardUser();
+		$coordinatorContacts = '';
+		if($user) {
+			$coordinators = $user->getMasters();
+			if($coordinators)
+				foreach($coordinators as $coordinator)
+					$coordinatorContacts .= $coordinator->getContactComments();
+
+		return $coordinatorContacts;
+		}
+
+		return null;
+
 	}
 
 	public function getId()
