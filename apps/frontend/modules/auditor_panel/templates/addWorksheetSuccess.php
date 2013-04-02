@@ -10,7 +10,9 @@
 	}
 </style>
 <h1>БЛАНК АУДИТА ПРОДУКЦИИ CORDIANT и TUNGA</h1>
+<?php if($worksheet->getStatus() < 20): ?>
 <form action="<?php echo url_for('auditor_panel_add_worksheet', $outlet) ?>" method="post">
+<?php endif; ?>
 <table class="table table-bordered table-striped">
 	<tr>
 		<td>
@@ -540,7 +542,7 @@
 </table>
 <div class="pagination-centered">
 	<?php if($worksheet->getStatus() < 20): ?>
-	<button type="submit" class="btn btn-info">
+	<button type="submit" class="btn">
 		<?php if($worksheet->getStatus() == 10): ?>
 			Обновить анкету
 		<?php else: ?>
@@ -551,11 +553,28 @@
 	<?php if($sf_user->hasCredential('coordinator')): ?>
 	<?php if($worksheet->getStatus() == 10): ?>
 	<a href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
-		<button type="button" class="btn btn-success">Одобрить анкету</button>
+		<button type="button" class="btn btn-info">Одобрить анкету</button>
+	</a>
+	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+		<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
 	</a>
 	<?php elseif($worksheet->getStatus() == 20): ?>
 		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
-			<button type="button" class="btn btn-warning">Вернуть анкету на доработку</button>
+			<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
+		</a>
+	<?php endif; ?>
+	<?php endif; ?>
+	<?php if($sf_user->hasCredential('project_manager')): ?>
+	<?php if($worksheet->getStatus() == 20): ?>
+	<a href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
+		<button type="button" class="btn btn-success">Одобрить анкету</button>
+	</a>
+	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+		<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
+	</a>
+	<?php elseif($worksheet->getStatus() == 30): ?>
+		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+			<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
 		</a>
 	<?php endif; ?>
 	<?php endif; ?>

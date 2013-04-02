@@ -47,13 +47,16 @@ class auditor_panelActions extends sfActions
 		$this->worksheet = $worksheet;
 		if ($request->isMethod('post')) {
 			$this->form->getObject()->setOutletId($this->outlet->getId());
-			$this->form->getObject()->setAuditorId($this->getUser()->getId());
+			/* @todo Подумать над необходимостью */
+//			$this->form->getObject()->setAuditorId($this->getUser()->getId());
 			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 			if ($this->form->isValid()) {
-				$worksheet = $this->form->save();
-				if (is_null($worksheet->getStatus())) {
-					$worksheet->setStatus(10);
-					$worksheet->save();
+				if($worksheet->getStatus() < 20) {
+					$worksheet = $this->form->save();
+					if (is_null($worksheet->getStatus())) {
+						$worksheet->setStatus(10);
+						$worksheet->save();
+					}
 				}
 				$this->setTemplate('worksheet');
 				return sfView::SUCCESS;
@@ -82,23 +85,42 @@ class auditor_panelActions extends sfActions
 	public function executeApproveWorksheet(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		$worksheet = $this->getRoute()->getObject()->getWorksheet();
-		/* @var $worksheet Worksheet */
-		if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 10) {
-			$worksheet->setStatus(20);
-			$worksheet->save();
+		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		{
+			$this->outlet = $this->getRoute()->getObject();
+			$worksheet = $this->outlet->getWorksheet();
+			/* @var $worksheet Worksheet */
+			if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 10) {
+				$worksheet->setStatus(20);
+				$worksheet->save();
+			}
+
+			if ($user->hasCredential('project_manager') && $worksheet->getStatus() == 20) {
+				$worksheet->setStatus(30);
+				$worksheet->save();
+			}
 		}
+		else $this->forward404();
 	}
 
 	public function executeDisapproveWorksheet(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		$worksheet = $this->getRoute()->getObject()->getWorksheet();
-		/* @var $worksheet Worksheet */
-		if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 20) {
-			$worksheet->setStatus(10);
-			$worksheet->save();
+		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		{
+			$this->outlet = $this->getRoute()->getObject();
+			$worksheet = $this->outlet->getWorksheet();
+			/* @var $worksheet Worksheet */
+			if ($user->hasCredential('coordinator') && $worksheet->getStatus() == 20) {
+				$worksheet->setStatus(null);
+				$worksheet->save();
+			}
+			if ($user->hasCredential('project_manager') && $worksheet->getStatus() == 30) {
+				$worksheet->setStatus(20);
+				$worksheet->save();
+			}
 		}
+		else $this->forward404();
 	}
 
 	public function executeApproveWorksheetPhoto(sfWebRequest $request)

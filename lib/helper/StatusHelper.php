@@ -18,6 +18,8 @@ function worksheet_button($outlet)
 		if($worksheet->getStatus() == 10)
 			$class = "btn-warning";
 		if($worksheet->getStatus() == 20)
+			$class = "btn-info";
+		if($worksheet->getStatus() == 30)
 			$class = "btn-success";
 
 		$text = 'Посмотреть анкету';
@@ -40,6 +42,8 @@ function worksheet_photo_button($outlet)
 		if($worksheet->getPhotoStatus() == 10)
 			$class = "btn-warning";
 		if($worksheet->getPhotoStatus() == 20)
+			$class = "btn-info";
+		if($worksheet->getPhotoStatus() == 30)
 			$class = "btn-success";
 		$text = 'Посмотреть фото';
 	}
@@ -60,6 +64,8 @@ function worksheet_audio_button($outlet)
 		if($worksheet->getAudioStatus() == 10)
 			$class = "btn-warning";
 		if($worksheet->getAudioStatus() == 20)
+			$class = "btn-info";
+		if($worksheet->getAudioStatus() == 30)
 			$class = "btn-success";
 
 		$text = 'Прослушать аудио';
