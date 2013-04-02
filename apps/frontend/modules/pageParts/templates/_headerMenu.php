@@ -41,6 +41,7 @@
 								<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager')): ?>
 								<li><?php echo link_to('Координаторы', 'coordinator') ?></li>
 								<li><?php echo link_to('Руководители проекта', 'project_manager') ?></li>
+								<li><?php echo link_to('Клиенты', 'client') ?></li>
 								<?php endif; ?>
 							</ul>
 						</li>

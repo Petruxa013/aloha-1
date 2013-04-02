@@ -1,3 +1,12 @@
+client:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                sfGuardUser
+    module:               client
+    prefix_path:          /client
+    column:               id
+    with_wildcard_routes: true
+
 project_manager:
   class: sfDoctrineRouteCollection
   options:

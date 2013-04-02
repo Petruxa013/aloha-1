@@ -96,4 +96,22 @@ class sfGuardUserTable extends PluginsfGuardUserTable
 
 	}
 
+	public function getActiveClientsQuery()
+	{
+		$q = $this->getClientsQuery();
+		$q->addWhere('user.is_active = ?', true);
+
+		return $q;
+	}
+
+	public function getClientsQuery()
+	{
+		$clientGroup = sfGuardGroupTable::getInstance()->findOneByName('client', Doctrine::HYDRATE_ARRAY);
+		$q = $this->createQuery('user')
+				->leftJoin('user.sfGuardUserGroup userGroup')
+				->addWhere('userGroup.group_id = ?', $clientGroup['id']);
+
+		return $q;
+	}
+
 }
