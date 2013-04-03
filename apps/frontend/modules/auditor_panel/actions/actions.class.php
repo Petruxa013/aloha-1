@@ -51,13 +51,13 @@ class auditor_panelActions extends sfActions
 //			$this->form->getObject()->setAuditorId($this->getUser()->getId());
 			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 			if ($this->form->isValid()) {
-				if($worksheet->getStatus() < 20) {
+//				if($worksheet->getStatus() < 20) {
 					$worksheet = $this->form->save();
 					if (is_null($worksheet->getStatus())) {
 						$worksheet->setStatus(10);
 						$worksheet->save();
 					}
-				}
+//				}
 				$this->setTemplate('worksheet');
 				return sfView::SUCCESS;
 			}

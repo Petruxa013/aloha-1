@@ -10,9 +10,9 @@
 	}
 </style>
 <h1>БЛАНК АУДИТА ПРОДУКЦИИ CORDIANT и TUNGA</h1>
-<?php if($worksheet->getStatus() < 20): ?>
+<?php //if($worksheet->getStatus() < 20): ?>
 <form action="<?php echo url_for('auditor_panel_add_worksheet', $outlet) ?>" method="post">
-<?php endif; ?>
+<?php //endif; ?>
 <table class="table table-bordered table-striped">
 	<tr>
 		<td>
