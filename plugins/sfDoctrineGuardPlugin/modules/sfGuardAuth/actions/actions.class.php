@@ -32,7 +32,7 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 		$user = sfGuardUserTable::getInstance()->findOneByTocken($tocken);
 		if ($user && $user->getIsActive()) {
 			$this->getUser()->signin($user);
-			$signinUrl = sfConfig::get('app_sf_guard_plugin_tocken_success_signin_url', $user->getReferer($request->getReferer()));
+			$signinUrl = sfConfig::get('app_sf_guard_plugin_tocken_success_signin_url', '@auditor_panel');
 
 			return $this->redirect('' != $signinUrl ? $signinUrl : '@homepage');
 		}
