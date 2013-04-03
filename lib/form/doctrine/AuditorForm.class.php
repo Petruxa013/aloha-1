@@ -43,7 +43,7 @@ class AuditorForm extends PluginsfGuardUserForm
 			'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
 			'first_name'       => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'last_name'        => new sfValidatorString(array('max_length' => 255, 'required' => true)),
-			'email_address'    => new sfValidatorEmail(array('max_length' => 255, 'required' => false)),
+			'email_address'    => new sfValidatorEmail(array('max_length' => 255, 'required' => false, 'trim' => true)),
 			'patrionimic'      => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'contact_comments' => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'masters_list'     => new sfValidatorDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'required' => true)),
@@ -78,7 +78,6 @@ class AuditorForm extends PluginsfGuardUserForm
 		$auditor = $this->getObject();
 		$auditor->setUsername('auditor_' . mt_rand(1000, 9999));
 		$auditor->setPassword($this->generateRandomPassword(14));
-		$auditor->setTocken($this->generateRandomPassword(30));
 
 		parent::doSave($con);
 
@@ -100,9 +99,9 @@ class AuditorForm extends PluginsfGuardUserForm
 		}
 
 		// Если email не указан, то генерируем его автоматически
-		if (isset($values['email_address']) && empty($values['email_address'])) {
-			$values['email_address'] = $this->generateRandomPassword(14) . '@nomail.com';
-		}
+//		if (isset($values['email_address']) && empty($values['email_address'])) {
+//			$values['email_address'] = $this->generateRandomPassword(14) . '@nomail.com';
+//		}
 
 		$values = $this->processValues($values);
 
