@@ -47,6 +47,8 @@ class AudioAttachmentForm extends AttachmentForm
 			'audio/x-wav', // mov
 			'audio/x-ms-wma', //wma
 			'video/x-ms-asf', // wma
+			'audio/x-hx-aac-adts', // aac
+			'audio/aac', //aac
 		));
 	}
 
