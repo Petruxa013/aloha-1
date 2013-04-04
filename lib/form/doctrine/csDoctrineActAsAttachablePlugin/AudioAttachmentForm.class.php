@@ -17,7 +17,7 @@ class AudioAttachmentForm extends AttachmentForm
 	{
 		parent::configure();
 		$this->getWidget('url')->setLabel('Файл');
-		$this->getValidator('url')->setOption('max_size', 30 * 1024 * 1024);
+		$this->getValidator('url')->setOption('max_size', 97 * 1024 * 1024);
 		$this->getValidator('url')->setOption('path', $this->getBaseUploadPath());
 		$this->getValidator('url')->setOption('mime_types', array(
 			'audio/basic', //mulaw аудио, 8 кГц, 1 канал (RFC 2046)
