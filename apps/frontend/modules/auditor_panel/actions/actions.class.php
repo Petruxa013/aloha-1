@@ -47,8 +47,11 @@ class auditor_panelActions extends sfActions
 		$this->worksheet = $worksheet;
 		if ($request->isMethod('post')) {
 			$this->form->getObject()->setOutletId($this->outlet->getId());
-			/* @todo Подумать над необходимостью */
-//			$this->form->getObject()->setAuditorId($this->getUser()->getId());
+			/* если форма новая то записываем создателя */
+			if($this->form->isNew())
+			{
+				$this->form->getObject()->setAuditorId($this->getUser()->getId());
+			}
 			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 			if ($this->form->isValid()) {
 //				if($worksheet->getStatus() < 20) {
