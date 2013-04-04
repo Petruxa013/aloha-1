@@ -77,12 +77,11 @@ function count_worksheet_sku_a($worksheet)
 		'tunga_camina_185_70R14_a',
 		'tunga_camina_195_65R15_a',
 	);
-
-	foreach($items_a as $item_a)
-	{
-		$counter += (int) $worksheet->$item_a;
+	if ($worksheet) {
+		foreach ($items_a as $item_a) {
+			$counter += (int)$worksheet->$item_a;
+		}
 	}
-
 	return $counter;
 }
 
@@ -166,11 +165,11 @@ function count_worksheet_sku_b($worksheet)
 		'tunga_camina_195_65R15_b'
 	);
 
-	foreach($items_b as $item_b)
-	{
-		$counter += (int) $worksheet->$item_b;
+	if ($worksheet) {
+		foreach ($items_b as $item_b) {
+			$counter += (int)$worksheet->$item_b;
+		}
 	}
-
 	return $counter;
 }
 
@@ -181,12 +180,10 @@ function get_worksheet_author($outlet)
 	/* @var $outlet Outlet */
 	/* @var $worksheet Worksheet */
 	$worksheet = $outlet->getWorksheet();
-	if($worksheet)
-	{
+	if ($worksheet) {
 		$authorId = $worksheet->getAuditorId();
-		if($authorId)
-		{
-			if($user = sfGuardUserTable::getInstance()->findOneById($authorId))
+		if ($authorId) {
+			if ($user = sfGuardUserTable::getInstance()->findOneById($authorId))
 				$author = $user->getName();
 		}
 	}
