@@ -1,4 +1,4 @@
-<?php use_helper('Status') ?>
+<?php use_helper('Status', 'Worksheet') ?>
 <div class="">
 	<h1>Добро пожаловать в систему</h1>
 </div>
@@ -38,6 +38,9 @@
 			<th>Анкета</th>
 			<th>Фотографии</th>
 			<th>Аудио</th>
+			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<th>Кто заполнял</th>
+			<?php endif ?>
 		</tr>
 		<?php $outlets = $pager->getResults() ?>
 		<?php if(count($outlets) > 0): ?>
@@ -60,6 +63,10 @@
 			<td>
 				<?php echo worksheet_audio_button($outlet, $sf_user) ?>
 			</td>
+			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<td><?php echo get_worksheet_author($outlet) ?></td>
+			<?php endif ?>
+
 			</td>
 		</tr>
 		<?php endforeach; ?>

@@ -173,3 +173,22 @@ function count_worksheet_sku_b($worksheet)
 
 	return $counter;
 }
+
+function get_worksheet_author($outlet)
+{
+	$author = '';
+
+	/* @var $outlet Outlet */
+	/* @var $worksheet Worksheet */
+	$worksheet = $outlet->getWorksheet();
+	if($worksheet)
+	{
+		$authorId = $worksheet->getAuditorId();
+		if($authorId)
+		{
+			if($user = sfGuardUserTable::getInstance()->findOneById($authorId))
+				$author = $user->getName();
+		}
+	}
+	return $author;
+}
