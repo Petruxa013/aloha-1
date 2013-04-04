@@ -16,6 +16,7 @@ class AuditorPanelFilter extends OutletFormFilter {
 			'distributor_id',
 			'lagal_name',
 			'actual_name',
+			'address',
 			'region_id',
 			'city_id',
 		));
@@ -24,6 +25,7 @@ class AuditorPanelFilter extends OutletFormFilter {
 			'distributor_id' => 'Дистрибьюто',
 			'lagal_name' => 'Юридическое название РТТ',
 			'actual_name' => 'Название РТТ',
+			'address' => 'Адрес',
 			'region_id' => 'Регион',
 			'city_id' => 'Город',
 
