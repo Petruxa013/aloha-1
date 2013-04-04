@@ -217,6 +217,14 @@ auditor_panel_worksheet:
     column:               id
     with_wildcard_routes: true
 
+client_panel:
+  url: /client/panel
+  param: {module: client_panel, action: index }
+
+client_panel_filter:
+  url: /client/panel/filter
+  param: {module: client_panel, action: filter }
+
 # generic rules
 # please, remove them by adding more specific rules
 #default_index:

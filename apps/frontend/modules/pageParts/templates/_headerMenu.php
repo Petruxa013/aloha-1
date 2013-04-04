@@ -13,6 +13,9 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li><a href="<?php echo url_for('@auditor_panel') ?>">Отчеты по РТТ</a> </li>
+						<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager') || $sf_user->hasCredential('client')): ?>
+						<li><a href="<?php echo url_for('@client_panel') ?>">Cordiant</a> </li>
+						<?php endif ?>
 						<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager')): ?>
 						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">Аудит
