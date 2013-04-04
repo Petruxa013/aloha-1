@@ -112,3 +112,41 @@ function worksheet_audio_button($outlet, $user)
 	return $button;
 }
 
+function worksheet_audit_status($outlet, $full_text = false)
+{
+	if($full_text)
+		$audit_status = '<span title="Нет данных" class="label">Нет данных</span>';
+	else
+		$audit_status = '<span title="Нет данных" class="label">-</span>';
+
+	/* @var $worksheet Worksheet */
+	if ($worksheet = $outlet->getWorksheet()) {
+		$status = $worksheet->getAuditStatus();
+		if(is_null($status))
+			return $audit_status;
+		switch($status)
+		{
+			case 0:
+				if($full_text)
+					$audit_status = '<span title="Аудит не проведен" class="label label-important">Аудит не проведен</span>';
+				else
+					$audit_status = '<span title="Аудит не проведен" class="label label-important">Нет</span>';
+				break;
+			case 10:
+				if($full_text)
+					$audit_status = '<span title="Аудит проведен частично" class="label label-warning">Аудит проведен частично</span>';
+				else
+					$audit_status = '<span title="Аудит проведен частично" class="label label-warning">Част</span>';
+				break;
+			case 20:
+				if($full_text)
+					$audit_status = '<span title="Аудит проведен" class="label label-success">Аудит проведен</span>';
+				else
+					$audit_status = '<span title="Аудит проведен" class="label label-success">Да</span>';
+				break;
+		}
+	}
+
+	return $audit_status;
+}
+

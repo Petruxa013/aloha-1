@@ -532,6 +532,10 @@
 		<td><?php echo $form['comment']->render() ?></td>
 	</tr>
 	<tr>
+		<td>Статус визита</td>
+		<td><?php echo $form['audit_status']->render() ?></td>
+	</tr>
+	<tr>
 		<td>Дата визита</td>
 		<td><?php echo $form['date']->render() ?></td>
 	</tr>

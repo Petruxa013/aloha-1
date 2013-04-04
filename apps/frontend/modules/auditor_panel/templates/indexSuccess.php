@@ -35,6 +35,9 @@
 			<th>Регион</th>
 			<th>Город</th>
 			<th>Тип РТТ</th>
+			<?php if($sf_user->hasCredential('coordinator') || $sf_user->hasCredential('project_manager') || $sf_user->hasCredential('client')): ?>
+			<th>Статус аудита</th>
+			<?php endif ?>
 			<th>Анкета</th>
 			<th>Фотографии</th>
 			<th>Аудио</th>
@@ -54,6 +57,9 @@
 			<td><?php echo $outlet->getRegion() ?></td>
 			<td><?php echo $outlet->getCity() ?></td>
 			<td><?php echo $outlet->getHumanType() ?></td>
+			<?php if($sf_user->hasCredential('coordinator') || $sf_user->hasCredential('project_manager') || $sf_user->hasCredential('client')): ?>
+			<th><?php echo worksheet_audit_status($outlet) ?></th>
+			<?php endif ?>
 			<td>
 				<?php echo worksheet_button($outlet, $sf_user) ?>
 			</td>

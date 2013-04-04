@@ -386,6 +386,8 @@ Worksheet:
       type: integer(4)
     auditor_id:
        type: integer
+    audit_status:
+       type: integer(4)
   relations:
     Outlet:
       local:          outlet_id
@@ -403,3 +405,5 @@ Worksheet:
       fields: [photo_status]
     audio_status_idx:
       fields: [audio_status]
+    audit_status_idx:
+      fields: [audit_status]

@@ -26,6 +26,16 @@ class WorksheetForm extends BaseWorksheetForm
 		$this->getWidget('date')->setDefault($this->getObject()->getDate());
 		$this->getWidget('time')->setDefault($this->getObject()->getTime());
 
+		$this->setWidget('audit_status', new sfWidgetFormChoice(array(
+			'multiple' => false,
+			'choices' => array(
+				0 => 'Аудит не проведен',
+				10 => 'Аудит проведен частично',
+				20 => 'Аудит проведен')
+		)));
+
+		$this->setValidator('audit_status', new sfValidatorChoice(array('choices' => array(0, 10, 20))));
+
 		$this->setValidator('date', new sfValidatorDate());
 		$this->setValidator('time', new sfValidatorTime());
 
