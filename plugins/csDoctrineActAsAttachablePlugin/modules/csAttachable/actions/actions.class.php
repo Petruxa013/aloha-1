@@ -45,4 +45,27 @@ class csAttachableActions extends BasecsAttachableActions
 			}
 		}
 	}
+
+	public function executeAttachmentDelete(sfWebRequest $request)
+	{
+		$attachment = Doctrine_Core::getTable('Attachment')->findOneById($this->getRequestParameter('attachment_id'));
+		$attachment->delete();
+
+		$files[] = $attachment->getUploadPath();
+		if($attachment->getType() == 'image')
+		{
+			$files[] = $attachment->getResizedHalthPath();
+			$files[] = $attachment->getResizedMiniPath();
+		}
+
+		foreach($files as $file)
+		{
+			if (file_exists($file))
+				unlink($file);
+		}
+
+		$this->refreshObject();
+
+		return $this->renderComponent('csAttachable', 'attachments', array('object' => $this->object, 'table' => $this->table, 'javascriptHelper' => $request->getParameter('javascriptHelper', 'Javascript')));
+	}
 }
