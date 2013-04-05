@@ -17,7 +17,7 @@ class AudioAttachmentForm extends AttachmentForm
 	{
 		parent::configure();
 		$this->getWidget('url')->setLabel('Файл');
-		$this->getValidator('url')->setOption('max_size', 97 * 1024 * 1024);
+		$this->getValidator('url')->setOption('max_size', 100 * 1024 * 1024);
 		$this->getValidator('url')->setOption('path', $this->getBaseUploadPath());
 		$this->getValidator('url')->setOption('mime_types', array(
 			'audio/basic', //mulaw аудио, 8 кГц, 1 канал (RFC 2046)
@@ -50,6 +50,11 @@ class AudioAttachmentForm extends AttachmentForm
 			'audio/x-hx-aac-adts', // aac
 			'audio/aac', //aac
 		));
+		$this->getValidator('url')->setMessages(array(
+			'max_size' => 'Для загрузки разрешены файлы до 100 мб.',
+			'mime_types' => 'Разрешенные форматы файлов: Mp3, Wma, Waw, Mov, Amr, Aif, ogg'
+		));
+
 	}
 
 	public function updateObject($values = null)

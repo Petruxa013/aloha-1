@@ -31,6 +31,10 @@ class ImageAttachmentForm extends AttachmentForm
 			'image/x-tiff',
 			'application/tif',
 		));
+		$this->getValidator('url')->setMessages(array(
+			'max_size' => 'Для загрузки разрешены файлы до 10 мб.',
+			'mime_types' => 'Разрешенные форматы файлов: Jpeg, Png, Gif, Tif'
+		));
 	}
 
 	public function updateObject($values = null)
