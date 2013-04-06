@@ -20,24 +20,42 @@ class WorksheetForm extends BaseWorksheetForm
 		$this->setWidget('comment', new sfWidgetFormTextarea(array(), array('cols' => 7, 'rows' => 4, 'class' => 'input-block-level', 'placeholder' => 'Здесь вы можете указать на неточность адреса, и других данных РТТ. Сложностей, с которыми вы столкнулись во время аудита')));
 
 		$year = date('Y', time());
-		$this->setWidget('date', new sfWidgetFormDate(array('format' => '%day%.%month%.%year%', 'can_be_empty' => false, 'years' => array($year => $year)), array('style' => 'width: auto')));
-		$this->setWidget('time', new sfWidgetFormTime(array('with_seconds' => false, 'can_be_empty' => false), array('style' => 'width: auto')));
+		$this->setWidget('date', new sfWidgetFormDate(array('format' => '%day%.%month%.%year%', 'can_be_empty' => true, 'years' => array($year => $year)), array('style' => 'width: auto')));
+		$this->setWidget('time', new sfWidgetFormTime(array('with_seconds' => false, 'can_be_empty' => true), array('style' => 'width: auto')));
 
 		$this->getWidget('date')->setDefault($this->getObject()->getDate());
 		$this->getWidget('time')->setDefault($this->getObject()->getTime());
 
 		$this->setWidget('audit_status', new sfWidgetFormChoice(array(
 			'multiple' => false,
-			'choices' => array(
-				0 => 'Аудит не проведен',
+			'choices'  => array(
+				-1 => 'Выбрать из списка',
+				0  => 'Аудит не проведен',
 				10 => 'Аудит проведен частично',
 				20 => 'Аудит проведен')
 		)));
 
-		$this->setValidator('audit_status', new sfValidatorChoice(array('choices' => array(0, 10, 20))));
+		$this->setValidator('audit_status', new sfValidatorChoice(
+			array(
+				'choices' => array(0, 10, 20)),
+			array('invalid' => 'Следует выбрать из списка')
+		));
 
-		$this->setValidator('date', new sfValidatorDate());
-		$this->setValidator('time', new sfValidatorTime());
+		$this->setValidator('comment', new sfValidatorString(
+			array('min_length' => 50),
+			array('min_length' => 'Не забывайте про коментарий, как минимум 50 символов',
+			      'required'   => 'Не забывайте про коментарий, как минимум 50 символов')
+		));
+
+		$this->setValidator('date', new sfValidatorDate(array(),
+			array('required' => 'Следует указать дату визита',
+			      'invalid' => 'Следует указать дату визита'
+			)
+		));
+		$this->setValidator('time', new sfValidatorTime(array(),
+			array('required' => 'Следует указать время визита',
+			      'invalid' => 'Следует указать время визита')
+		));
 
 		$this->disableCSRFProtection();
 	}
@@ -50,7 +68,7 @@ class WorksheetForm extends BaseWorksheetForm
 
 		// Если email не указан, то генерируем его автоматически
 		if (isset($values['date']) && isset($values['time'])) {
-			$this->getObject()->setCreatedAt($values['date']. ' ' . $values['time']);
+			$this->getObject()->setCreatedAt($values['date'] . ' ' . $values['time']);
 		}
 
 		$values = $this->processValues($values);

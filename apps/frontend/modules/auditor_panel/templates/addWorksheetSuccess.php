@@ -10,6 +10,11 @@
 	}
 </style>
 <h1>БЛАНК АУДИТА ПРОДУКЦИИ CORDIANT и TUNGA</h1>
+<?php if($form->hasErrors()): ?>
+<div class="alert">
+	Не все поля формы заполнены верно
+</div>
+<?php endif ?>
 <?php //if($worksheet->getStatus() < 20): ?>
 <form action="<?php echo url_for('auditor_panel_add_worksheet', $outlet) ?>" method="post">
 <?php //endif; ?>
@@ -529,19 +534,31 @@
 <table class="table table-bordered table-striped">
 	<tr>
 		<td>Комментарии</td>
-		<td><?php echo $form['comment']->render() ?></td>
+		<td>
+			<?php echo $form['comment']->render() ?>
+			<?php echo $form['comment']->renderError() ?>
+		</td>
 	</tr>
 	<tr>
 		<td>Статус визита</td>
-		<td><?php echo $form['audit_status']->render() ?></td>
+		<td>
+			<?php echo $form['audit_status']->render() ?>
+			<?php echo $form['audit_status']->renderError() ?>
+		</td>
 	</tr>
 	<tr>
 		<td>Дата визита</td>
-		<td><?php echo $form['date']->render() ?></td>
+		<td>
+			<?php echo $form['date']->render() ?>
+			<?php echo $form['date']->renderError() ?>
+		</td>
 	</tr>
 	<tr>
 		<td>Время визита</td>
-		<td><?php echo $form['time']->render() ?></td>
+		<td>
+			<?php echo $form['time']->render() ?>
+			<?php echo $form['time']->renderError() ?>
+		</td>
 	</tr>
 </table>
 <div class="pagination-centered">
