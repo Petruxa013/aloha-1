@@ -138,12 +138,32 @@ auditor_panel_approve_worksheet:
     model: outlet
     type: object
   requirements:
+    sf_method: [post]
+
+auditor_panel_approved_worksheet:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/approved
+  param: {module: auditor_panel, action: approvedWorksheet }
+  options:
+    model: outlet
+    type: object
+  requirements:
     sf_method: [get]
 
 auditor_panel_disapprove_worksheet:
   class: sfDoctrineRoute
   url: /auditor/panel/outlet/:id/worksheet/disapprove
   param: {module: auditor_panel, action: disapproveWorksheet }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [post]
+
+auditor_panel_disapproved_worksheet:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/disapproved
+  param: {module: auditor_panel, action: disapprovedWorksheet }
   options:
     model: outlet
     type: object

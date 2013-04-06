@@ -545,16 +545,43 @@
 	</tr>
 </table>
 <div class="pagination-centered">
-	<?php if($worksheet->getStatus() < 20): ?>
-	<button type="submit" class="btn">
-		<?php if($worksheet->getStatus() == 10): ?>
-			Обновить анкету
+
+	<?php if($sf_user->hasCredential('auditor')): ?>
+	<!-- Аудитор -->
+		<?php if($worksheet->getStatus() < 20): ?>
+		<button type="submit" class="btn">
+			<?php if($worksheet->getStatus() >= 10): ?>
+				Обновить анкету
+			<?php else: ?>
+				Сохранить
+			<?php endif; ?>
+		</button>
 		<?php else: ?>
-			Сохранить
+			<div class="alert alert-info">
+				Анкета одобрена, редактирование невозможно
+			</div>
 		<?php endif; ?>
-	</button>
 	<?php endif; ?>
+
+	<?php if($sf_user->hasCredential('coordinator')): ?>
+	<!-- Координатор -->
+		<?php if($worksheet->getStatus() < 30): ?>
+		<button type="submit" class="btn">
+			<?php if($worksheet->getStatus() >= 10): ?>
+				Обновить анкету
+			<?php else: ?>
+				Сохранить
+			<?php endif; ?>
+		</button>
+		<?php else: ?>
+			<div class="alert alert-info">
+				Анкета одобрена, редактирование невозможно
+			</div>
+		<?php endif; ?>
+	<?php endif; ?>
+
 	<?php if($sf_user->hasCredential('project_manager')): ?>
+		<!-- Руководитель -->
 	<button type="submit" class="btn">
 		<?php if($worksheet->getStatus() >= 10): ?>
 			Обновить анкету
@@ -563,16 +590,17 @@
 		<?php endif; ?>
 	</button>
 	<?php endif; ?>
+
 	<?php if($sf_user->hasCredential('coordinator')): ?>
 	<?php if($worksheet->getStatus() <= 10): ?>
-	<a href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-info">Одобрить анкету</button>
 	</a>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
 	</a>
 	<?php elseif($worksheet->getStatus() == 20): ?>
-		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
 			<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
 		</a>
 	<?php endif; ?>
@@ -580,18 +608,22 @@
 
 	<?php if($sf_user->hasCredential('project_manager')): ?>
 	<?php if($worksheet->getStatus() <= 20): ?>
-	<a href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить анкету</button>
 	</a>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
 	</a>
 	<?php elseif($worksheet->getStatus() == 30): ?>
-		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
+		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
 			<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
 		</a>
+		<div class="alert alert-info">
+			Анкета одобрена, ее видит клиент
+		</div>
 	<?php endif; ?>
 	<?php endif; ?>
+
 </div>
 </form>
 <script type="text/javascript">
@@ -599,6 +631,12 @@
 		$('input:checkbox[name$="_b]"]').click(function() {
 			if($(this).is(':checked'))
 				$(this).parent('td').parent('tr').find('input:checkbox[name$="_a]"]').attr('checked', true);
+		});
+		$('a.action').click(function() {
+			$.post($(this).attr('href'), function(data) {
+				window.location = data.url;
+			});
+			return false;
 		});
 	});
 </script>

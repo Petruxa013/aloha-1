@@ -88,7 +88,7 @@ class auditor_panelActions extends sfActions
 	public function executeApproveWorksheet(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager') && $request->isMethod('post'))
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
@@ -102,8 +102,17 @@ class auditor_panelActions extends sfActions
 				$worksheet->setStatus(30);
 				$worksheet->save();
 			}
+
+			if($request->isXmlHttpRequest())
+				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_approved_worksheet', array('id' => $this->outlet->getId()))));
 		}
 		else $this->forward404();
+	}
+
+	public function executeApprovedWorksheet(sfWebRequest $request)
+	{
+		$this->outlet = $this->getRoute()->getObject();
+		$this->setTemplate('approveWorksheet');
 	}
 
 	public function executeDisapproveWorksheet(sfWebRequest $request)
@@ -122,9 +131,19 @@ class auditor_panelActions extends sfActions
 				$worksheet->setStatus(null);
 				$worksheet->save();
 			}
+			if($request->isXmlHttpRequest())
+				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_disapproved_worksheet', array('id' => $this->outlet->getId()))));
+
 		}
 		else $this->forward404();
 	}
+
+	public function executeDisapprovedWorksheet(sfWebRequest $request)
+	{
+		$this->outlet = $this->getRoute()->getObject();
+		$this->setTemplate('disapproveWorksheet');
+	}
+
 
 	public function executeApproveWorksheetPhoto(sfWebRequest $request)
 	{
@@ -291,6 +310,17 @@ class auditor_panelActions extends sfActions
 	protected function getPage()
 	{
 		return $this->getUser()->getAttribute('auditor_panel.page', 1, 'auditor_panel_module');
+	}
+
+	/**
+	 * Метод, отдающий данные в JSON формате
+	 * @param Array $output
+	 * @return JSON String <sfView::NONE, string>
+	 */
+	private function returnJSON($output)
+	{
+		$this->getResponse()->setHttpHeader('Content-type', 'application/json');
+		return $this->renderText(json_encode($output));
 	}
 
 
