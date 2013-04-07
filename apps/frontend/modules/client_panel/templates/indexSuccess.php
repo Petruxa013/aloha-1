@@ -51,10 +51,10 @@
 			<td><?php echo $outlet->getCity() ?></td>
 			<td><?php echo $outlet->getHumanType() ?></td>
 			<td>
-				<a href="<?php echo url_for('auditor_panel_add_worksheet', $outlet) ?>" title="Перейти к отчету по точке"><span class="badge badge-info"><?php echo count_worksheet_sku_a($outlet->getWorksheet()); ?></span></a>
+				<a href="<?php echo url_for('client_panel_show_worksheet', $outlet) ?>" title="Перейти к отчету по точке"><?php echo count_worksheet_sku_a($outlet->getWorksheet()); ?></a>
 			</td>
 			<td>
-				<a href="<?php echo url_for('auditor_panel_add_worksheet', $outlet) ?>" title="Перейти к отчету по точке"><span class="badge badge-info"><?php echo count_worksheet_sku_b($outlet->getWorksheet()); ?></span></a>
+				<a href="<?php echo url_for('client_panel_show_worksheet', $outlet) ?>" title="Перейти к отчету по точке"><?php echo count_worksheet_sku_b($outlet->getWorksheet()); ?></a>
 			</td>
 			<td>
 				<?php echo worksheet_audit_status($outlet, true) ?>

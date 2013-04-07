@@ -109,4 +109,12 @@ class client_panelActions extends sfActions
 		return $this->getUser()->getAttribute('client_panel.page', 1, 'client_panel_module');
 	}
 
+	public function executeShowWorksheet(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->outlet = $this->getRoute()->getObject());
+		$this->forward404Unless($this->worksheet = $this->outlet->getWorksheet());
+		$this->form = new WorksheetForm($this->worksheet);
+
+	}
+
 }
