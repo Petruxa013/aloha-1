@@ -58,6 +58,15 @@ class csAttachableActions extends BasecsAttachableActions
 			$files[] = $attachment->getResizedMiniPath();
 		}
 
+		// set status 10
+		$worksheet = $attachment->getObject();
+		if($attachment->getType() == 'image')
+			$worksheet->setPhotoStatus(10);
+		if($attachment->getType() == 'audio')
+			$worksheet->setAudioStatus(10);
+		$worksheet->save();
+
+
 		foreach($files as $file)
 		{
 			if (file_exists($file))

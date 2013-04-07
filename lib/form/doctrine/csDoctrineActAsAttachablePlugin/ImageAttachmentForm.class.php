@@ -65,7 +65,7 @@ class ImageAttachmentForm extends AttachmentForm
 
 		$image = $this->getObject();
 		$worksheet = $image->getObject();
-		if ($worksheet && $worksheet->getPhotoStatus() == null) {
+		if ($worksheet) {
 			$worksheet->setPhotoStatus(10);
 			$worksheet->save();
 		}
