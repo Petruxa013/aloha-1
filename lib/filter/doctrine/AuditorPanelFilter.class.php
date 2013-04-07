@@ -22,7 +22,7 @@ class AuditorPanelFilter extends OutletFormFilter {
 		));
 
 		$this->getWidgetSchema()->setLabels(array(
-			'distributor_id' => 'Дистрибьюто',
+			'distributor_id' => 'Дистрибьютор',
 			'lagal_name' => 'Юридическое название РТТ',
 			'actual_name' => 'Название РТТ',
 			'address' => 'Адрес',
