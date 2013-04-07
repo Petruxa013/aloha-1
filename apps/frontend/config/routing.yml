@@ -178,7 +178,7 @@ auditor_panel_approve_worksheet_photo:
     model: outlet
     type: object
   requirements:
-    sf_method: [get]
+    sf_method: [post]
 
 auditor_panel_disapprove_worksheet_photo:
   class: sfDoctrineRoute
@@ -188,7 +188,7 @@ auditor_panel_disapprove_worksheet_photo:
     model: outlet
     type: object
   requirements:
-    sf_method: [get]
+    sf_method: [post]
 
 auditor_panel_approve_worksheet_audio:
   class: sfDoctrineRoute
@@ -198,7 +198,7 @@ auditor_panel_approve_worksheet_audio:
     model: outlet
     type: object
   requirements:
-    sf_method: [get]
+    sf_method: [post]
 
 auditor_panel_disapprove_worksheet_audio:
   class: sfDoctrineRoute
@@ -208,7 +208,7 @@ auditor_panel_disapprove_worksheet_audio:
     model: outlet
     type: object
   requirements:
-    sf_method: [get]
+    sf_method: [post]
 
 auditor_panel_worksheet_additional_files:
   class: sfDoctrineRoute

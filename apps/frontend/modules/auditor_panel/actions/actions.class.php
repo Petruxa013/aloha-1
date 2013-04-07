@@ -88,7 +88,7 @@ class auditor_panelActions extends sfActions
 	public function executeApproveWorksheet(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager') && $request->isMethod('post'))
+		if(($user->hasCredential('coordinator') || $user->hasCredential('project_manager')) && $request->isMethod('post'))
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
@@ -118,7 +118,7 @@ class auditor_panelActions extends sfActions
 	public function executeDisapproveWorksheet(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		if(($user->hasCredential('coordinator') || $user->hasCredential('project_manager')) && $request->isMethod('post'))
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
@@ -148,7 +148,7 @@ class auditor_panelActions extends sfActions
 	public function executeApproveWorksheetPhoto(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		if(($user->hasCredential('coordinator') || $user->hasCredential('project_manager')) && $request->isMethod('post'))
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
@@ -161,6 +161,8 @@ class auditor_panelActions extends sfActions
 				$worksheet->setPhotoStatus(30);
 				$worksheet->save();
 			}
+			if($request->isXmlHttpRequest())
+				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_worksheet_additional_files', array('id' => $this->outlet->getId()))));
 
 			$this->forward('auditor_panel', 'additionalFiles');
 		}
@@ -170,7 +172,7 @@ class auditor_panelActions extends sfActions
 	public function executeDisapproveWorksheetPhoto(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		if(($user->hasCredential('coordinator') || $user->hasCredential('project_manager')) && $request->isMethod('post'))
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
@@ -183,6 +185,10 @@ class auditor_panelActions extends sfActions
 				$worksheet->setPhotoStatus(null);
 				$worksheet->save();
 			}
+
+			if($request->isXmlHttpRequest())
+				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_worksheet_additional_files', array('id' => $this->outlet->getId()))));
+
 			$this->forward('auditor_panel', 'additionalFiles');
 		}
 		else $this->forward404();
@@ -191,7 +197,7 @@ class auditor_panelActions extends sfActions
 	public function executeApproveWorksheetAudio(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		if(($user->hasCredential('coordinator') || $user->hasCredential('project_manager')) && $request->isMethod('post'))
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
@@ -204,6 +210,10 @@ class auditor_panelActions extends sfActions
 				$worksheet->setAudioStatus(30);
 				$worksheet->save();
 			}
+
+			if($request->isXmlHttpRequest())
+				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_worksheet_additional_files', array('id' => $this->outlet->getId()))));
+
 			$this->forward('auditor_panel', 'additionalFiles');
 		}
 		else $this->forward404();
@@ -212,7 +222,7 @@ class auditor_panelActions extends sfActions
 	public function executeDisapproveWorksheetAudio(sfWebRequest $request)
 	{
 		$user = $this->getUser();
-		if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+		if(($user->hasCredential('coordinator') || $user->hasCredential('project_manager')) && $request->isMethod('post'))
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
@@ -225,6 +235,9 @@ class auditor_panelActions extends sfActions
 				$worksheet->setAudioStatus(null);
 				$worksheet->save();
 			}
+			if($request->isXmlHttpRequest())
+				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_worksheet_additional_files', array('id' => $this->outlet->getId()))));
+
 			$this->forward('auditor_panel', 'additionalFiles');
 		}
 		else $this->forward404();

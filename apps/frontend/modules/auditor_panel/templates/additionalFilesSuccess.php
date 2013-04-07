@@ -7,28 +7,29 @@
 		</a>
 
 	<?php if($sf_user->hasCredential('coordinator')): ?>
+
 	<?php if($worksheet->getPhotoStatus() <= 10): ?>
-	<a href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить фото</button>
 	</a>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
 	</a>
 	<?php elseif($worksheet->getPhotoStatus() == 20): ?>
-		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
+		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
 			<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
 		</a>
 	<?php endif; ?>
 
 	<?php if($worksheet->getAudioStatus() <= 10): ?>
-	<a href="<?php echo url_for('auditor_panel_approve_worksheet_audio', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_audio', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить аудио</button>
 	</a>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
 	</a>
 	<?php elseif($worksheet->getAudioStatus() == 20): ?>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
 	</a>
 	<?php endif; ?>
@@ -37,27 +38,27 @@
 
 	<?php if($sf_user->hasCredential('project_manager')): ?>
 	<?php if($worksheet->getPhotoStatus() <= 20): ?>
-	<a href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить фото</button>
 	</a>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
 	</a>
 	<?php elseif($worksheet->getPhotoStatus() == 30): ?>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
 	</a>
 	<?php endif; ?>
 
 	<?php if($worksheet->getAudioStatus() <= 20): ?>
-	<a href="<?php echo url_for('auditor_panel_approve_worksheet_audio', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_audio', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить аудио</button>
 	</a>
-	<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
+	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
 		<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
 	</a>
 	<?php elseif($worksheet->getAudioStatus() == 30): ?>
-		<a href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
+		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
 			<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
 		</a>
 	<?php endif; ?>
@@ -76,24 +77,16 @@
 	<?php include_component('csAttachable', 'attachments', array('form' => $form)) ?>
 	<?php endif; ?>
 </div>
-<div id="renameFile" class="modal hide fade">
-	<form>
-		<div class="modal-header">
-			<a class="close" data-dismiss="modal">×</a>
-
-			<h3>Переименовать файл</h3>
-		</div>
-
-		<div class="modal-body">
-			<label for="name">Название</label>
-			<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" style="width: 90%"/>
-		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-primary">Сохранить</button>
-			<button class="btn" data-dismiss="modal">Отмена</button>
-		</div>
-	</form>
-</div>
+<script type="text/javascript">
+	$(function () {
+		$('a.action').click(function() {
+			$.post($(this).attr('href'), function(data) {
+				window.location = data.url;
+			});
+			return false;
+		});
+	});
+</script>
 <style>
 	.attachment li a.btn:hover {
 		color: #ffffff;
