@@ -46,8 +46,30 @@ class OutletTable extends Doctrine_Table
 			$q->addWhere('worksheet.status = ? AND worksheet.photo_status = ? AND worksheet.audio_status = ?', array(30,30,30));
 		}
 
+		return $q;
+	}
+
+	public function getByRegionAndCityQuery($regionId, $cityId)
+	{
+		$q = $this->createQuery('outlet');
+		$q->addWhere('outlet.region_id = ?', $regionId);
+		$q->addWhere('outlet.city_id = ?', $cityId);
 
 		return $q;
+	}
+
+	public function countByRegionAndCity($regionId, $cityId)
+	{
+		$q = $this->getByRegionAndCityQuery($regionId, $cityId);
+
+		return $q->count();
+	}
+
+	public function findByRegionAndCity($regionId, $cityId)
+	{
+		$q = $this->getByRegionAndCityQuery($regionId, $cityId);
+
+		return $q->execute(array(), Doctrine::HYDRATE_ARRAY);
 	}
 
 }

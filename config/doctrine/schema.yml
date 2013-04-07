@@ -32,7 +32,7 @@ City:
     Region:
       local:          region_id
       foreign:        id
-      foreignAlias:   Rigions
+      foreignAlias:   Cities
   indexes:
     name:
       fields:         [name]

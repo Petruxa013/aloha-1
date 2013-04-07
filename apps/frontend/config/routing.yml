@@ -255,6 +255,10 @@ client_panel_show_worksheet:
   requirements:
     sf_method: [get]
 
+statistic:
+  url: /statistic
+  param: {module: statistic, action: index }
+
 # generic rules
 # please, remove them by adding more specific rules
 #default_index:
