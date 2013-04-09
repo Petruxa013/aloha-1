@@ -651,7 +651,7 @@
 		});
 		$('input:checkbox[name$="_a]"]').click(function() {
 			if($(this).parent('td').parent('tr').find('input:checkbox[name$="_b]"]').is(':checked'))
-				$(this).attr('checked', true)
+				$(this).attr('checked', true);
 		});
 		$('a.action').click(function() {
 			$.post($(this).attr('href'), function(data) {
