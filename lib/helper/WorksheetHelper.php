@@ -3,7 +3,8 @@
 function count_worksheet_sku_a($worksheet)
 {
 	$counter = 0;
-	$items_a = array('cordiant_comfort_155_65R13_a',
+	$items_a = array(
+		'cordiant_comfort_155_65R13_a',
 		'cordiant_comfort_175_70R13_a',
 		'cordiant_comfort_175_65R14_a',
 		'cordiant_comfort_185_60R14_a',
