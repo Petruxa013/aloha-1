@@ -2,7 +2,8 @@
 <?php include_javascripts_for_form($form) ?>
 <div class="info well container">
 	<h3><?php echo $outlet->getCity() ?> / <?php echo $outlet->getActualName() ?> / <?php echo $outlet->getAddress() ?></h3>
-		<a href="<?php echo url_for('auditor_panel')?>">
+	<?php $filters = $sf_user->getAttribute('auditor_panel.filter', array(), 'auditor_panel_module') ?>
+	<a href="<?php echo url_for('auditor_panel_filter') . '?' . http_build_query(array('auditor_panel_filter' => sfOutputEscaper::unescape($filters))) ?>">
 			<button class="btn btn-info">Вернуться к списку РТТ</button>
 		</a>
 
