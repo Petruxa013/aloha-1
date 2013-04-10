@@ -94,10 +94,15 @@ class outletActions extends autoOutletActions
 
 				$outlet->setType($type);
 
-				$groupType = mb_strtolower($line[7], 'utf-8');
-				if (!array_key_exists($groupType, Outlet::$groupTypes)) {
-					$groupType = array_search($groupType, Outlet::$groupTypes);
+				$groupTypeSearch = mb_strtolower(trim($line[7]), 'utf-8');
+				if (!array_key_exists($groupTypeSearch, Outlet::$groupTypes)) {
+					$groupType = array_search($groupTypeSearch, Outlet::$groupTypes);
+					if(!$groupType)
+						$groupType = array_search($groupTypeSearch, Outlet::$groupTypesRus);
 				}
+				else
+					$groupType = $groupTypeSearch;
+
 				$outlet->setGroupType($groupType);
 
 				$outlet->save();
