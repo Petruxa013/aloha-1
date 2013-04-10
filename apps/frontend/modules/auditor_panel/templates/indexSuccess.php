@@ -41,7 +41,7 @@
 			<th>Анкета</th>
 			<th>Фотографии</th>
 			<th>Аудио</th>
-			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
 			<th>Кто заполнял</th>
 			<?php endif ?>
 		</tr>
@@ -69,7 +69,7 @@
 			<td>
 				<?php echo worksheet_audio_button($outlet, $sf_user) ?>
 			</td>
-			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
 			<td><?php echo get_worksheet_author($outlet) ?></td>
 			<?php endif ?>
 

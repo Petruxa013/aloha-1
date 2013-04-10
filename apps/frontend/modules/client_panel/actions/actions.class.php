@@ -96,7 +96,7 @@ class client_panelActions extends sfActions
 
 	private function getFilterForm()
 	{
-		return new AuditorPanelFilter();
+		return new ClientPanelFilter();
 	}
 
 	protected function setPage($page)

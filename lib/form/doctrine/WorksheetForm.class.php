@@ -41,11 +41,11 @@ class WorksheetForm extends BaseWorksheetForm
 			array('invalid' => 'Следует выбрать из списка')
 		));
 
-		$this->setValidator('comment', new sfValidatorString(
-			array('min_length' => 50),
-			array('min_length' => 'Не забывайте про коментарий, как минимум 50 символов',
-			      'required'   => 'Не забывайте про коментарий, как минимум 50 символов')
-		));
+//		$this->setValidator('comment', new sfValidatorString(
+//			array('min_length' => 50),
+//			array('min_length' => 'Не забывайте про коментарий, как минимум 50 символов',
+//			      'required'   => 'Не забывайте про коментарий, как минимум 50 символов')
+//		));
 
 		$this->setValidator('date', new sfValidatorDate(array(),
 			array('required' => 'Следует указать дату визита',

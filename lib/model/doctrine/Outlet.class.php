@@ -23,6 +23,10 @@ class Outlet extends BaseOutlet
 		'a' => 'a',
 		'b'  => 'b'
 	);
+	public static $groupTypesRus = array(
+		'a' => 'а',
+		'b'  => 'в'
+	);
 
 	public function getHumanType()
 	{
