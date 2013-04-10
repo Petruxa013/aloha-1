@@ -33,6 +33,7 @@
 			<th>Регион</th>
 			<th>Город</th>
 			<th>Тип РТТ</th>
+			<th>Группа</th>
 			<th>Наличие SKU в торговой точке
 					(в торговом зале или на складе),</th>
 			<th>Наличие минимального кол-ва = 4 шт (торговый зал + склад)</th>
@@ -50,6 +51,7 @@
 			<td><?php echo $outlet->getRegion() ?></td>
 			<td><?php echo $outlet->getCity() ?></td>
 			<td><?php echo $outlet->getHumanType() ?></td>
+			<td><?php echo strtoupper($outlet->getGroupType()) ?></td>
 			<td>
 				<a href="<?php echo url_for('client_panel_show_worksheet', $outlet) ?>" title="Перейти к отчету по точке"><?php echo count_worksheet_sku_a($outlet->getWorksheet()); ?></a>
 			</td>
