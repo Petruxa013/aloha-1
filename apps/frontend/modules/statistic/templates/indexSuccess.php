@@ -15,27 +15,38 @@
 				<th>Готово</th>
 				<th>Одобрено координатором</th>
 				<th>Залито аудтором но не одобрено</th>
-				<th>Частично или незаполненные аудитором</th>
+				<th>В работе</th>
+				<th>Ничего нет</th>
 
 			</tr>
 			<?php $regionCities = $region->getCities() ?>
 			<?php foreach($regionCities as $city): ?>
+
 				<?php $cityOtletIds = array() ?>
 				<?php $cityOtlets = OutletTable::getInstance()->findByRegionAndCity($region->getId(), $city->getId()) ?>
-					<?php foreach($cityOtlets as $cityOtlet): ?>
-						<?php $cityOtletIds[] = $cityOtlet['id'] ?>
-					<?php endforeach ?>
+				<?php foreach($cityOtlets as $cityOtlet): ?>
+					<?php $cityOtletIds[] = $cityOtlet['id'] ?>
+				<?php endforeach ?>
+
+				<?php
+
+					$all = OutletTable::getInstance()->countByRegionAndCity($region->getId(), $city->getId());
+					$allDone = WorksheetTable::getInstance()->countDoneByOutlets($cityOtletIds);
+					$allCoordinator = WorksheetTable::getInstance()->countCoordinatorDoneByOutlets($cityOtletIds);
+					$allAuditor = WorksheetTable::getInstance()->countAuditorDoneByOutlets($cityOtletIds);
+					$allInWork = WorksheetTable::getInstance()->countOnWorkByOutlets($cityOtletIds)
+
+					?>
 
 				<tr>
 					<td><?php echo $city->getName() ?></td>
-					<td><?php echo OutletTable::getInstance()->countByRegionAndCity($region->getId(), $city->getId()) ?></td>
-					<td><?php echo WorksheetTable::getInstance()->countDoneByOutlets($cityOtletIds) ?></td>
-					<td><?php
-						$coordinatorDone = WorksheetTable::getInstance()->countCoordinatorDoneByOutlets($cityOtletIds);
-						echo $coordinatorDone;
-						?></td>
-					<td><?php echo WorksheetTable::getInstance()->countAuditorDoneByOutlets($cityOtletIds) ?></td>
-					<td><?php echo WorksheetTable::getInstance()->countAuditorNotDoneByOutlets($cityOtletIds) ?></td>
+					<td><?php echo $all ?></td>
+					<td><?php echo $allDone ?></td>
+					<td><?php echo $allCoordinator ?></td>
+					<td><?php echo $allAuditor ?></td>
+
+					<td><?php echo $allInWork ?></td>
+					<td><?php echo ($all - $allDone - $allCoordinator - $allAuditor - $allInWork) ?></td>
 
 				</tr>
 			<?php endforeach; ?>
