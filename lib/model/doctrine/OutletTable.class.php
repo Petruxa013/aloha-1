@@ -55,7 +55,8 @@ class OutletTable extends Doctrine_Table
 		$q = $this->createQuery('outlet');
 		foreach($params as $field => $search)
 		{
-			$q->addWhere('outlet.'.$field.' = ?', $search);
+			if(!empty($search))
+				$q->addWhere('outlet.'.$field.' = ?', $search);
 		}
 		$q->limit(1);
 
