@@ -50,4 +50,16 @@ class OutletTable extends Doctrine_Table
 		return $q;
 	}
 
+	public function findOneByArray($params = array())
+	{
+		$q = $this->createQuery('outlet');
+		foreach($params as $field => $search)
+		{
+			$q->addWhere('outlet.'.$field.' = ?', $search);
+		}
+		$q->limit(1);
+
+		return $q->fetchOne();
+	}
+
 }

@@ -66,6 +66,8 @@ outlet:
     collection_actions:
       parseFile:           [get,post]
       parseFile_create:    [post]
+      parseFileFix:           [get,post]
+      parseFileFix_create:    [post]
 
 city:
   class: sfDoctrineRouteCollection

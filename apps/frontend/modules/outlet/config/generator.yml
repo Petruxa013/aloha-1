@@ -27,6 +27,7 @@ generator:
         title: Список РТТ
         actions:
           parseFile: {label: Загрузить группу РТТ из файла }
+          parseFileFix: {label: Поправить группу РТТ из файла }
           _new: ~
         display: [_distributor, lagal_name, actual_name, _region_id, _city_id, _type, group_type]
         table_method: getForList
