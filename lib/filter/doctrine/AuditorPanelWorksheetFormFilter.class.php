@@ -60,7 +60,7 @@ class AuditorPanelWorksheetFormFilter extends BaseWorksheetFormFilter
 		$this->getWidgetSchema()->setLabels(array(
 			'status'       => 'Статус анкеты',
 			'photo_status' => 'Статус фото',
-			'audio_status' => 'Статус аудита',
+			'audio_status' => 'Статус аудио',
 			'audit_status' => 'Статус аудита',
 		));
 	}
