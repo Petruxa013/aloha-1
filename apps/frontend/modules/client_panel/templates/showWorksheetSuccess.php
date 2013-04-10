@@ -11,6 +11,14 @@
 	}
 </style>
 <h1>БЛАНК АУДИТА ПРОДУКЦИИ CORDIANT и TUNGA</h1>
+<a href="#photo">
+	<button class="btn btn-info">Посмотреть фото</button>
+</a>
+<a href="#audio">
+	<button class="btn btn-info">Прослушать аудио</button>
+</a>
+<br>
+<br>
 <table class="table table-bordered table-striped">
 	<tr>
 		<td>
@@ -549,6 +557,9 @@
 			<?php echo date('H:i',strtotime($worksheet['created_at'])) ?>		</td>
 	</tr>
 </table>
+<a name="photo"></a>
+<?php include_component('csAttachable', 'attachmentsList', array('form' => $form)) ?>
+<a name="audio"></a>
 <script type="text/javascript">
 	$(function () {
 		$('input:checkbox').click(function() {
@@ -556,3 +567,13 @@
 		});
 	});
 </script>
+<style>
+	.attachment li a.btn:hover {
+		color: #ffffff;
+		background-color: #2f96b4;
+		*background-color: #2a85a0;
+	}
+	.attachment li {
+		list-style: none;
+	}
+</style>
