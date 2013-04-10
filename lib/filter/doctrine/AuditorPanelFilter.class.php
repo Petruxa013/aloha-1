@@ -7,7 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class AuditorPanelFilter extends OutletFormFilter {
+class AuditorPanelFilter extends OutletFormFilter
+{
 
 	public function configure()
 	{
@@ -21,19 +22,22 @@ class AuditorPanelFilter extends OutletFormFilter {
 			'city_id',
 		));
 
+		$auditorPanelWorksheetFormFilter = new AuditorPanelWorksheetFormFilter();
+		$this->mergeForm($auditorPanelWorksheetFormFilter);
+
 		$this->getWidgetSchema()->setLabels(array(
 			'distributor_id' => 'Дистрибьютор',
-			'lagal_name' => 'Юридическое название РТТ',
-			'actual_name' => 'Название РТТ',
-			'address' => 'Адрес',
-			'region_id' => 'Регион',
-			'city_id' => 'Город',
+			'lagal_name'     => 'Юридическое название РТТ',
+			'actual_name'    => 'Название РТТ',
+			'address'        => 'Адрес',
+			'region_id'      => 'Регион',
+			'city_id'        => 'Город',
 
 		));
 
-		$this->getWidget('distributor_id')->setOption('order_by', array('name','asc'));
-		$this->getWidget('region_id')->setOption('order_by', array('name','asc'));
-		$this->getWidget('city_id')->setOption('order_by', array('name','asc'));
+		$this->getWidget('distributor_id')->setOption('order_by', array('name', 'asc'));
+		$this->getWidget('region_id')->setOption('order_by', array('name', 'asc'));
+		$this->getWidget('city_id')->setOption('order_by', array('name', 'asc'));
 
 		$this->getWidgetSchema()->setNameFormat('auditor_panel_filter[%s]');
 
@@ -42,4 +46,45 @@ class AuditorPanelFilter extends OutletFormFilter {
 
 	}
 
+	protected function doBuildQuery(array $values)
+	{
+
+		/* @var $t Doctrine_Query */
+		$query = parent::doBuildQuery($values);
+
+		$allStatus = array();
+		if (isset($values['status']) && !is_null($values['status'])) {
+			$status = (int)$values['status'] == 0 ? null : (int)$values['status'];
+			$allStatus['status'] = $status;
+		}
+		if (isset($values['photo_status']) && !is_null($values['photo_status'])) {
+			$photoStatus = (int)$values['photo_status'] == 0 ? null : (int)$values['photo_status'];
+			$allStatus['photo_status'] = $photoStatus;
+		}
+		if (isset($values['audio_status']) && !is_null($values['audio_status'])) {
+			$audioStatus = (int)$values['audio_status'] == 0 ? null : (int)$values['audio_status'];
+			$allStatus['audio_status'] = $audioStatus;
+		}
+		if (isset($values['audit_status']) && !is_null($values['audit_status'])) {
+			$auditStatus = (int)$values['audit_status'] == 0 ? null : (int)$values['audit_status'];
+			$allStatus['audit_status'] = $auditStatus;
+		}
+
+		$worksheet_outlet_ids = array();
+		if (!empty($allStatus)) {
+			$worksheets = WorksheetTable::getInstance()->findByAllStatus($allStatus, Doctrine::HYDRATE_ARRAY);
+			if (!empty($worksheets)) {
+				foreach ($worksheets as $worksheet) {
+					$worksheet_outlet_ids[] = $worksheet['outlet_id'];
+				}
+			}
+		}
+		$worksheet_outlet_ids = array_unique($worksheet_outlet_ids);
+		if (!empty($worksheet_outlet_ids))
+			$query->whereIn(sprintf('%s.%s', $query->getRootAlias(), 'id'), $worksheet_outlet_ids);
+		elseif(!empty($allStatus))
+			$query->whereIn(sprintf('%s.%s', $query->getRootAlias(), 'id'), array(0));
+
+		return $query;
+	}
 }

@@ -16,4 +16,70 @@ class WorksheetTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Worksheet');
     }
+
+	public function findByAllStatus($allStatus, $hydrate)
+	{
+		$q = $this->createQuery('worksheet');
+
+		if(array_key_exists('status', $allStatus))
+		{
+			if(is_null($allStatus['status']))
+				$q->addWhere('worksheet.status IS NULL');
+			else
+				$q->addWhere('worksheet.status = ?', $allStatus['status']);
+		}
+		if(array_key_exists('photo_status', $allStatus))
+		{
+			if(is_null($allStatus['photo_status']))
+				$q->addWhere('worksheet.photo_status IS NULL');
+			else
+				$q->addWhere('worksheet.photo_status = ?', $allStatus['photo_status']);
+		}
+		if(array_key_exists('audio_status', $allStatus))
+		{
+			if(is_null($allStatus['audio_status']))
+				$q->addWhere('worksheet.audio_status IS NULL');
+			else
+				$q->addWhere('worksheet.audio_status = ?', $allStatus['audio_status']);
+		}
+		if(array_key_exists('audit_status', $allStatus))
+		{
+			$q->addWhere('worksheet.audit_status = ?', (int)$allStatus['audit_status']);
+		}
+
+		return $q->execute(array(), $hydrate);
+
+	}
+
+//	public function findByStatus($status, $hydrate)
+//	{
+//		$q = $this->createQuery('worksheet');
+//		if(is_null($status))
+//			$q->addWhere('worksheet.status IS NULL');
+//		else
+//			$q->addWhere('worksheet.status = ?', $status);
+//
+//		return $q->execute(array(), $hydrate);
+//	}
+//	public function findByPhotoStatus($status, $hydrate)
+//	{
+//		$q = $this->createQuery('worksheet');
+//		if(is_null($status))
+//			$q->addWhere('worksheet.photo_status IS NULL');
+//		else
+//			$q->addWhere('worksheet.photo_status = ?', $status);
+//
+//		return $q->execute(array(), $hydrate);
+//	}
+//	public function findByAudioStatus($status, $hydrate)
+//	{
+//		$q = $this->createQuery('worksheet');
+//		if(is_null($status))
+//			$q->addWhere('worksheet.audio_status IS NULL');
+//		else
+//			$q->addWhere('worksheet.audio_status = ?', $status);
+//
+//		return $q->execute(array(), $hydrate);
+//	}
+
 }
