@@ -49,10 +49,12 @@ class AudioAttachmentForm extends AttachmentForm
 			'video/x-ms-asf', // wma
 			'audio/x-hx-aac-adts', // aac
 			'audio/aac', //aac
+			'video/3gpp', // .3gpp .3gp
+			'video/3gpp2', // .3gpp2 .3g2
 		));
 		$this->getValidator('url')->setMessages(array(
 			'max_size' => 'Для загрузки разрешены файлы до 100 мб.',
-			'mime_types' => 'Разрешенные форматы файлов: Mp3, Wma, Waw, Mov, Amr, Aif, ogg'
+			'mime_types' => 'Разрешенные форматы файлов: Mp3, Wma, Waw, Mov, Amr, Aif, ogg, 3gp'
 		));
 
 	}
