@@ -16,4 +16,14 @@ class Region extends BaseRegion
 	{
 		return $this->getName();
 	}
+
+	public function getCoordinators()
+	{
+		/* @var $q Doctrine_Query */
+		$q = sfGuardUserTable::getInstance()->getCoordinatorsQuery();
+		$q->leftJoin('user.sfGuardUserRegionSchema regionSchema');
+		$q->addWhere('regionSchema.region_id =? ', $this->getId());
+
+		return $q->execute();
+	}
 }

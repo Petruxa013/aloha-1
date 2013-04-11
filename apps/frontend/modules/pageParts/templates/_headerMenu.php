@@ -22,6 +22,7 @@
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><?php echo link_to('РТТ', 'outlet') ?></li>
+								<li><?php echo link_to('Статистика', 'statistic') ?></li>
 							</ul>
 						</li>
 						<?php endif; ?>

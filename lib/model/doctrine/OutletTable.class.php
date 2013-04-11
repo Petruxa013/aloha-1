@@ -46,8 +46,59 @@ class OutletTable extends Doctrine_Table
 			$q->addWhere('worksheet.status = ? AND worksheet.photo_status = ? AND worksheet.audio_status = ?', array(30,30,30));
 		}
 
+		return $q;
+	}
+
+	protected function getQuery()
+	{
+		return $this->createQuery('outlet');
+	}
+
+	public function getByRegionQuery($regionId)
+	{
+		$q = $this->getQuery();
+
+		$q->addWhere('outlet.region_id = ?', $regionId);
 
 		return $q;
+	}
+
+	public function getByRegionAndCityQuery($regionId, $cityId)
+	{
+		$q = $this->getQuery();
+
+		$q->addWhere('outlet.region_id = ?', $regionId);
+		$q->addWhere('outlet.city_id = ?', $cityId);
+
+		return $q;
+	}
+
+	public function countByRegionAndCity($regionId, $cityId)
+	{
+		$q = $this->getByRegionAndCityQuery($regionId, $cityId);
+
+		return $q->count();
+	}
+
+	public function countByRegion($regionId)
+	{
+		$q = $this->getByRegionQuery($regionId);
+
+		return $q->count();
+	}
+
+	public function findByRegionAndCity($regionId, $cityId)
+	{
+		$q = $this->getByRegionAndCityQuery($regionId, $cityId);
+
+		return $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+	}
+
+	public function findByRegion($regionId)
+	{
+		$q = $this->getByRegionQuery($regionId);
+
+		return $q->execute(array(), Doctrine::HYDRATE_ARRAY);
 	}
 
 	public function findOneByArray($params = array())
@@ -62,5 +113,4 @@ class OutletTable extends Doctrine_Table
 
 		return $q->fetchOne();
 	}
-
 }
