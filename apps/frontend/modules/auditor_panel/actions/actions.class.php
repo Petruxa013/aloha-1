@@ -274,6 +274,7 @@ class auditor_panelActions extends sfActions
 		$pager = new myPager('Outlet', sfConfig::get('app_max_items_on_auditor_panel'));
 		$pager->setQuery($this->buildQuery());
 		$pager->setPage($request->getParameter('page', 1));
+		$this->setPage($request->getParameter('page', 1));
 
 		$pager->init();
 
