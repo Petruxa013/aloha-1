@@ -261,6 +261,14 @@ statistic:
   url: /statistic
   param: {module: statistic, action: index }
 
+statistic_show_region:
+  url: /statistic/region/:id
+  param: {module: statistic, action: showRegion }
+  class: sfDoctrineRoute
+  options:
+    model: region
+    type: object
+
 # generic rules
 # please, remove them by adding more specific rules
 #default_index:

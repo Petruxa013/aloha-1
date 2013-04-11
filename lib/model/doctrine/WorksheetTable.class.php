@@ -48,9 +48,20 @@ class WorksheetTable extends Doctrine_Table
 	{
 		$q = $this->createQuery('worksheet');
 		$q->whereIn('worksheet.outlet_id', $outletIds);
-		$q->addWhere('worksheet.status <= ? OR worksheet.status IS NULL OR worksheet.photo_status <= ? OR worksheet.photo_status IS NULL OR	worksheet.audio_status <= ? OR worksheet.audio_status IS NULL', array(10, 10, 10));
+		$q->addWhere('worksheet.status <= ? OR worksheet.status IS NULL OR worksheet.photo_status <= ? OR worksheet.photo_status IS NULL OR worksheet.audio_status <= ? OR worksheet.audio_status IS NULL', array(10, 10, 10));
 
 		return $q->count();
+	}
+
+	public function countNotExistByOutlets($outletIds)
+	{
+		$q = $this->createQuery('worksheet');
+		$q->whereIn('worksheet.outlet_id', $outletIds);
+		$mustBe = count($outletIds);
+		$exist = $q->count();
+
+		return $mustBe - $exist;
+
 	}
 
 	public function findByAllStatus($allStatus, $hydrate)

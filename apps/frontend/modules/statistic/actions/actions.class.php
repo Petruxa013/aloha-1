@@ -17,7 +17,12 @@ class statisticActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
-		$this->regions = RegionTable::getInstance()->findAll();
+		$this->regions = RegionTable::getInstance()->getAllOrderedQuery()->execute();
 
+	}
+
+	public function executeShowRegion(sfWebRequest $request)
+	{
+		$this->region = $this->getRoute()->getObject();
 	}
 }

@@ -16,4 +16,12 @@ class RegionTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Region');
     }
+
+	public function getAllOrderedQuery()
+	{
+		$q = $this->createQuery('region');
+		$q->orderBy('name ASC');
+
+		return $q;
+	}
 }

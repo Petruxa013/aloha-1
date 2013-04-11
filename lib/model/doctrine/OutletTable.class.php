@@ -49,9 +49,24 @@ class OutletTable extends Doctrine_Table
 		return $q;
 	}
 
+	protected function getQuery()
+	{
+		return $this->createQuery('outlet');
+	}
+
+	public function getByRegionQuery($regionId)
+	{
+		$q = $this->getQuery();
+
+		$q->addWhere('outlet.region_id = ?', $regionId);
+
+		return $q;
+	}
+
 	public function getByRegionAndCityQuery($regionId, $cityId)
 	{
-		$q = $this->createQuery('outlet');
+		$q = $this->getQuery();
+
 		$q->addWhere('outlet.region_id = ?', $regionId);
 		$q->addWhere('outlet.city_id = ?', $cityId);
 
@@ -65,9 +80,23 @@ class OutletTable extends Doctrine_Table
 		return $q->count();
 	}
 
+	public function countByRegion($regionId)
+	{
+		$q = $this->getByRegionQuery($regionId);
+
+		return $q->count();
+	}
+
 	public function findByRegionAndCity($regionId, $cityId)
 	{
 		$q = $this->getByRegionAndCityQuery($regionId, $cityId);
+
+		return $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+	}
+
+	public function findByRegion($regionId)
+	{
+		$q = $this->getByRegionQuery($regionId);
 
 		return $q->execute(array(), Doctrine::HYDRATE_ARRAY);
 	}
