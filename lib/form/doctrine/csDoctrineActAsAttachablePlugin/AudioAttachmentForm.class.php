@@ -26,6 +26,7 @@ class AudioAttachmentForm extends AttachmentForm
 			'audio/mpeg', //MP3 или др. MPEG (RFC 3003)
 			'audio/ogg', //Ogg Vorbis, Speex, Flac или др. аудио (RFC 5334)
 			'audio/vorbis', // Vorbis (RFC 5215)
+			'application/ogg',
 			'audio/x-ms-wma', //Windows Media Audio[5]
 			'audio/x-ms-wax', //Windows Media Audio перенаправление
 			'audio/vnd.rn-realaudio', //RealAudio[6]
