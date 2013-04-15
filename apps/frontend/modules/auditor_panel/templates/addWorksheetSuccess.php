@@ -142,7 +142,7 @@
 	<td><?php echo $form['cordiant_comfort_215_55R16_a']->render() ?></td>
 	<td><?php echo $form['cordiant_comfort_215_55R16_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td rowspan="13">CORDIANT SPORT</td>
 	<td>175/70R13
@@ -223,7 +223,7 @@
 	<td><?php echo $form['cordiant_sport_215_55R16_a']->render() ?></td>
 	<td><?php echo $form['cordiant_sport_215_55R16_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td rowspan="7">CORDIANT STANDART</td>
 	<td>175/70R13
@@ -266,7 +266,7 @@
 	<td><?php echo $form['cordiant_standart_195_65R15_a']->render() ?></td>
 	<td><?php echo $form['cordiant_standart_195_65R15_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td rowspan="4">CORDIANT ALL TERRAIN</td>
 	<td>225/70R16
@@ -382,7 +382,7 @@
 	<td><?php echo $form['cordiant_sport_2_215_60R16_a']->render() ?></td>
 	<td><?php echo $form['cordiant_sport_2_215_60R16_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td rowspan="10">CORDIANT ROAD RUNNER</td>
 	<td>155/70R13
@@ -443,14 +443,14 @@
 	<td><?php echo $form['cordiant_road_runner_175_65R14_a']->render() ?></td>
 	<td><?php echo $form['cordiant_road_runner_175_65R14_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td>CORDIANT 4х4</td>
 	<td>235/70R16</td>
 	<td><?php echo $form['cordiant_4_x_4_235_70R16_a']->render() ?></td>
 	<td><?php echo $form['cordiant_4_x_4_235_70R16_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td rowspan="5">CORDIANT OFF ROAD</td>
 	<td>205/70R15
@@ -481,14 +481,14 @@
 	<td><?php echo $form['cordiant_off_road_245_70R16_a']->render() ?></td>
 	<td><?php echo $form['cordiant_off_road_245_70R16_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td>TUNGA PS-3</td>
 	<td>175/70R13</td>
 	<td><?php echo $form['tunga_ps_3_175_70R13_a']->render() ?></td>
 	<td><?php echo $form['tunga_ps_3_175_70R13_b']->render() ?></td>
 </tr>
-
+<tr><td colspan="4" style="height: 20px;"></td></tr>
 <tr>
 	<td rowspan="6">TUNGA CAMINA</td>
 	<td>175/70R13
