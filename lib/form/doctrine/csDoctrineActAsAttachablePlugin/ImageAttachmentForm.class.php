@@ -77,14 +77,14 @@ class ImageAttachmentForm extends AttachmentForm
 			$imageWidth = $thumb->getWidth();
 			$imageHeigh = $thumb->getHeight();
 
-			$thumb->resize(floor($imageWidth * 0.5), floor($imageHeigh * 0.5));
-			$thumb->saveAs($image->getResizedHalthPath());
+//			$thumb->resize(floor($imageWidth * 0.5), floor($imageHeigh * 0.5));
+//			$thumb->saveAs($image->getResizedHalthPath());
 
 			$thumb->resize(floor($imageWidth * 0.1), floor($imageHeigh * 0.1));
 			$thumb->saveAs($image->getResizedMiniPath());
+
 		} catch (sfImageTransformException $exeption) {
-//			$image->setType('other');
-//			$image->save();
+
 		}
 
 		return $object;
