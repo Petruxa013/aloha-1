@@ -257,6 +257,10 @@ client_panel_show_worksheet:
   requirements:
     sf_method: [get]
 
+client_panel_export_excel:
+  url: /client/panel/export/excel
+  param: {module: client_panel, action: exportExcel }
+
 statistic:
   url: /statistic
   param: {module: statistic, action: index }

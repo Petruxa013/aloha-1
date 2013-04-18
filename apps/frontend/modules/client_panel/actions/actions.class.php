@@ -8,6 +8,9 @@
  * @author     Alexander Manichev a.manichev@gmail.com
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
+require_once sfConfig::get('sf_lib_dir').DS.'helper'.DS.'StatusHelper.php';
+require_once sfConfig::get('sf_lib_dir').DS.'helper'.DS.'WorksheetHelper.php';
+
 class client_panelActions extends sfActions
 {
 	/**
@@ -51,6 +54,92 @@ class client_panelActions extends sfActions
 		$this->route = 'client_panel_filter';
 
 		$this->setTemplate('index');
+	}
+
+	public function executeExportExcel(sfWebRequest $request)
+	{
+		$this->filter = $this->getFilterForm();
+
+		$this->filter->bind($request->getParameter($this->filter->getName()));
+		if ($this->filter->isValid()) {
+
+			$filename = 'cordiant_otchet_' . date('d_m_Y') . '.xlsx';
+			$filepath = sfConfig::get('sf_data_dir') . DS . 'otchet' . DS;
+			if (!is_dir($filepath))
+				mkdir($filepath, 0755, true);
+
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel->getProperties()->setCreator("allclients.ru");
+			$objPHPExcel->getProperties()->setLastModifiedBy("allclients.ru");
+			$objPHPExcel->getProperties()->setTitle("Отчет по аудиту коипании ОАО Кордиант");
+			$objPHPExcel->getProperties()->setSubject("Отчет по аудиту коипании ОАО Кордиант");
+			$objPHPExcel->getProperties()->setDescription("Отчет по аудиту коипании ОАО Кордиант");
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+			$objPHPExcel->setActiveSheetIndex(0);
+
+			$excelWorksheet = $objPHPExcel->getActiveSheet();
+
+			$excelWorksheet->SetCellValue('A1', 'Дистрибьютор');
+			$excelWorksheet->SetCellValue('B1', 'Юридическое название РТТ!');
+			$excelWorksheet->SetCellValue('C1', 'Название РТТ');
+			$excelWorksheet->SetCellValue('D1', 'Адрес');
+			$excelWorksheet->SetCellValue('E1', 'Регион');
+			$excelWorksheet->SetCellValue('F1', 'Город');
+			$excelWorksheet->SetCellValue('G1', 'Тип РТТ');
+			$excelWorksheet->SetCellValue('H1', 'Группа');
+			$excelWorksheet->SetCellValue('I1', 'Наличие SKU в торговой точке (в торговом зале или на складе)');
+			$excelWorksheet->SetCellValue('J1', 'Наличие минимального кол-ва = 4 шт (торговый зал + склад)');
+			$excelWorksheet->SetCellValue('K1', 'Результат');
+
+			$outlets = $this->buildQuery()->execute();
+
+			/* @var $outlet Outlet */
+			foreach ($outlets as $i => $outlet) {
+				$k = $i + 2;
+				$excelWorksheet->SetCellValue('A' . $k, $outlet->getDistributor()->getName());
+				$excelWorksheet->SetCellValue('B' . $k, $outlet->getLagalName());
+				$excelWorksheet->SetCellValue('C' . $k, $outlet->getActualName());
+				$excelWorksheet->SetCellValue('D' . $k, $outlet->getAddress());
+				$excelWorksheet->SetCellValue('E' . $k, $outlet->getRegion()->getName());
+				$excelWorksheet->SetCellValue('F' . $k, $outlet->getCity()->getName());
+				$excelWorksheet->SetCellValue('G' . $k, $outlet->getHumanType());
+				$excelWorksheet->SetCellValue('H' . $k, strtoupper($outlet->getGroupType()));
+				$excelWorksheet->SetCellValue('I' . $k, count_worksheet_sku_a($outlet->getWorksheet()));
+				$excelWorksheet->SetCellValue('J' . $k, count_worksheet_sku_b($outlet->getWorksheet()));
+				$excelWorksheet->SetCellValue('K' . $k, worksheet_audit_simple_status($outlet, true));
+			}
+
+			$boldFont = array(
+				'font' => array(
+					'bold' => true
+				)
+			);
+			//и позиционирование
+			$center = array(
+				'alignment' => array(
+					'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+					'vertical' => PHPExcel_Style_Alignment::VERTICAL_TOP
+				)
+			);
+			// установим жирный шрифт для заголовков
+			// и заодно отцентрируем
+			foreach (range('a', 'k') as $letter) {
+				$excelWorksheet->getStyle($letter . '1')->applyFromArray($boldFont)
+						->applyFromArray($center);
+			}
+
+			$objWriter->save($filepath . $filename);
+
+			// redirect output to client browser
+			$response = $this->getResponse();
+			$response->setHttpHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			$response->setHttpHeader('Content-Disposition', 'attachment;filename="' . $filename . '"');
+			$response->setHttpHeader('Cache-Control', 'max-age=0');
+			$response->setContent(file_get_contents($filepath . $filename));
+
+			return sfView::NONE;
+		} else $this->forward404();
+
 	}
 
 	protected function getPager(sfWebRequest $request)

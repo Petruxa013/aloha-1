@@ -150,3 +150,41 @@ function worksheet_audit_status($outlet, $full_text = false)
 	return $audit_status;
 }
 
+function worksheet_audit_simple_status($outlet, $full_text = false)
+{
+	if($full_text)
+		$audit_status = 'Нет данных';
+	else
+		$audit_status = '-';
+
+	/* @var $worksheet Worksheet */
+	if ($worksheet = $outlet->getWorksheet()) {
+		$status = $worksheet->getAuditStatus();
+		if(is_null($status))
+			return $audit_status;
+		switch($status)
+		{
+			case 0:
+				if($full_text)
+					$audit_status = 'Аудит не проведен';
+				else
+					$audit_status = 'Нет';
+				break;
+			case 10:
+				if($full_text)
+					$audit_status = 'Аудит проведен частично';
+				else
+					$audit_status = 'Част';
+				break;
+			case 20:
+				if($full_text)
+					$audit_status = 'Аудит проведен';
+				else
+					$audit_status = 'Да';
+				break;
+		}
+	}
+
+	return $audit_status;
+}
+

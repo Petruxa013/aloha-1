@@ -23,6 +23,12 @@
 
 <div class="">
 	<h2>Розничные торговые точки (РТТ)</h2>
+	<a href="<?php echo url_for('@client_panel_export_excel') ?>" target="_blank"><button class="btn"><i class="icon-download"></i> Выгрузить в Excel</button></a>
+	<?php if (!empty($filterValues)): ?>
+	<div class="span4 alert alert-info">
+		Будут выгружены только отфильтрованные данные
+	</div>
+	<?php endif ?>
 	<?php include_partial('paginator', array('pager' => $pager)) ?>
 	<table class="table table-bordered" style="margin-top: 15px;">
 		<tr>
