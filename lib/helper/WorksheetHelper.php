@@ -291,3 +291,23 @@ function get_worksheet_author($outlet)
 	}
 	return $author;
 }
+
+function get_worksheet_authors_coordinator($outlet)
+{
+	$coordinator = '';
+
+	/* @var $outlet Outlet */
+	/* @var $worksheet Worksheet */
+	/* @var $user sfGuardUser */
+	$worksheet = $outlet->getWorksheet();
+	if ($worksheet) {
+		$authorId = $worksheet->getAuditorId();
+		if ($authorId) {
+			if ($user = sfGuardUserTable::getInstance()->findOneById($authorId))
+				$coordinator = $user->getMasters()[0];
+				if($coordinator)
+					$coordinator = $coordinator->getName();
+		}
+	}
+	return $coordinator;
+}

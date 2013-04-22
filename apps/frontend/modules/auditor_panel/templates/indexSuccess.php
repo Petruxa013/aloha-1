@@ -44,6 +44,10 @@
 			<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
 			<th>Кто заполнял</th>
 			<?php endif ?>
+			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<th>Кто координатор</th>
+			<?php endif ?>
+
 		</tr>
 		<?php $outlets = $pager->getResults() ?>
 		<?php if(count($outlets) > 0): ?>
@@ -72,6 +76,10 @@
 			<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
 			<td><?php echo get_worksheet_author($outlet) ?></td>
 			<?php endif ?>
+			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<td><?php echo get_worksheet_authors_coordinator($outlet) ?></td>
+			<?php endif ?>
+
 
 			</td>
 		</tr>
