@@ -20,13 +20,26 @@ class client_panelActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
+		// sorting
+		if ($request->getParameter('sort') && $this->isValidSortColumn($request->getParameter('sort'))) {
+			$this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
+		}
+
 		$this->filter = $this->getFilterForm();
 
+		$query = Doctrine::getTable('Outlet')
+						->getAllWithGeoByUserQuery($this->getUser());
+		$query = $this->addSortQuery($query, true);
+
 		$this->pager = new myPager('Outlet', sfConfig::get('max_items_on_report', 20));
-		$this->pager->setQuery(Doctrine::getTable('Outlet')
-				->getAllWithGeoByUserQuery($this->getUser()));
+		$this->pager->setQuery($query);
 		$this->pager->setPage($request->getParameter('page', 1));
 		$this->pager->init();
+		$this->setPage($request->getParameter('page', 1));
+
+		$this->route = 'client_panel';
+
+		$this->sort = $this->getSort();
 
 	}
 
@@ -38,6 +51,11 @@ class client_panelActions extends sfActions
 			$this->setFilters($this->getFilterDefaults());
 
 			$this->redirect('@client_panel');
+		}
+
+		// sorting
+		if ($request->getParameter('sort') && $this->isValidSortColumn($request->getParameter('sort'))) {
+			$this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
 		}
 
 		$this->filter = $this->getFilterForm();
@@ -52,6 +70,7 @@ class client_panelActions extends sfActions
 
 		$this->pager->setFilters(http_build_query($filters));
 		$this->route = 'client_panel_filter';
+		$this->sort = $this->getSort();
 
 		$this->setTemplate('index');
 	}
@@ -142,11 +161,53 @@ class client_panelActions extends sfActions
 
 	}
 
+	protected function isValidSortColumn($column)
+	{
+		return Doctrine_Core::getTable('outlet')->hasColumn($column);
+	}
+
+	protected function addSortQuery($query, $return = false)
+	{
+		if (array(null, null) == ($sort = $this->getSort()) || array(0 => null) == $sort) {
+			return;
+		}
+
+		if (!in_array(strtolower($sort[1]), array('asc', 'desc'))) {
+			$sort[1] = 'asc';
+		}
+
+		$query->addOrderBy($sort[0] . ' ' . $sort[1]);
+
+		if($return)
+			return $query;
+	}
+
+	protected function getSort()
+	{
+		if (null !== $sort = $this->getUser()->getAttribute('client_panel.sort', null, 'client_panel_module')) {
+			return $sort;
+		}
+
+		$this->setSort(array(null => null));
+
+		return $this->getUser()->getAttribute('client_panel.sort', null, 'client_panel_module');
+	}
+
+	protected function setSort(array $sort)
+	{
+		if (null !== $sort[0] && null === $sort[1]) {
+			$sort[1] = 'asc';
+		}
+
+		$this->getUser()->setAttribute('client_panel.sort', $sort, 'client_panel_module');
+	}
+
 	protected function getPager(sfWebRequest $request)
 	{
 		$pager = new myPager('Outlet', sfConfig::get('app_max_items_on_client_panel'));
 		$pager->setQuery($this->buildQuery());
 		$pager->setPage($request->getParameter('page', 1));
+		$this->setPage($request->getParameter('page', 1));
 
 		$pager->init();
 
@@ -164,6 +225,9 @@ class client_panelActions extends sfActions
 		/* @var $query Doctrine_Query */
 		$query = Doctrine::getTable('Outlet')
 				->getAllWithGeoByUserQuery($this->getUser(), $query);
+
+		$query = $this->addSortQuery($query, true);
+
 		return $query;
 	}
 

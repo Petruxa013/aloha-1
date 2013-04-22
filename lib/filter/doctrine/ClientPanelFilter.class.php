@@ -40,7 +40,7 @@ class ClientPanelFilter extends OutletFormFilter {
 		$this->getWidget('city_id')->setOption('order_by', array('name','asc'));
 		$this->getWidget('type')->setOption('choices', array('' => '', 'specialized' => 'СШМ', 'auto' => 'Авто', 'market' => 'Рынок'));
 
-		$this->getWidgetSchema()->setNameFormat('auditor_panel_filter[%s]');
+		$this->getWidgetSchema()->setNameFormat('client_panel_filter[%s]');
 
 
 		$this->disableCSRFProtection();
