@@ -97,6 +97,7 @@ class client_panelActions extends sfActions
 			$objPHPExcel->setActiveSheetIndex(0);
 
 			$excelWorksheet = $objPHPExcel->getActiveSheet();
+			$excelWorksheet->setTitle('РТТ');
 
 			$excelWorksheet->SetCellValue('A1', 'Дистрибьютор');
 			$excelWorksheet->SetCellValue('B1', 'Юридическое название РТТ!');
@@ -147,6 +148,30 @@ class client_panelActions extends sfActions
 						->applyFromArray($center);
 			}
 
+			// Среднее арифметическое по дистрибьюторам.
+			// По всем точкам одного дистрибьютора считается ср. арифметическое по полю
+			// "Наличие минимального кол-ва = 4 шт (торговый зал + склад)"
+			$excelWorksheet = $objPHPExcel->createSheet(1);
+			$excelWorksheet->setTitle('Среднее по дистрибьюторам');
+
+			$excelWorksheet->SetCellValue('A1', 'Дистрибьютор');
+			$excelWorksheet->SetCellValue('B1', 'Среднее по "Наличие минимального кол-ва = 4 шт (торговый зал + склад)"!');
+
+			$distributors = DistributorTable::getInstance()->findAll();
+			/* @var $distributor Distributor */
+			foreach ($distributors as $i => $distributor) {
+				$k = $i + 2;
+				$excelWorksheet->SetCellValue('A' . $k, $distributor->getName());
+				$excelWorksheet->SetCellValue('B' . $k, count_worksheet_sku_b_average_by_outlets($distributor->getOutlets()));
+			}
+
+			// установим жирный шрифт для заголовков
+			// и заодно отцентрируем
+			foreach (range('a', 'b') as $letter) {
+				$excelWorksheet->getStyle($letter . '1')->applyFromArray($boldFont)
+						->applyFromArray($center);
+			}
+
 			$objWriter->save($filepath . $filename);
 
 			// redirect output to client browser
@@ -168,7 +193,8 @@ class client_panelActions extends sfActions
 
 	protected function addSortQuery($query, $return = false)
 	{
-		if (array(null, null) == ($sort = $this->getSort()) || array(0 => null) == $sort) {
+		$sort = $this->getSort();
+		if (empty($sort) || empty($sort[0])) {
 			return;
 		}
 
@@ -184,13 +210,13 @@ class client_panelActions extends sfActions
 
 	protected function getSort()
 	{
-		if (null !== $sort = $this->getUser()->getAttribute('client_panel.sort', null, 'client_panel_module')) {
+		if (null !== $sort = $this->getUser()->getAttribute('client_panel.sort', array(0 => null), 'client_panel_module')) {
 			return $sort;
 		}
 
-		$this->setSort(array(null => null));
+		$this->setSort(array(0 => null));
 
-		return $this->getUser()->getAttribute('client_panel.sort', null, 'client_panel_module');
+		return $this->getUser()->getAttribute('client_panel.sort', array(0 => null), 'client_panel_module');
 	}
 
 	protected function setSort(array $sort)
