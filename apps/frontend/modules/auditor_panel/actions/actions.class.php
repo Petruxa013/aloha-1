@@ -243,6 +243,25 @@ class auditor_panelActions extends sfActions
 		else $this->forward404();
 	}
 
+	public function executeChangeWorksheetAuditor(sfWebRequest $request)
+	{
+		$user = $this->getUser();
+		if(($user->hasCredential('coordinator') || $user->hasCredential('project_manager')))
+		{
+			$this->outlet = $this->getRoute()->getObject();
+			$worksheet = $this->outlet->getWorksheet();
+
+			$this->form = new WorksheetAuditorForm($worksheet);
+
+			if ($request->isMethod('post')) {
+				$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+				if ($this->form->isValid())
+					$this->form->save();
+			}
+		}
+		else $this->forward404();
+	}
+
 	public function executeFilter(sfWebRequest $request)
 	{
 		$this->setPage(1);

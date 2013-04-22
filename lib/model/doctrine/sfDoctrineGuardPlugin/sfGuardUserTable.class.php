@@ -77,6 +77,11 @@ class sfGuardUserTable extends PluginsfGuardUserTable
 		return $q;
 	}
 
+	public function getActiveAuditors()
+	{
+		return $this->getActiveAuditorsQuery()->execute();
+	}
+
 	public function getAuditorsQuery()
 	{
 		$user = sfContext::getInstance()->getUser();

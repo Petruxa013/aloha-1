@@ -299,6 +299,7 @@ function get_worksheet_authors_coordinator($outlet)
 	/* @var $outlet Outlet */
 	/* @var $worksheet Worksheet */
 	/* @var $user sfGuardUser */
+	/* @var $coordinator sfGuardUser */
 	$worksheet = $outlet->getWorksheet();
 	if ($worksheet) {
 		$authorId = $worksheet->getAuditorId();
