@@ -113,6 +113,8 @@ class client_panelActions extends sfActions
 
 			$outlets = $this->buildQuery()->execute();
 
+			$distributorIds = array();
+
 			/* @var $outlet Outlet */
 			foreach ($outlets as $i => $outlet) {
 				$k = $i + 2;
@@ -127,6 +129,7 @@ class client_panelActions extends sfActions
 				$excelWorksheet->SetCellValue('I' . $k, count_worksheet_sku_a($outlet->getWorksheet()));
 				$excelWorksheet->SetCellValue('J' . $k, count_worksheet_sku_b($outlet->getWorksheet()));
 				$excelWorksheet->SetCellValue('K' . $k, worksheet_audit_simple_status($outlet, true));
+				$distributorIds[] = $outlet->getDistributorId();
 			}
 
 			$boldFont = array(
@@ -157,12 +160,16 @@ class client_panelActions extends sfActions
 			$excelWorksheet->SetCellValue('A1', 'Дистрибьютор');
 			$excelWorksheet->SetCellValue('B1', 'Среднее по "Наличие минимального кол-ва = 4 шт (торговый зал + склад)"!');
 
-			$distributors = DistributorTable::getInstance()->findAll();
-			/* @var $distributor Distributor */
-			foreach ($distributors as $i => $distributor) {
-				$k = $i + 2;
-				$excelWorksheet->SetCellValue('A' . $k, $distributor->getName());
-				$excelWorksheet->SetCellValue('B' . $k, count_worksheet_sku_b_average_by_outlets($distributor->getOutlets()));
+			$distributorIds = array_unique($distributorIds);
+			if(!empty($distributorIds))
+			{
+				$distributors = DistributorTable::getInstance()->getByDistributorIdsQuery($distributorIds)->execute();
+				/* @var $distributor Distributor */
+				foreach ($distributors as $i => $distributor) {
+					$k = $i + 2;
+					$excelWorksheet->SetCellValue('A' . $k, $distributor->getName());
+					$excelWorksheet->SetCellValue('B' . $k, count_worksheet_sku_b_average_by_outlets($distributor->getOutlets()));
+				}
 			}
 
 			// установим жирный шрифт для заголовков

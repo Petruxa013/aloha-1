@@ -16,4 +16,12 @@ class DistributorTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Distributor');
     }
+
+	public function getByDistributorIdsQuery($distributorIds = array())
+	{
+		$q = $this->createQuery('distributor');
+		$q->whereIn('distributor.id', $distributorIds);
+
+		return $q;
+	}
 }

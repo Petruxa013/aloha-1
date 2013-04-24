@@ -50,7 +50,7 @@
 								<li><?php echo link_to('Клиенты', 'client') ?></li>
 								<?php endif; ?>
 								<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager')): ?>
-								<li><?php echo link_to('История действий', 'history') ?></li>
+<!--								<li>--><?php //echo link_to('История действий', 'history') ?><!--</li>-->
 								<?php endif; ?>
 							</ul>
 						</li>
