@@ -195,7 +195,10 @@ class client_panelActions extends sfActions
 	{
 		$sort = $this->getSort();
 		if (empty($sort) || empty($sort[0])) {
-			return;
+			if($return)
+				return $query;
+			else
+				return;
 		}
 
 		if (!in_array(strtolower($sort[1]), array('asc', 'desc'))) {
