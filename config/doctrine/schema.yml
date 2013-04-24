@@ -407,3 +407,38 @@ Worksheet:
       fields: [audio_status]
     audit_status_idx:
       fields: [audit_status]
+
+History:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:
+      type:           integer(8)
+      notnull:        true
+      unsigned:       true
+      primary:        true
+      autoincrement:  true
+    event:
+      type:           integer(4)
+      notnull:        true
+      unsigned:       true
+    model:
+      type:			  string(255)
+    model_id:
+      type:           integer(8)
+    user_id:
+      type: 		  integer
+    comment:
+      type:           string(255)
+  relations:
+    sfGuardUser:
+      local:          user_id
+      foreign:        id
+      foreignAlias:   HistoryActions
+  indexes:
+    event:
+      fields: [event]
+    model:
+      fields: [model]
+    model_id:
+      fields: [model_id]
