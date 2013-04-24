@@ -82,7 +82,7 @@ class client_panelActions extends sfActions
 		$this->filter->bind($request->getParameter($this->filter->getName()));
 		if ($this->filter->isValid()) {
 
-			$filename = 'cordiant_otchet_' . date('d_m_Y') . '.xlsx';
+			$filename = 'cordiant_otchet_' . date('d_m_Y') . '_'.$this->getUser()->getId().'.xlsx';
 			$filepath = sfConfig::get('sf_data_dir') . DS . 'otchet' . DS;
 			if (!is_dir($filepath))
 				mkdir($filepath, 0755, true);
