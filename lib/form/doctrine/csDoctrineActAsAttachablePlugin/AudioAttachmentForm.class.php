@@ -24,6 +24,7 @@ class AudioAttachmentForm extends AttachmentForm
 			'audio/L24', //24bit Linear PCM аудио, 8-48 кГц, 1-N каналов (RFC 3190)
 			'audio/mp4', //MP4
 			'audio/mpeg', //MP3 или др. MPEG (RFC 3003)
+			'audio/mp3', //MP3 или др. MPEG (RFC 3003)
 			'audio/ogg', //Ogg Vorbis, Speex, Flac или др. аудио (RFC 5334)
 			'audio/vorbis', // Vorbis (RFC 5215)
 			'application/ogg',
