@@ -44,6 +44,10 @@
 			<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
 			<th>Кто заполнял</th>
 			<?php endif ?>
+			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<th>Кто координатор</th>
+			<?php endif ?>
+
 		</tr>
 		<?php $outlets = $pager->getResults() ?>
 		<?php if(count($outlets) > 0): ?>
@@ -70,8 +74,20 @@
 				<?php echo worksheet_audio_button($outlet, $sf_user) ?>
 			</td>
 			<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
-			<td><?php echo get_worksheet_author($outlet) ?></td>
+			<td>
+				<?php
+					$auditor = get_worksheet_author($outlet);
+					echo $auditor
+				?>
+				<?php if(!empty($auditor)): ?>
+				<a href="<?php echo url_for('auditor_panel_change_auditor', $outlet) ?>"><button class="btn">Сменить</button></a>
+				<?php endif ?>
+			</td>
 			<?php endif ?>
+			<?php if($sf_user->hasCredential('project_manager')): ?>
+			<td><?php echo get_worksheet_authors_coordinator($outlet) ?></td>
+			<?php endif ?>
+
 
 			</td>
 		</tr>

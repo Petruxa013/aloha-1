@@ -12,7 +12,9 @@
 				<!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
 				<div class="nav-collapse collapse">
 					<ul class="nav">
+						<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator') || $sf_user->hasCredential('auditor')): ?>
 						<li><a href="<?php echo url_for('@auditor_panel') ?>">Отчеты по РТТ</a> </li>
+						<?php endif ?>
 						<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager') || $sf_user->hasCredential('client')): ?>
 						<li><a href="<?php echo url_for('@client_panel') ?>">Cordiant</a> </li>
 						<?php endif ?>
@@ -46,6 +48,9 @@
 								<li><?php echo link_to('Координаторы', 'coordinator') ?></li>
 								<li><?php echo link_to('Руководители проекта', 'project_manager') ?></li>
 								<li><?php echo link_to('Клиенты', 'client') ?></li>
+								<?php endif; ?>
+								<?php if($sf_user->hasCredential('admin') || $sf_user->hasCredential('project_manager')): ?>
+<!--								<li>--><?php //echo link_to('История действий', 'history') ?><!--</li>-->
 								<?php endif; ?>
 							</ul>
 						</li>

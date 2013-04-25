@@ -37,6 +37,11 @@ class ImageAttachment extends Attachment
 		return $this->getDefaultResizedFilepath($width, $height);
 	}
 
+	public function getOriginalUrl()
+	{
+		return $this->getDefaultResizedFilepath();
+	}
+
 	public function getDefaultResizedFilepath($width = null, $height = null)
 	{
 		/* @todo Не ходит на диск а придумать как отдавать ссылки не на веб картинки напрямую */

@@ -4,7 +4,7 @@
 			<?php foreach ($attachments as $attachment): ?>
 
 					<?php if ($attachment->getType() == 'image'): ?>
-						<?php $imageAttachments .= '<li>'.link_to(image_tag($attachment->getAttachmentResizedRoute(10, 10)), image_path($attachment->getAttachmentResizedRoute(50, 50)), 'class=link target=_blank').'</li>' ?>
+						<?php $imageAttachments .= '<li>'.link_to(image_tag($attachment->getAttachmentResizedRoute(10, 10)), image_path($attachment->getOriginalUrl()), 'class=link target=_blank').'</li>' ?>
 					<?php elseif ($attachment->getType() == 'audio'): ?>
 						<?php $audioAttachment .= '<li>'.link_to($attachment->getTitle(), image_path($attachment->getAttachmentRoute()), 'class=link target=_blank').'</li>' ?>
 					<?php endif;?>

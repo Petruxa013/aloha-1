@@ -7,7 +7,7 @@
 		<?php endforeach ?>
 	</div>
 	<a href="<?php echo url_for('@statistic') ?>"><button class="btn btn-info">Вернуться к статистике по регионам</button> </a>
-	<table class="table table-bordered" style="margin-top: 15px;">
+	<table class="table table-bordered table-striped" style="margin-top: 15px;">
 		<tr>
 			<th>Город</th>
 			<th>Количество точек</th>
@@ -16,8 +16,15 @@
 			<th>Залито аудтором но не одобрено</th>
 			<th>В работе</th>
 			<th>Ничего нет</th>
-
 		</tr>
+		<?php
+			$all_ = 0;
+			$allDone_ = 0;
+			$allCoordinator_ = 0;
+			$allAuditor_ = 0;
+			$noWorksheets_ = 0;
+		?>
+
 		<?php $regionCities = $region->getCities() ?>
 		<?php foreach ($regionCities as $city): ?>
 
@@ -52,5 +59,23 @@
 				<td><?php echo $noWorksheets ?></td>
 
 			</tr>
+			<?php
+				$all_ += $all;
+				$allDone_ += $allDone;
+				$allCoordinator_ += $allCoordinator;
+				$allAuditor_ += $allAuditor;
+				$noWorksheets_ += $noWorksheets;
+
+			?>
+
 		<?php endforeach; ?>
+			<tr>
+				<td>Итого:</td>
+				<td><?php echo $all_ ?></td>
+				<td><?php echo $allDone_ ?></td>
+				<td><?php echo $allCoordinator_ ?></td>
+				<td><?php echo $allAuditor_ ?></td>
+				<td><?php echo ($all_ - $allDone_ - $allCoordinator_ - $allAuditor_ - $noWorksheets_)?></td>
+				<td><?php echo $noWorksheets_ ?></td>
+			</tr>
 	</table>

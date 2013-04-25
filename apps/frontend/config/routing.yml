@@ -239,6 +239,16 @@ auditor_panel_worksheet:
     column:               id
     with_wildcard_routes: true
 
+auditor_panel_change_auditor:
+  url: /auditor/panel/outlet/:id/worksheet/auditor
+  class: sfDoctrineRoute
+  param: {module: auditor_panel, action: changeWorksheetAuditor }
+  options:
+    model: outlet
+    type: object
+  requirements:
+    sf_method: [get, post]
+
 client_panel:
   url: /client/panel
   param: {module: client_panel, action: index }

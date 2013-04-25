@@ -38,7 +38,7 @@ class AudioAttachmentForm extends AttachmentForm
 			'audio/x-aiff', // aif aifc aiff
 			'audio/x-mpegurl', // m3u
 			'audio/x-pn-realaudio', // ra ram
-			'application/octet-stream', // amr
+//			'application/octet-stream', // amr
 			'audio/AMR', // amr
 			'audio/amr', // amr
 			'video/quicktime', // mov
@@ -53,6 +53,7 @@ class AudioAttachmentForm extends AttachmentForm
 			'video/3gpp', // .3gpp .3gp
 			'video/3gpp2', // .3gpp2 .3g2
 		));
+		$this->getValidator('url')->setOption('mime_type_guessers', 'guessFromFileBinary');
 		$this->getValidator('url')->setMessages(array(
 			'max_size' => 'Для загрузки разрешены файлы до 100 мб.',
 			'mime_types' => 'Разрешенные форматы файлов: Mp3, Wma, Waw, Mov, Amr, Aif, ogg, 3gp'

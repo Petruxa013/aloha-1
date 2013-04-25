@@ -20,13 +20,26 @@ class client_panelActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
+		// sorting
+		if ($request->getParameter('sort') && $this->isValidSortColumn($request->getParameter('sort'))) {
+			$this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
+		}
+
 		$this->filter = $this->getFilterForm();
 
+		$query = Doctrine::getTable('Outlet')
+						->getAllWithGeoByUserQuery($this->getUser());
+		$query = $this->addSortQuery($query, true);
+
 		$this->pager = new myPager('Outlet', sfConfig::get('max_items_on_report', 20));
-		$this->pager->setQuery(Doctrine::getTable('Outlet')
-				->getAllWithGeoByUserQuery($this->getUser()));
+		$this->pager->setQuery($query);
 		$this->pager->setPage($request->getParameter('page', 1));
 		$this->pager->init();
+		$this->setPage($request->getParameter('page', 1));
+
+		$this->route = 'client_panel';
+
+		$this->sort = $this->getSort();
 
 	}
 
@@ -38,6 +51,11 @@ class client_panelActions extends sfActions
 			$this->setFilters($this->getFilterDefaults());
 
 			$this->redirect('@client_panel');
+		}
+
+		// sorting
+		if ($request->getParameter('sort') && $this->isValidSortColumn($request->getParameter('sort'))) {
+			$this->setSort(array($request->getParameter('sort'), $request->getParameter('sort_type')));
 		}
 
 		$this->filter = $this->getFilterForm();
@@ -52,6 +70,7 @@ class client_panelActions extends sfActions
 
 		$this->pager->setFilters(http_build_query($filters));
 		$this->route = 'client_panel_filter';
+		$this->sort = $this->getSort();
 
 		$this->setTemplate('index');
 	}
@@ -63,7 +82,7 @@ class client_panelActions extends sfActions
 		$this->filter->bind($request->getParameter($this->filter->getName()));
 		if ($this->filter->isValid()) {
 
-			$filename = 'cordiant_otchet_' . date('d_m_Y') . '.xlsx';
+			$filename = 'cordiant_otchet_' . date('d_m_Y') . '_'.$this->getUser()->getId().'.xlsx';
 			$filepath = sfConfig::get('sf_data_dir') . DS . 'otchet' . DS;
 			if (!is_dir($filepath))
 				mkdir($filepath, 0755, true);
@@ -78,6 +97,7 @@ class client_panelActions extends sfActions
 			$objPHPExcel->setActiveSheetIndex(0);
 
 			$excelWorksheet = $objPHPExcel->getActiveSheet();
+			$excelWorksheet->setTitle('РТТ');
 
 			$excelWorksheet->SetCellValue('A1', 'Дистрибьютор');
 			$excelWorksheet->SetCellValue('B1', 'Юридическое название РТТ!');
@@ -93,6 +113,8 @@ class client_panelActions extends sfActions
 
 			$outlets = $this->buildQuery()->execute();
 
+			$distributorIds = array();
+
 			/* @var $outlet Outlet */
 			foreach ($outlets as $i => $outlet) {
 				$k = $i + 2;
@@ -107,6 +129,7 @@ class client_panelActions extends sfActions
 				$excelWorksheet->SetCellValue('I' . $k, count_worksheet_sku_a($outlet->getWorksheet()));
 				$excelWorksheet->SetCellValue('J' . $k, count_worksheet_sku_b($outlet->getWorksheet()));
 				$excelWorksheet->SetCellValue('K' . $k, worksheet_audit_simple_status($outlet, true));
+				$distributorIds[] = $outlet->getDistributorId();
 			}
 
 			$boldFont = array(
@@ -128,6 +151,34 @@ class client_panelActions extends sfActions
 						->applyFromArray($center);
 			}
 
+			// Среднее арифметическое по дистрибьюторам.
+			// По всем точкам одного дистрибьютора считается ср. арифметическое по полю
+			// "Наличие минимального кол-ва = 4 шт (торговый зал + склад)"
+			$excelWorksheet = $objPHPExcel->createSheet(1);
+			$excelWorksheet->setTitle('Среднее по дистрибьюторам');
+
+			$excelWorksheet->SetCellValue('A1', 'Дистрибьютор');
+			$excelWorksheet->SetCellValue('B1', 'Среднее по "Наличие минимального кол-ва = 4 шт (торговый зал + склад)"!');
+
+			$distributorIds = array_unique($distributorIds);
+			if(!empty($distributorIds))
+			{
+				$distributors = DistributorTable::getInstance()->getByDistributorIdsQuery($distributorIds)->execute();
+				/* @var $distributor Distributor */
+				foreach ($distributors as $i => $distributor) {
+					$k = $i + 2;
+					$excelWorksheet->SetCellValue('A' . $k, $distributor->getName());
+					$excelWorksheet->SetCellValue('B' . $k, count_worksheet_sku_b_average_by_outlets($distributor->getOutlets()));
+				}
+			}
+
+			// установим жирный шрифт для заголовков
+			// и заодно отцентрируем
+			foreach (range('a', 'b') as $letter) {
+				$excelWorksheet->getStyle($letter . '1')->applyFromArray($boldFont)
+						->applyFromArray($center);
+			}
+
 			$objWriter->save($filepath . $filename);
 
 			// redirect output to client browser
@@ -142,11 +193,57 @@ class client_panelActions extends sfActions
 
 	}
 
+	protected function isValidSortColumn($column)
+	{
+		return Doctrine_Core::getTable('outlet')->hasColumn($column);
+	}
+
+	protected function addSortQuery($query, $return = false)
+	{
+		$sort = $this->getSort();
+		if (empty($sort) || empty($sort[0])) {
+			if($return)
+				return $query;
+			else
+				return;
+		}
+
+		if (!in_array(strtolower($sort[1]), array('asc', 'desc'))) {
+			$sort[1] = 'asc';
+		}
+
+		$query->addOrderBy($sort[0] . ' ' . $sort[1]);
+
+		if($return)
+			return $query;
+	}
+
+	protected function getSort()
+	{
+		if (null !== $sort = $this->getUser()->getAttribute('client_panel.sort', array(0 => null), 'client_panel_module')) {
+			return $sort;
+		}
+
+		$this->setSort(array(0 => null));
+
+		return $this->getUser()->getAttribute('client_panel.sort', array(0 => null), 'client_panel_module');
+	}
+
+	protected function setSort(array $sort)
+	{
+		if (null !== $sort[0] && null === $sort[1]) {
+			$sort[1] = 'asc';
+		}
+
+		$this->getUser()->setAttribute('client_panel.sort', $sort, 'client_panel_module');
+	}
+
 	protected function getPager(sfWebRequest $request)
 	{
 		$pager = new myPager('Outlet', sfConfig::get('app_max_items_on_client_panel'));
 		$pager->setQuery($this->buildQuery());
 		$pager->setPage($request->getParameter('page', 1));
+		$this->setPage($request->getParameter('page', 1));
 
 		$pager->init();
 
@@ -164,6 +261,9 @@ class client_panelActions extends sfActions
 		/* @var $query Doctrine_Query */
 		$query = Doctrine::getTable('Outlet')
 				->getAllWithGeoByUserQuery($this->getUser(), $query);
+
+		$query = $this->addSortQuery($query, true);
+
 		return $query;
 	}
 

@@ -1,10 +1,14 @@
 <h2>Статистика по аудиту</h2>
-<table class="table table-bordered" style="margin-top: 15px;">
+<table class="table table-bordered table-striped" style="margin-top: 15px;">
 	<tr>
 		<th>Регион</th>
 		<th>Всего</th>
 		<th>Готово</th>
 	</tr>
+	<?php
+		$all_ = 0;
+		$allDone_ = 0;
+	?>
 	<?php foreach ($regions as $region): ?>
 		<?php
 		$regionOtletIds = array();
@@ -25,5 +29,14 @@
 			<td><?php echo $all ?></td>
 			<td><?php echo $allDone ?></td>
 		</tr>
+		<?php
+			$all_ += $all;
+			$allDone_ += $allDone;
+		?>
 	<?php endforeach; ?>
+		<tr>
+			<td>Итого:</td>
+			<td><?php echo $all_ ?></td>
+			<td><?php echo $allDone_ ?></td>
+		</tr>
 </table>
