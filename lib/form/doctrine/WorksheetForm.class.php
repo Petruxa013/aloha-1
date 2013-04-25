@@ -17,7 +17,21 @@ class WorksheetForm extends BaseWorksheetForm
 		$this->getWidget('outlet_manager')->setAttributes(array('class' => 'input-block-level', 'placeholder' => 'Иванов Иван Иванович'));
 		$this->getWidget('outlet_manager_position')->setAttributes(array('class' => 'input-block-level', 'placeholder' => 'Зиц-Председатель'));
 		$this->getWidget('outlet_phone')->setAttributes(array('class' => 'input-block-level', 'placeholder' => '+7 895 556 67 45'));
-		$this->setWidget('comment', new sfWidgetFormTextarea(array(), array('cols' => 7, 'rows' => 4, 'class' => 'input-block-level', 'placeholder' => 'Здесь вы можете указать на неточность адреса, и других данных РТТ. Сложностей, с которыми вы столкнулись во время аудита')));
+		$this->setWidget('comment', new sfWidgetFormTextarea(array(),
+			array(
+				'cols' => 7,
+				'rows' => 4,
+				'class' => 'input-block-level',
+				'placeholder' => 'Здесь вы можете указать на неточность адреса, и других данных РТТ. Сложностей, с которыми вы столкнулись во время аудита. в этом поле указывать на все отклонения от требований к заполнению анкеты: почему нет печати или она не такая и т.д. Подсказка внизу вам может помочь.')));
+		$this->setWidget('comment_data', new sfWidgetFormTextarea(
+			array(),
+			array(
+				'cols' => 7,
+				'rows' => 4,
+				'class' => 'input-block-level',
+				'placeholder' => 'Данные получены: '
+				)
+		));
 
 		$year = date('Y', time());
 		$this->setWidget('date', new sfWidgetFormDate(array('format' => '%day%.%month%.%year%', 'can_be_empty' => true, 'years' => array($year => $year)), array('style' => 'width: auto')));
@@ -41,11 +55,11 @@ class WorksheetForm extends BaseWorksheetForm
 			array('invalid' => 'Следует выбрать из списка')
 		));
 
-//		$this->setValidator('comment', new sfValidatorString(
-//			array('min_length' => 50),
-//			array('min_length' => 'Не забывайте про коментарий, как минимум 50 символов',
-//			      'required'   => 'Не забывайте про коментарий, как минимум 50 символов')
-//		));
+		$this->setValidator('comment_data', new sfValidatorString(
+			array('min_length' => 30),
+			array('min_length' => 'Не забывайте про коментарий, как минимум 50 символов',
+			      'required'   => 'Не забывайте про коментарий, как минимум 50 символов')
+		));
 
 		$this->setValidator('date', new sfValidatorDate(array(),
 			array('required' => 'Следует указать дату визита',

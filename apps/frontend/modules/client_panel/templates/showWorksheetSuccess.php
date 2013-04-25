@@ -534,6 +534,12 @@
 </table>
 <table class="table table-bordered table-striped">
 	<tr>
+		<td>Как были получены данные по остаткам шин</td>
+		<td>
+			<?php echo $worksheet['comment_data'] ?>
+		</td>
+	</tr>
+	<tr>
 		<td>Комментарии</td>
 		<td>
 			<?php echo $worksheet['comment'] ?>

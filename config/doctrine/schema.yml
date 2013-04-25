@@ -372,6 +372,8 @@ Worksheet:
 
     comment:
       type: text(1024)
+    comment_data:
+      type: text(1024)
     outlet_manager:
       type: string(255)
     outlet_manager_position:
