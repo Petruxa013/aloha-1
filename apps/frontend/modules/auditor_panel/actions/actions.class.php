@@ -38,6 +38,7 @@ class auditor_panelActions extends sfActions
 
 	public function executeAddWorksheet(sfWebRequest $request)
 	{
+		$event = 20;
 		$this->outlet = $this->getRoute()->getObject();
 		$worksheet = $this->outlet->getWorksheet();
 		if (!$worksheet)
@@ -51,6 +52,7 @@ class auditor_panelActions extends sfActions
 			if($this->form->isNew())
 			{
 				$this->form->getObject()->setAuditorId($this->getUser()->getId());
+				$event = 10;
 			}
 			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 			if ($this->form->isValid()) {
@@ -60,6 +62,7 @@ class auditor_panelActions extends sfActions
 					$worksheet->setStatus(10);
 //					}
 					$worksheet->save();
+					History::log($event, $worksheet, $this->getUser());
 //				}
 				$this->setTemplate('worksheet');
 				return sfView::SUCCESS;

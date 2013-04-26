@@ -1,0 +1,29 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           history
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          history
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      fields:
+        event: {label: Событие }
+        user: {label: Пользователь }
+        created_at: {label: Дата }
+      list:
+        title: История действий
+        display: [event, user_id, created_at]
+        batch_actions: {}
+        object_actions: {}
+        actions: {}
+      filter:  ~
+      form:
+        class: false
+      edit: ~
+      new: ~
