@@ -28,6 +28,15 @@ class csAttachableActions extends BasecsAttachableActions
 				$this->bindAttachment($request->getParameter('attachment'), $files);
 				if ($this->form->isValid()) {
 					$this->form->save();
+					$event = 0;
+					if($this->form->getObject()->getType() == 'image')
+						$event = 40;
+
+					if($this->form->getObject()->getType() == 'audio')
+						$event = 50;
+
+					History::log($event, $this->form->getObject()->getObject(), $this->getUser());
+
 				} else {
 					$errors = $this->form->getErrorList();
 					$this->alert = implode("\n", $errors);
@@ -50,6 +59,16 @@ class csAttachableActions extends BasecsAttachableActions
 	{
 		$attachment = Doctrine_Core::getTable('Attachment')->findOneById($this->getRequestParameter('attachment_id'));
 		$attachment->delete();
+
+		$event = 0;
+		if($attachment->getType() == 'image')
+			$event = 60;
+
+		if($attachment->getType() == 'audio')
+			$event = 70;
+
+		History::log($event, $attachment->getObject(), $this->getUser());
+
 
 		$files[] = $attachment->getUploadPath();
 		if($attachment->getType() == 'image')

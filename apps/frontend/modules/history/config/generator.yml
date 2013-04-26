@@ -14,11 +14,13 @@ generator:
     config:
       fields:
         event: {label: Событие }
+        model: {label: Объект }
         user: {label: Пользователь }
+        user_id: {label: Пользователь }
         created_at: {label: Дата }
       list:
         title: История действий
-        display: [event, user_id, created_at]
+        display: [_event, _model, _user, created_at]
         batch_actions: {}
         object_actions: {}
         actions: {}
