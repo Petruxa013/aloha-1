@@ -38,11 +38,30 @@ class OutletTable extends Doctrine_Table
 		$q->leftJoin($rootAlias. '.Worksheet worksheet');
 
 		if($user->hasCredential('auditor'))
-			$q->whereIn($q->getRootAlias().'.city_id', $user->getCityIds());
+		{
+			$cityIds = $user->getCityIds();
+			if(empty($cityIds))
+				$q->addWhere($q->getRootAlias().'.id = ?', 0);
+
+			$q->whereIn($q->getRootAlias().'.city_id', $cityIds);
+		}
+
 		if($user->hasCredential('coordinator'))
-			$q->whereIn($q->getRootAlias().'.region_id', $user->getRegionIds());
-		if($user->hasCredential('client')) {
-			$q->whereIn($q->getRootAlias().'.region_id', $user->getRegionIds());
+		{
+			$regionIds = $user->getRegionIds();
+			if(empty($regionIds))
+				$q->addWhere($q->getRootAlias().'.id = ?', 0);
+
+			$q->whereIn($q->getRootAlias().'.region_id', $regionIds);
+		}
+
+		if($user->hasCredential('client'))
+		{
+			$regionIds = $user->getRegionIds();
+			if(empty($regionIds))
+				$q->addWhere($q->getRootAlias().'.id = ?', 0);
+
+			$q->whereIn($q->getRootAlias().'.region_id', $regionIds);
 			$q->addWhere('worksheet.status = ? AND worksheet.photo_status = ? AND worksheet.audio_status = ?', array(30,30,30));
 		}
 
