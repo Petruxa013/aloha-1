@@ -1,3 +1,4 @@
+<?php use_helper('Date') ?>
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 <div class="info well container">
@@ -14,26 +15,18 @@
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить фото</button>
 	</a>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
-	</a>
+	<a href="#disaprovePhotoPopup" class="btn btn-danger" data-toggle="modal">Вернуть фото на доработку</a>
 	<?php elseif($worksheet->getPhotoStatus() == 20): ?>
-		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
-			<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
-		</a>
+	<a href="#disaprovePhotoPopup" class="btn btn-danger" data-toggle="modal">Вернуть фото на доработку</a>
 	<?php endif; ?>
 
 	<?php if($worksheet->getAudioStatus() <= 10): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_audio', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить аудио</button>
 	</a>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
-	</a>
+	<a href="#disaproveAudioPopup" class="btn btn-danger" data-toggle="modal">Вернуть аудио на доработку</a>
 	<?php elseif($worksheet->getAudioStatus() == 20): ?>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
-	</a>
+	<a href="#disaproveAudioPopup" class="btn btn-danger" data-toggle="modal">Вернуть аудио на доработку</a>
 	<?php endif; ?>
 	<?php endif; ?>
 
@@ -43,26 +36,18 @@
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить фото</button>
 	</a>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
-	</a>
+	<a href="#disaprovePhotoPopup" class="btn btn-danger" data-toggle="modal">Вернуть фото на доработку</a>
 	<?php elseif($worksheet->getPhotoStatus() == 30): ?>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть фото на доработку</button>
-	</a>
+	<a href="#disaprovePhotoPopup" class="btn btn-danger" data-toggle="modal">Вернуть фото на доработку</a>
 	<?php endif; ?>
 
 	<?php if($worksheet->getAudioStatus() <= 20): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_audio', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить аудио</button>
 	</a>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
-	</a>
+	<a href="#disaproveAudioPopup" class="btn btn-danger" data-toggle="modal">Вернуть аудио на доработку</a>
 	<?php elseif($worksheet->getAudioStatus() == 30): ?>
-		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>">
-			<button type="button" class="btn btn-danger">Вернуть аудио на доработку</button>
-		</a>
+	<a href="#disaproveAudioPopup" class="btn btn-danger" data-toggle="modal">Вернуть аудио на доработку</a>
 	<?php endif; ?>
 	<?php endif; ?>
 
@@ -70,6 +55,32 @@
 <?php if(!$worksheet->getId()): ?>
 	<div class="alert container">Пока вы не заполните анкету по этой точке загрузка данных невозможна</div>
 <?php endif; ?>
+
+<?php if($worksheet->getPhotoStatus() === null): ?>
+<div class="alert alert-danger container">
+	<div class="row container">
+		Фото было возвращена на доработку.
+	</div>
+<?php foreach($historyDissaprovePhoto as $history): ?>
+	<div class="row container">
+		<?php echo format_datetime($history->getCreatedAt()).' <b>Причина: '.$history->getComment().'</b>' ?>
+	</div>
+<?php endforeach; ?>
+</div>
+<?php endif ?>
+
+<?php if($worksheet->getAudioStatus() === null): ?>
+<div class="alert alert-danger container">
+	<div class="row container">
+		Аудио было возвращена на доработку.
+	</div>
+<?php foreach($historyDissaproveAudio as $history): ?>
+	<div class="row container">
+		<?php echo format_datetime($history->getCreatedAt()).' <b>Причина: '.$history->getComment().'</b>' ?>
+	</div>
+<?php endforeach; ?>
+</div>
+<?php endif ?>
 
 
 <div class="container">
@@ -79,6 +90,60 @@
 	<?php include_component('csAttachable', 'attachments', array('form' => $form)) ?>
 	<?php endif; ?>
 </div>
+
+<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
+<div id="disaprovePhotoPopup" class="modal hide fade">
+
+	<form action="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>" method="post"  class="form-horizontal">
+
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">×</a>
+
+			<h3>Вернуть фото на доработку</h3>
+		</div>
+
+		<div class="modal-body">
+			<label>Комментраий к действию</label>
+			<textarea cols="10" rows="3" name="comment" style="width: 97%"></textarea>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-danger">Вернуть фото на доработку</button>
+			<button type="reset" class="btn">Отмена</button>
+		</div>
+
+	</form>
+
+</div>
+<?php endif; ?>
+
+<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
+<div id="disaproveAudioPopup" class="modal hide fade">
+
+	<form action="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>" method="post"  class="form-horizontal">
+
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">×</a>
+
+			<h3>Вернуть аудио на доработку</h3>
+		</div>
+
+		<div class="modal-body">
+			<label>Комментраий к действию</label>
+			<textarea cols="10" rows="3" name="comment" style="width: 97%"></textarea>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-danger">Вернуть аудио на доработку</button>
+			<button type="reset" class="btn">Отмена</button>
+		</div>
+
+	</form>
+
+</div>
+<?php endif; ?>
+
+
 <script type="text/javascript">
 	$(function () {
 		$('a.action').click(function() {

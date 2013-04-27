@@ -44,7 +44,15 @@ class auditor_panelActions extends sfActions
 		if (!$worksheet)
 			$this->form = new WorksheetForm();
 		else
+		{
 			$this->form = new WorksheetForm($worksheet);
+			$query = HistoryTable::getInstance()->getByModelObjectQuery($worksheet);
+			$query->addWhere('history.event = ?', 110);
+			$query->addWhere('history.comment IS NOT NULL');
+			$query->orderBy('history.created_at DESC');
+
+			$this->historyDissaprove = $query->execute();
+		}
 		$this->worksheet = $worksheet;
 		if ($request->isMethod('post')) {
 			$this->form->getObject()->setOutletId($this->outlet->getId());
@@ -74,6 +82,23 @@ class auditor_panelActions extends sfActions
 	{
 		$this->outlet = $this->getRoute()->getObject();
 		$this->worksheet = $this->outlet->getWorksheet();
+		if($this->worksheet)
+		{
+			$query = HistoryTable::getInstance()->getByModelObjectQuery($this->worksheet);
+			$query->addWhere('history.event = ?', 120);
+			$query->addWhere('history.comment IS NOT NULL');
+			$query->orderBy('history.created_at DESC');
+
+			$this->historyDissaprovePhoto = $query->execute();
+
+			$query = HistoryTable::getInstance()->getByModelObjectQuery($this->worksheet);
+			$query->addWhere('history.event = ?', 130);
+			$query->addWhere('history.comment IS NOT NULL');
+			$query->orderBy('history.created_at DESC');
+
+			$this->historyDissaproveAudio = $query->execute();
+		}
+
 		$this->form = new WorksheetForm($this->worksheet);
 	}
 
@@ -127,6 +152,7 @@ class auditor_panelActions extends sfActions
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
+			$comment = $request->getParameter('comment');
 			/* @var $worksheet Worksheet */
 			if ($user->hasCredential('coordinator') && $worksheet->getStatus() <= 20) {
 				$worksheet->setStatus(null);
@@ -137,7 +163,7 @@ class auditor_panelActions extends sfActions
 				$worksheet->save();
 			}
 
-			History::log(110, $worksheet, $this->getUser());
+			History::log(110, $worksheet, $this->getUser(), $comment);
 
 			if($request->isXmlHttpRequest())
 				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_disapproved_worksheet', array('id' => $this->outlet->getId()))));
@@ -187,6 +213,7 @@ class auditor_panelActions extends sfActions
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
+			$comment = $request->getParameter('comment');
 			/* @var $worksheet Worksheet */
 			if ($user->hasCredential('coordinator') && $worksheet->getPhotoStatus() <= 20) {
 				$worksheet->setPhotoStatus(null);
@@ -197,7 +224,7 @@ class auditor_panelActions extends sfActions
 				$worksheet->save();
 			}
 
-			History::log(120, $worksheet, $this->getUser());
+			History::log(120, $worksheet, $this->getUser(), $comment);
 
 			if($request->isXmlHttpRequest())
 				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_worksheet_additional_files', array('id' => $this->outlet->getId()))));
@@ -241,6 +268,7 @@ class auditor_panelActions extends sfActions
 		{
 			$this->outlet = $this->getRoute()->getObject();
 			$worksheet = $this->outlet->getWorksheet();
+			$comment = $request->getParameter('comment');
 			/* @var $worksheet Worksheet */
 			if ($user->hasCredential('coordinator') && $worksheet->getAudioStatus() <= 20) {
 				$worksheet->setAudioStatus(null);
@@ -251,7 +279,7 @@ class auditor_panelActions extends sfActions
 				$worksheet->save();
 			}
 
-			History::log(130, $worksheet, $this->getUser());
+			History::log(130, $worksheet, $this->getUser(), $comment);
 
 			if($request->isXmlHttpRequest())
 				return $this->returnJSON(array('url' => $this->generateUrl('auditor_panel_worksheet_additional_files', array('id' => $this->outlet->getId()))));
@@ -275,8 +303,7 @@ class auditor_panelActions extends sfActions
 				$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 				if ($this->form->isValid())
 					if($this->form->save())
-						History::log(140, $worksheet, $this->getUser());;
-
+						History::log(140, $worksheet, $this->getUser());
 			}
 		}
 		else $this->forward404();

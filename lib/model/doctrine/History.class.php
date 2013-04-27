@@ -38,15 +38,20 @@ class History extends BaseHistory
 		'Worksheet' => 'Анкета'
 	);
 
-	public static function log($event, $object, $user)
+	public static function log($event, $object, $user, $comment = false)
 	{
 		$history = new History();
 		$history->setEvent($event);
 		$history->setModel(get_class($object));
 		$history->setModelId($object->getId());
+
 		if($user instanceof myUser)
 			$user = $user->getGuardUser();
+
 		$history->setSfGuardUser($user);
+
+		if($comment)
+			$history->setComment($comment);
 
 		$history->save();
 	}

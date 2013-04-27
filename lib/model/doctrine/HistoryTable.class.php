@@ -17,4 +17,13 @@ class HistoryTable extends Doctrine_Table
         return Doctrine_Core::getTable('History');
     }
 
+	public function getByModelObjectQuery($object)
+	{
+		$q = $this->createQuery('history');
+		$q->addWhere('history.model = ?', get_class($object))
+			->addWhere('history.model_id = ?', $object->getId());
+
+		return $q;
+	}
+
 }

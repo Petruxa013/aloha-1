@@ -1,3 +1,4 @@
+<?php use_helper('Date') ?>
 <style>
 	input[type=checkbox]
 	{
@@ -13,6 +14,18 @@
 <?php if($form->hasErrors()): ?>
 <div class="alert">
 	Не все поля формы заполнены верно
+</div>
+<?php endif ?>
+<?php if($worksheet->getStatus() === null): ?>
+<div class="alert alert-danger container">
+	<div class="row container">
+		Анкета была возвращена на доработку.
+	</div>
+<?php foreach($historyDissaprove as $history): ?>
+	<div class="row container">
+		<?php echo format_datetime($history->getCreatedAt()).' <b>Причина: '.$history->getComment().'</b>' ?>
+	</div>
+<?php endforeach; ?>
 </div>
 <?php endif ?>
 <?php //if($worksheet->getStatus() < 20): ?>
@@ -654,13 +667,9 @@
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-info">Одобрить анкету</button>
 	</a>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
-	</a>
+	<a href="#disaprovePopup" class="btn btn-danger" data-toggle="modal">Вернуть анкету на доработку</a>
 	<?php elseif($worksheet->getStatus() == 20): ?>
-		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
-			<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
-		</a>
+		<a href="#disaprovePopup" class="btn btn-danger" data-toggle="modal">Вернуть анкету на доработку</a>
 	<?php endif; ?>
 	<?php endif; ?>
 
@@ -669,13 +678,9 @@
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить анкету</button>
 	</a>
-	<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
-		<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
-	</a>
+	<a href="#disaprovePopup" class="btn btn-danger" data-toggle="modal">Вернуть анкету на доработку</a>
 	<?php elseif($worksheet->getStatus() == 30): ?>
-		<a class="action" href="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>">
-			<button type="button" class="btn btn-danger">Вернуть анкету на доработку</button>
-		</a>
+		<a href="#disaprovePopup" class="btn btn-danger" data-toggle="modal">Вернуть анкету на доработку</a>
 		<div class="alert alert-info">
 			Анкета одобрена, ее видит клиент
 		</div>
@@ -684,6 +689,31 @@
 
 </div>
 </form>
+<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
+<div id="disaprovePopup" class="modal hide fade">
+
+	<form action="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>" method="post"  class="form-horizontal">
+
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">×</a>
+
+			<h3>Вернуть анкету на доработку</h3>
+		</div>
+
+		<div class="modal-body">
+			<label>Комментраий к действию</label>
+			<textarea cols="10" rows="3" name="comment" style="width: 97%"></textarea>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-danger">Вернуть анкету на доработку</button>
+			<button type="reset" class="btn">Отмена</button>
+		</div>
+
+	</form>
+
+</div>
+<?php endif; ?>
 <script type="text/javascript">
 	$(function () {
 		$('input:checkbox[name$="_b]"]').click(function() {
