@@ -35,6 +35,7 @@ class AudioAttachmentForm extends AttachmentForm
 			'audio/webm', //WebM
 			'audio/wav', //.wav
 			'audio/x-wav', //.wav
+			'audio/x-m4a', //.wav
 			'audio/mid', // .mid .rmi
 			'audio/x-aiff', // aif aifc aiff
 			'audio/x-mpegurl', // m3u
