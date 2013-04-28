@@ -16,7 +16,7 @@
 	Не все поля формы заполнены верно
 </div>
 <?php endif ?>
-<?php if($worksheet->getStatus() === null): ?>
+<?php if($worksheet->getId() && $worksheet->getStatus() === null): ?>
 <div class="alert alert-danger container">
 	<div class="row container">
 		Анкета была возвращена на доработку.

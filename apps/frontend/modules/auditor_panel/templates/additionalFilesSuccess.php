@@ -9,7 +9,7 @@
 			<button class="btn btn-info">Вернуться к списку РТТ</button>
 		</a>
 
-	<?php if($sf_user->hasCredential('coordinator')): ?>
+	<?php if($sf_user->hasCredential('coordinator') && $worksheet->getId()): ?>
 
 	<?php if($worksheet->getPhotoStatus() <= 10): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
@@ -31,7 +31,7 @@
 	<?php endif; ?>
 
 
-	<?php if($sf_user->hasCredential('project_manager')): ?>
+	<?php if($sf_user->hasCredential('project_manager') && $worksheet->getId()): ?>
 	<?php if($worksheet->getPhotoStatus() <= 20): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить фото</button>
@@ -56,7 +56,7 @@
 	<div class="alert container">Пока вы не заполните анкету по этой точке загрузка данных невозможна</div>
 <?php endif; ?>
 
-<?php if($worksheet->getPhotoStatus() === null): ?>
+<?php if($worksheet->getId() && $worksheet->getPhotoStatus() === null && count($historyDissaprovePhoto) > 0): ?>
 <div class="alert alert-danger container">
 	<div class="row container">
 		Фото было возвращена на доработку.
@@ -69,7 +69,7 @@
 </div>
 <?php endif ?>
 
-<?php if($worksheet->getAudioStatus() === null): ?>
+<?php if($worksheet->getId() && $worksheet->getAudioStatus() === null && count($historyDissaproveAudio) > 0): ?>
 <div class="alert alert-danger container">
 	<div class="row container">
 		Аудио было возвращена на доработку.
@@ -82,7 +82,7 @@
 </div>
 <?php endif ?>
 
-
+<?php if($worksheet->getId()): ?>
 <div class="container">
 	<?php if($worksheet->getAudioStatus() >= 20 && $worksheet->getPhotoStatus() >= 20): ?>
 	<?php include_component('csAttachable', 'attachmentsList', array('form' => $form)) ?>
@@ -90,6 +90,7 @@
 	<?php include_component('csAttachable', 'attachments', array('form' => $form)) ?>
 	<?php endif; ?>
 </div>
+<?php endif ?>
 
 <?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
 <div id="disaprovePhotoPopup" class="modal hide fade">
