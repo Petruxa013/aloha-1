@@ -431,7 +431,7 @@ History:
     user_id:
       type: 		  integer
     comment:
-      type:           string(255)
+      type:           text
   relations:
     sfGuardUser:
       local:          user_id
