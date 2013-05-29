@@ -38,6 +38,32 @@ class History extends BaseHistory
 		'Worksheet' => 'Анкета'
 	);
 
+	public static $modelRusLink = array(
+		'Worksheet' => array(
+			'route' => array(
+				10 => 'auditor_panel_add_worksheet',
+				20 => 'auditor_panel_add_worksheet',
+				30 => 'auditor_panel_add_worksheet',
+
+				40 => 'auditor_panel_worksheet_additional_files',
+				50 => 'auditor_panel_worksheet_additional_files',
+
+				60 => 'auditor_panel_worksheet_additional_files',
+				70 => 'auditor_panel_worksheet_additional_files',
+
+				80 => 'auditor_panel_add_worksheet',
+				90 => 'auditor_panel_worksheet_additional_files',
+				100 => 'auditor_panel_worksheet_additional_files',
+
+				110 => 'auditor_panel_add_worksheet',
+				120 => 'auditor_panel_worksheet_additional_files',
+				130 => 'auditor_panel_worksheet_additional_files',
+
+				140 => 'auditor_panel_add_worksheet'),
+
+			'object' => 'getOutlet'),
+	);
+
 	public static function log($event, $object, $user, $comment = false)
 	{
 		$history = new History();

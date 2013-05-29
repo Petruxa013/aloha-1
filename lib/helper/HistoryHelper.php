@@ -33,3 +33,23 @@ function model_rus($history)
 	return $model;
 
 }
+
+function model_rus_link($history)
+{
+	$modelRusLink = History::$modelRusLink;
+
+	/* @var $history History */
+	if(array_key_exists($history->getModel(), $modelRusLink))
+	{
+		$route = $modelRusLink[$history->getModel()]['route'][$history->getEvent()];
+		$model = $history->getModel().'Table';
+		$modelObject = $model::getInstance()->findOneById($history->getModelId());
+		$object = call_user_func(array($modelObject, $modelRusLink[$history->getModel()]['object']));
+		$modelLink = link_to(model_rus($history), $route, $object);
+	}
+	else
+		$modelLink = model_rus($history);
+
+	return $modelLink;
+
+}
