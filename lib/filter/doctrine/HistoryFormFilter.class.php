@@ -16,9 +16,11 @@ class HistoryFormFilter extends BaseHistoryFormFilter
 			'event', 'user_id', 'created_at'
 		));
 
-		$this->setWidget('event', new sfWidgetFormChoice(array('choices' => History::$eventCode)), array());
+		$eventChoices = array(0 => 'Все события') + History::$eventCode;
 
-		$this->setValidator('event', new sfValidatorChoice(array('choices' => array_keys(History::$eventCode)), array()));
+		$this->setWidget('event', new sfWidgetFormChoice(array('choices' => $eventChoices)), array());
+
+		$this->setValidator('event', new sfValidatorChoice(array('choices' => array_keys($eventChoices)), array()));
 
 	}
 
@@ -28,8 +30,8 @@ class HistoryFormFilter extends BaseHistoryFormFilter
 		$query = parent::doBuildQuery($values);
 
 		$eventId = isset($values['event']) ? $values['event'] : false;
-		if ($eventId)
-			$query->addwhere(sprintf('%s.%s', $query->getRootAlias(), 'event').' =?', $eventId);
+		if ($eventId !== false && $eventId != 0)
+			$query->addwhere(sprintf('%s.%s', $query->getRootAlias(), 'event').' = ?', $eventId);
 
 		return $query;
 	}
