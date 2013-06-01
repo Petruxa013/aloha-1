@@ -10,7 +10,10 @@
  */
 class OutletForm extends BaseOutletForm
 {
-  public function configure()
-  {
-  }
+	public function configure()
+	{
+		$this->getWidget('distributor_id')->setOption('order_by', array('name', 'asc'));
+		$this->getWidget('region_id')->setOption('order_by', array('name', 'asc'));
+		$this->getWidget('city_id')->setOption('order_by', array('name', 'asc'));
+	}
 }
