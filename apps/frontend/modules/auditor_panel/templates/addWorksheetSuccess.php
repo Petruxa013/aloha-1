@@ -639,9 +639,9 @@
 		<?php if($worksheet->getStatus() < 30): ?>
 		<button type="submit" class="btn">
 			<?php if($worksheet->getStatus() >= 10): ?>
-				Обновить анкету
+				Обновить анкету и одобрить
 			<?php else: ?>
-				Сохранить
+				Сохранить и одобрить
 			<?php endif; ?>
 		</button>
 		<?php else: ?>
@@ -655,9 +655,9 @@
 		<!-- Руководитель -->
 	<button type="submit" class="btn">
 		<?php if($worksheet->getStatus() >= 10): ?>
-			Обновить анкету
+			Обновить анкету и одобрить
 		<?php else: ?>
-			Сохранить
+			Сохранить и одобрить
 		<?php endif; ?>
 	</button>
 	<?php endif; ?>

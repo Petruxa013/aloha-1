@@ -41,6 +41,9 @@ class auditor_panelActions extends sfActions
 		$event = 20;
 		$this->outlet = $this->getRoute()->getObject();
 		$worksheet = $this->outlet->getWorksheet();
+		/* @var $user myUser */
+		$user = $this->getUser();
+
 		if (!$worksheet)
 			$this->form = new WorksheetForm();
 		else
@@ -59,19 +62,29 @@ class auditor_panelActions extends sfActions
 			/* если форма новая то записываем создателя */
 			if($this->form->isNew())
 			{
-				$this->form->getObject()->setAuditorId($this->getUser()->getId());
+				$this->form->getObject()->setAuditorId($user->getId());
 				$event = 10;
 			}
 			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 			if ($this->form->isValid()) {
-//				if($worksheet->getStatus() < 20) {
-					$worksheet = $this->form->save();
-//					if (is_null($worksheet->getStatus())) {
-					$worksheet->setStatus(10);
-//					}
-					$worksheet->save();
-					History::log($event, $worksheet, $this->getUser());
-//				}
+
+				$worksheet = $this->form->save();
+				$worksheetStatus = 10;
+
+				if($user->hasCredential('coordinator'))
+					$worksheetStatus = 20;
+
+				if($user->hasCredential('project_manager'))
+					$worksheetStatus = 30;
+
+				$worksheet->setStatus($worksheetStatus);
+				$worksheet->save();
+
+				History::log($event, $worksheet, $user);
+
+				if($user->hasCredential('coordinator') || $user->hasCredential('project_manager'))
+					History::log(80, $worksheet, $user);
+
 				$this->setTemplate('worksheet');
 				return sfView::SUCCESS;
 			}
