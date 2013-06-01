@@ -32,6 +32,7 @@ class auditor_panelActions extends sfActions
 		$this->pager->setQuery(Doctrine::getTable('Outlet')
 						->getAllWithGeoByUserQuery($this->getUser()));
 		$this->pager->setPage($request->getParameter('page', 1));
+		$this->setPage($request->getParameter('page', 1));
 		$this->pager->init();
 
 	}
