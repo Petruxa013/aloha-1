@@ -32,7 +32,6 @@ class AuditorPanelFilter extends OutletFormFilter
 			'address'        => 'Адрес',
 			'region_id'      => 'Регион',
 			'city_id'        => 'Город',
-
 		));
 
 		$this->getWidget('distributor_id')->setOption('order_by', array('name', 'asc'));
@@ -71,7 +70,9 @@ class AuditorPanelFilter extends OutletFormFilter
 		}
 
 		$worksheet_outlet_ids = array();
+		$filterByStatus = false;
 		if (!empty($allStatus)) {
+			$filterByStatus = true;
 			$worksheets = WorksheetTable::getInstance()->findByAllStatus($allStatus, Doctrine::HYDRATE_ARRAY);
 			if (!empty($worksheets)) {
 				foreach ($worksheets as $worksheet) {
@@ -79,7 +80,42 @@ class AuditorPanelFilter extends OutletFormFilter
 				}
 			}
 		}
-		$worksheet_outlet_ids = array_unique($worksheet_outlet_ids);
+
+		$worksheet_outlet_ids_by_auditor = array();
+		$filterByAuditor = false;
+		if(isset($values['auditor_id']) && !is_null($values['auditor_id']))
+		{
+			$filterByAuditor = true;
+			$worksheets = WorksheetTable::getInstance()->findByAuditorId($values['auditor_id'], Doctrine::HYDRATE_ARRAY);
+			if (!empty($worksheets)) {
+				foreach ($worksheets as $worksheet) {
+					$worksheet_outlet_ids_by_auditor[] = $worksheet['outlet_id'];
+				}
+			}
+
+		}
+
+		// Фильтры по статусу и по аудитору
+		if($filterByAuditor && $filterByStatus)
+		{
+			// Получаем только пересекающиеся массивы в фильтрации по статусам и аудиторам
+			$worksheet_outlet_ids = array_intersect($worksheet_outlet_ids, $worksheet_outlet_ids_by_auditor);
+			// Выбираем уникальные элементы
+			$worksheet_outlet_ids = array_unique($worksheet_outlet_ids);
+		}
+
+		// Фильтр только по аудитору
+		if($filterByAuditor && !$filterByStatus)
+		{
+			$worksheet_outlet_ids = array_unique($worksheet_outlet_ids_by_auditor);
+		}
+
+		// Фильтр только по статусам
+		if(!$filterByAuditor && $filterByStatus)
+		{
+			$worksheet_outlet_ids = array_unique($worksheet_outlet_ids);
+		}
+
 		if (!empty($worksheet_outlet_ids))
 			$query->whereIn(sprintf('%s.%s', $query->getRootAlias(), 'id'), $worksheet_outlet_ids);
 		elseif(!empty($allStatus))

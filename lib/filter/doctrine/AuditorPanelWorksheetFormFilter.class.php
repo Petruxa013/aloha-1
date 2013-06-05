@@ -18,6 +18,7 @@ class AuditorPanelWorksheetFormFilter extends BaseWorksheetFormFilter
 			'photo_status',
 			'audio_status',
 			'audit_status',
+			'auditor_id',
 		));
 
 		$this->setWidgets(array(
@@ -47,7 +48,12 @@ class AuditorPanelWorksheetFormFilter extends BaseWorksheetFormFilter
 					'' => '',
 					0  => 'Аудит не проведен',
 					10 => 'Аудит проведен частично',
-					20 => 'Аудит проведен')))
+					20 => 'Аудит проведен'))),
+			'auditor_id' => new sfWidgetFormDoctrineChoice(array(
+				'model' => 'sfGuardUser',
+				'table_method' => 'getAuditorsQuery',
+				'add_empty' => true)
+			),
 		));
 
 		$this->setValidators(array(
@@ -55,6 +61,7 @@ class AuditorPanelWorksheetFormFilter extends BaseWorksheetFormFilter
 			'photo_status' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 0, 10, 20, 30))),
 			'audio_status' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 0, 10, 20, 30))),
 			'audit_status' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 0, 10, 20,))),
+			'auditor_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('sfGuardUser'), 'column' => 'id')),
 		));
 
 		$this->getWidgetSchema()->setLabels(array(
@@ -62,6 +69,7 @@ class AuditorPanelWorksheetFormFilter extends BaseWorksheetFormFilter
 			'photo_status' => 'Статус фото',
 			'audio_status' => 'Статус аудио',
 			'audit_status' => 'Статус аудита',
+			'auditor_id'   => 'Аудитор',
 		));
 	}
 }

@@ -93,8 +93,12 @@ class sfGuardUserTable extends PluginsfGuardUserTable
 
 		if($user->hasCredential('coordinator'))
 		{
-			$q->leftJoin('user.sfGuardUserSchema userSchema')
-				->addWhere('userSchema.master_id = ?', $user->getId());
+			$workersList = sfGuardUserSchemaTable::getInstance()->findByMasterId($user->getId(), Doctrine::HYDRATE_ARRAY);
+			$workersListIds = array();
+			foreach($workersList as $worker)
+				$workersListIds[] = $worker['worker_id'];
+
+			$q->whereIn('user.id', $workersListIds);
 		}
 
 		return $q;
