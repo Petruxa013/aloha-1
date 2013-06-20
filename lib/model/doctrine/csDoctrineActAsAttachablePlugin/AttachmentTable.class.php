@@ -16,4 +16,13 @@ class AttachmentTable extends PluginAttachmentTable
     {
         return Doctrine_Core::getTable('Attachment');
     }
+
+	public function findByObjectClassAndObjectId($objectClass, $objectId, $hydration = Doctrine::HYDRATE_ON_DEMAND)
+	{
+		$q = $this->createQuery('a')
+					->addWhere('a.object_class = ?', $objectClass)
+					->addWhere('a.object_id = ?', $objectId);
+
+		return $q->execute();
+	}
 }

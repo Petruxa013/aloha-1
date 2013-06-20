@@ -44,7 +44,7 @@ function worksheet_button($outlet, $user)
 
 }
 
-function worksheet_photo_button($outlet, $user)
+function worksheet_photo_button($outlet, $user, $old = false)
 {
 	$class = "btn-danger";
 	$text = 'Загрузить фото';
@@ -71,14 +71,19 @@ function worksheet_photo_button($outlet, $user)
 		$text = 'Посмотреть фото';
 	}
 
-	$button = '<a href="' . url_for('auditor_panel_worksheet_additional_files', $outlet) . '">';
+	if($old)
+		$route = 'auditor_panel_worksheet_additional_files';
+	else
+		$route = 'auditor_panel_worksheet_additional_m_files';
+
+	$button = '<a href="' . url_for($route, $outlet) . '">';
 	$button .= '<button class="btn ' . $class . ' ">' . $text . '</button>';
 	$button .= '</a>';
 
 	return $button;
 }
 
-function worksheet_audio_button($outlet, $user)
+function worksheet_audio_button($outlet, $user, $old = false)
 {
 	$class = "btn-danger";
 	$text = 'Загрузить аудио';
@@ -105,7 +110,12 @@ function worksheet_audio_button($outlet, $user)
 		$text = 'Прослушать аудио';
 	}
 
-	$button = '<a href="' . url_for('auditor_panel_worksheet_additional_files', $outlet) . '">';
+	if($old)
+		$route = 'auditor_panel_worksheet_additional_files';
+	else
+		$route = 'auditor_panel_worksheet_additional_m_files';
+
+	$button = '<a href="' . url_for($route, $outlet) . '">';
 	$button .= '<button class="btn ' . $class . ' ">' . $text . '</button>';
 	$button .= '</a>';
 

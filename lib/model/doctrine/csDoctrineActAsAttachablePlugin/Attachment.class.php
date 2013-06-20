@@ -28,4 +28,23 @@ class Attachment extends PluginAttachment
 		return $basePath;
 	}
 
+	public function getFilePath()
+	{
+		return $this->getBaseUploadPath().$this->getUrl();
+	}
+
+	public function getFileUrl()
+	{
+		return $this->getDefaultFilepath();
+	}
+
+	public function getSize()
+    {
+	    $filepath = $this->getFilePath();
+
+	    if(file_exists($filepath))
+            return filesize($this->getUploadPath());
+	    else
+		    return null;
+    }
 }

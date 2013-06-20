@@ -14,12 +14,19 @@ class ImageAttachment extends Attachment
 {
 	public function getResizedPath($width = null, $height = null)
 	{
-		$res = explode('.', $this->getUrl());
-		if ($width && $height) {
-			$res[count($res) - 2] = $res[count($res) - 2] . '_' . $width . '_' . $height;
-		}
+		$url = $this->getUrl();
 
-		return $this->getBaseUploadPath() . implode('.', $res);
+		if(strlen($url) > 0)
+		{
+			$res = explode('.', $url);
+			if ($width && $height) {
+				$res[count($res) - 2] = $res[count($res) - 2] . '_' . $width . '_' . $height;
+			}
+
+			return $this->getBaseUploadPath() . implode('.', $res);
+		}
+		else
+			return null;
 	}
 
 	public function getResizedHalthPath()

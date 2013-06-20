@@ -116,6 +116,30 @@ class auditor_panelActions extends sfActions
 		$this->form = new WorksheetForm($this->worksheet);
 	}
 
+	public function executeAdditionalMFiles()
+	{
+		$this->outlet = $this->getRoute()->getObject();
+		$this->worksheet = $this->outlet->getWorksheet();
+		if($this->worksheet)
+		{
+			$query = HistoryTable::getInstance()->getByModelObjectQuery($this->worksheet);
+			$query->addWhere('history.event = ?', 120);
+			$query->addWhere('history.comment IS NOT NULL');
+			$query->orderBy('history.created_at DESC');
+
+			$this->historyDissaprovePhoto = $query->execute();
+
+			$query = HistoryTable::getInstance()->getByModelObjectQuery($this->worksheet);
+			$query->addWhere('history.event = ?', 130);
+			$query->addWhere('history.comment IS NOT NULL');
+			$query->orderBy('history.created_at DESC');
+
+			$this->historyDissaproveAudio = $query->execute();
+		}
+
+		$this->form = new WorksheetForm($this->worksheet);
+	}
+
 	public function executeAdditionalFilesRename(sfWebRequest $request)
 	{
 		$attachment = Doctrine::getTable('Attachment')->findOneById($request->getParameter('attachmentId'));

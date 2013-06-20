@@ -10,6 +10,20 @@
  */
 class ImageAttachmentForm extends AttachmentForm
 {
+
+	public static $mime_types = array(
+		'image/jpeg',
+		'image/pjpeg',
+		'image/png',
+		'image/x-png',
+		'image/gif',
+		'image/tif',
+		'image/x-tif',
+		'image/tiff',
+		'image/x-tiff',
+		'application/tif',
+	);
+
 	/**
 	 * @see AttachmentForm
 	 */
@@ -19,18 +33,7 @@ class ImageAttachmentForm extends AttachmentForm
 		$this->getWidget('url')->setLabel('Файл');
 		$this->getValidator('url')->setOption('max_size', 10 * 1024 * 1024);
 		$this->getValidator('url')->setOption('path', $this->getBaseUploadPath());
-		$this->getValidator('url')->setOption('mime_types', array(
-			'image/jpeg',
-			'image/pjpeg',
-			'image/png',
-			'image/x-png',
-			'image/gif',
-			'image/tif',
-			'image/x-tif',
-			'image/tiff',
-			'image/x-tiff',
-			'application/tif',
-		));
+		$this->getValidator('url')->setOption('mime_types', self::$mime_types);
 		$this->getValidator('url')->setMessages(array(
 			'max_size' => 'Для загрузки разрешены файлы до 10 мб.',
 			'mime_types' => 'Разрешенные форматы файлов: Jpeg, Png, Gif, Tif'

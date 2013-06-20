@@ -8,3 +8,9 @@ all:
 additionalFilesSuccess:
   stylesheets:    [/bootstrapAdminThemePlugin/css/bootstrap.min.css, cupertino/jquery-ui-1.8.16.custom.css]
   javascripts:    [/bootstrapAdminThemePlugin/js/bootstrap.min.js, jquery-ui.custom.min.js]
+
+additionalMFilesSuccess:
+  stylesheets:    [/bootstrapAdminThemePlugin/css/bootstrap.min.css, jquery.fileupload-ui.css]
+  javascripts:    [/bootstrapAdminThemePlugin/js/bootstrap.min.js]
+
+

@@ -39,6 +39,13 @@ class csDoctrineActAsAttachableRouting
         )
       );
       $r->prependRoute(
+        'cs_attachable_m_file',
+        new sfRoute(
+          '/cs/attachable/m/:table/:object_id',
+          array('module' => 'csAttachable', 'action' => 'attachmentMFile')
+        )
+      );
+      $r->prependRoute(
         'cs_attachable_refresh',
         new sfRoute(
           '/cs/attachable/:table/:object_id/refresh',

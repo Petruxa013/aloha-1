@@ -229,6 +229,14 @@ auditor_panel_worksheet_additional_files:
     model: outlet
     type: object
 
+auditor_panel_worksheet_additional_m_files:
+  class: sfDoctrineRoute
+  url: /auditor/panel/outlet/:id/worksheet/mfiles
+  param: {module: auditor_panel, action: additionalMFiles }
+  options:
+    model: outlet
+    type: object
+
 auditor_panel_worksheet_additional_files_rename:
   class: sfDoctrineRoute
   url: /auditor/panel/outlet/:id/worksheet/files/rename
