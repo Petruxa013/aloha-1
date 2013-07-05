@@ -19,11 +19,24 @@ class Attachment extends PluginAttachment
 
 		$outlet = $worksheet->getOutlet();
 
-		$basePath = sfConfig::get('sf_upload_dir') . DS .
-				strtolower($this->getObjectClass()) . DS .
-				SlugifyClass::slugify($outlet->getRegion()) . DS .
-				SlugifyClass::slugify($outlet->getCity()) . DS .
-				SlugifyClass::slugify($outlet->getAddress()) . DS;
+		$basePath = '';
+
+		if($cdnDomain = sfConfig::get('app_amazone_cloud_front_url', false))
+		{
+			$basePath .= 'http://'.$cdnDomain;
+		}
+
+		$basePath .= sfConfig::get('sf_upload_dir') . DS;
+
+		// @todo stupid fix
+		if(!$cdnDomain)
+		{
+			$basePath .= strtolower($this->getObjectClass()) . DS;
+		}
+
+		$basePath .=    SlugifyClass::slugify($outlet->getRegion()) . DS .
+						SlugifyClass::slugify($outlet->getCity()) . DS .
+						SlugifyClass::slugify($outlet->getAddress()) . DS;
 
 		return $basePath;
 	}
