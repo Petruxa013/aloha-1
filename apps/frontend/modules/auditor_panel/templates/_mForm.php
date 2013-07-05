@@ -17,7 +17,7 @@
 	<noscript><input type="hidden" name="redirect" value="http://blueimp.github.com/jQuery-File-Upload/"></noscript>
 	<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 	<div class="container">
-	<?php if($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20): ?>
+	<?php if(($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20) && !sfConfig::get('app_static_mode')): ?>
 		<div class="row fileupload-buttonbar">
 			<div class="span9">
 				<!-- The fileinput-button span is used to style the file input field as button -->
@@ -58,7 +58,7 @@
 	</div>
 </form>
 <br>
-<?php if($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20): ?>
+<?php if(($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20) && !sfConfig::get('app_static_mode')): ?>
 <div class="well container">
 	<h3>Информация по загрузке файлов</h3>
 	<ul>
@@ -161,7 +161,7 @@
 			<span class="size">{%=o.formatFileSize(file.size)%}</span>
 		</td>
 		<td>
-			<?php if($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20): ?>
+			<?php if(($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20) && !sfConfig::get('app_static_mode')): ?>
 			{% if (!file.error) { %}
 			<button class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"
 			{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
@@ -179,13 +179,13 @@
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="/js/fileUpload/vendor/jquery.ui.widget.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
-<script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
+<script src="/js/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+<script src="/js/load-image.min.js"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
+<script src="/js/canvas-to-blob.min.js"></script>
 <!-- Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo -->
-<script src="http://blueimp.github.com/cdn/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootstrap-image-gallery.js"></script>
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="/js/fileUpload/jquery.iframe-transport.js"></script>

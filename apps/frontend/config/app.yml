@@ -36,3 +36,6 @@ all:
     email_from:                 error@aloha.com
 
   max_items_on_auditor_panel:   20
+
+  static_mode: true
+  aws3route: false

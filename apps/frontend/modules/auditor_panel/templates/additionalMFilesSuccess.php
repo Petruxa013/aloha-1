@@ -9,7 +9,7 @@
 			<button class="btn btn-info">Вернуться к списку РТТ</button>
 		</a>
 
-	<?php if($sf_user->hasCredential('coordinator') && $worksheet->getId()): ?>
+	<?php if(($sf_user->hasCredential('coordinator') && $worksheet->getId()) && !sfConfig::get('app_static_mode')): ?>
 
 	<?php if($worksheet->getPhotoStatus() <= 10): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
@@ -31,7 +31,7 @@
 	<?php endif; ?>
 
 
-	<?php if($sf_user->hasCredential('project_manager') && $worksheet->getId()): ?>
+	<?php if(($sf_user->hasCredential('project_manager') && $worksheet->getId()) && !sfConfig::get('app_static_mode')): ?>
 	<?php if($worksheet->getPhotoStatus() <= 20): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet_photo', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить фото</button>
@@ -86,7 +86,7 @@
 	<?php include_partial('mForm', array('outlet'=> $outlet, 'form' => $form, 'worksheet' => $worksheet)) ?>
 <?php endif ?>
 
-<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
+<?php if(($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')) && !sfConfig::get('app_static_mode')): ?>
 <div id="disaprovePhotoPopup" class="modal hide fade">
 
 	<form action="<?php echo url_for('auditor_panel_disapprove_worksheet_photo', $outlet) ?>" method="post"  class="form-horizontal">
@@ -112,7 +112,7 @@
 </div>
 <?php endif; ?>
 
-<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
+<?php if(($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')) && !sfConfig::get('app_static_mode')): ?>
 <div id="disaproveAudioPopup" class="modal hide fade">
 
 <form action="<?php echo url_for('auditor_panel_disapprove_worksheet_audio', $outlet) ?>" method="post"  class="form-horizontal">

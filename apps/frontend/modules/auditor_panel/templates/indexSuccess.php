@@ -79,7 +79,7 @@
 					$auditor = get_worksheet_author($outlet);
 					echo $auditor
 				?>
-				<?php if(!empty($auditor)): ?>
+				<?php if(!empty($auditor) && !sfConfig::get('app_static_mode')): ?>
 				<a href="<?php echo url_for('auditor_panel_change_auditor', $outlet) ?>"><button class="btn">Сменить</button></a>
 				<?php endif ?>
 			</td>

@@ -28,9 +28,9 @@
 <?php endforeach; ?>
 </div>
 <?php endif ?>
-<?php //if($worksheet->getStatus() < 20): ?>
+<?php if(!sfConfig::get('app_static_mode')): ?>
 <form action="<?php echo url_for('auditor_panel_add_worksheet', $outlet) ?>" method="post">
-<?php //endif; ?>
+<?php endif; ?>
 <table class="table table-bordered table-striped">
 	<tr>
 		<td>
@@ -612,7 +612,7 @@
 </table>
 <div class="pagination-centered">
 
-	<?php if($sf_user->hasCredential('auditor')): ?>
+	<?php if($sf_user->hasCredential('auditor') && !sfConfig::get('app_static_mode')): ?>
 	<!-- Аудитор -->
 		<?php if($worksheet->getStatus() < 20): ?>
 		<button type="submit" class="btn">
@@ -629,7 +629,7 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if($sf_user->hasCredential('coordinator')): ?>
+	<?php if($sf_user->hasCredential('coordinator') && !sfConfig::get('app_static_mode')): ?>
 	<!-- Координатор -->
 		<?php if($worksheet->getStatus() < 30): ?>
 		<button type="submit" class="btn">
@@ -646,7 +646,7 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if($sf_user->hasCredential('project_manager')): ?>
+	<?php if($sf_user->hasCredential('project_manager') && !sfConfig::get('app_static_mode')): ?>
 		<!-- Руководитель -->
 	<button type="submit" class="btn">
 		<?php if($worksheet->getStatus() >= 10): ?>
@@ -657,7 +657,7 @@
 	</button>
 	<?php endif; ?>
 
-	<?php if($sf_user->hasCredential('coordinator')): ?>
+	<?php if($sf_user->hasCredential('coordinator') && !sfConfig::get('app_static_mode')): ?>
 	<?php if($worksheet->getStatus() <= 10): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-info">Одобрить анкету</button>
@@ -668,7 +668,7 @@
 	<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if($sf_user->hasCredential('project_manager')): ?>
+	<?php if($sf_user->hasCredential('project_manager') && !sfConfig::get('app_static_mode')): ?>
 	<?php if($worksheet->getStatus() <= 20): ?>
 	<a class="action" href="<?php echo url_for('auditor_panel_approve_worksheet', $outlet) ?>">
 		<button type="button" class="btn btn-success">Одобрить анкету</button>
@@ -684,7 +684,7 @@
 
 </div>
 </form>
-<?php if($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')): ?>
+<?php if(($sf_user->hasCredential('project_manager') || $sf_user->hasCredential('coordinator')) && !sfConfig::get('app_static_mode')): ?>
 <div id="disaprovePopup" class="modal hide fade">
 
 	<form action="<?php echo url_for('auditor_panel_disapprove_worksheet', $outlet) ?>" method="post"  class="form-horizontal">
