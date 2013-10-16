@@ -39,3 +39,5 @@ all:
 
   static_mode: false
   amazone_cloud_front_url: false
+
+  project_name: Волна
