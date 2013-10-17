@@ -31,6 +31,7 @@ class ProjectManagerForm extends PluginsfGuardUserForm
 			'email_address'    => new sfValidatorEmail(array('max_length' => 255, 'required' => false, 'trim' => true)),
 			'patrionimic'      => new sfValidatorString(array('max_length' => 255, 'required' => true)),
 			'contact_comments' => new sfValidatorString(array('max_length' => 255, 'required' => true)),
+			'is_active'        => new sfValidatorBoolean(array('required' => false)),
 		));
 
 		$this->getValidator('first_name')->setMessages(array('required' => 'Обязательно к заполнению'));
@@ -54,14 +55,14 @@ class ProjectManagerForm extends PluginsfGuardUserForm
 	protected function doSave($con = null)
 	{
 
-		$auditor = $this->getObject();
-		$auditor->setUsername('project_manager_' . mt_rand(1000, 9999));
-		$auditor->setPassword($this->generateRandomPassword(14));
+		$project_manager = $this->getObject();
+		$project_manager->setUsername('project_manager_' . mt_rand(1000, 9999));
+		$project_manager->setPassword($this->generateRandomPassword(14));
 
 		parent::doSave($con);
 
-		if(!$auditor->hasGroup('project_manager'))
-			$auditor->addGroupByName('project_manager');
+		if (!$project_manager->hasGroup('project_manager'))
+			$project_manager->addGroupByName('project_manager');
 	}
 
 	/**
