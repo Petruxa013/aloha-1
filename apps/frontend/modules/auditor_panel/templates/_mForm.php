@@ -17,7 +17,7 @@
 	<noscript><input type="hidden" name="redirect" value="http://blueimp.github.com/jQuery-File-Upload/"></noscript>
 	<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 	<div class="container">
-	<?php if(($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20) && !sfConfig::get('app_static_mode')): ?>
+	<?php if(($worksheet->getAudioStatus() < 20 || $worksheet->getPhotoStatus() < 20) && !sfConfig::get('app_static_mode')): ?>
 		<div class="row fileupload-buttonbar">
 			<div class="span9">
 				<!-- The fileinput-button span is used to style the file input field as button -->
@@ -58,7 +58,7 @@
 	</div>
 </form>
 <br>
-<?php if(($worksheet->getAudioStatus() < 20 && $worksheet->getPhotoStatus() < 20) && !sfConfig::get('app_static_mode')): ?>
+<?php if(($worksheet->getAudioStatus() < 20 || $worksheet->getPhotoStatus() < 20) && !sfConfig::get('app_static_mode')): ?>
 <div class="well container">
 	<h3>Информация по загрузке файлов</h3>
 	<ul>
